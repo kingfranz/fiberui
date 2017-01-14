@@ -1,0 +1,1463 @@
+
+;; GardenDB v0.1
+;; Extensible Data Notional (edn)
+;; Thu Jan 12 22:16:06 CET 2017
+;; fiber-db.edn
+
+
+{:member
+ {:3ec1cdec1ed14258932e2601378179d0
+  {:member-id 70,
+   :estates ["MBEF116"],
+   :from-to {:from "2013-01-01"},
+   :name "Toresson, Anna. Hjalmarsson, Patrik",
+   :contact
+   [{:type :phone, :value "010-4018282"}
+    {:type :phone, :value "0722-145715"}
+    {:type :email, :value "toresson_a@hotmail.com", :preferred true}],
+   :_id :3ec1cdec1ed14258932e2601378179d0},
+  :6aa54d830fd24a16b9b7fffa13dfc84b
+  {:member-id 40,
+   :estates ["MBEF27"],
+   :from-to {:from "2013-01-01"},
+   :name "Tropp, Mats",
+   :contact
+   [{:type :phone, :value "070-3285102"}
+    {:type :phone, :value "070-2901231"}
+    {:type :email, :value "mats.tropp@hovaror.com", :preferred true}
+    {:type :address, :value "Torsgatan 6, 54233 Mariestad"}],
+   :_id :6aa54d830fd24a16b9b7fffa13dfc84b},
+  :da8de0ab33c94209a960c8f83baaa236
+  {:member-id 78,
+   :estates ["MBEF115"],
+   :from-to {:from "2013-01-01"},
+   :name "Paulmichl, Margreth & Florian",
+   :contact
+   [{:type :phone, :value "0700-384318"}
+    {:type :email, :value "mpaulmichl@bluewin.ch", :preferred true}
+    {:type :email, :value "regina@reginasfullkorn.com"}],
+   :_id :da8de0ab33c94209a960c8f83baaa236},
+  :4809f94335d34aed8e5b3fafb2d362f8
+  {:member-id 23,
+   :estates ["MBEF55"],
+   :from-to {:from "2013-01-01"},
+   :name "Backman, Anders. Ann-Marie",
+   :contact
+   [{:type :phone, :value "070-2728029"}
+    {:type :email, :value "baserud.gard@gmail.com", :preferred true}],
+   :_id :4809f94335d34aed8e5b3fafb2d362f8},
+  :11eea26a44d541e8a5f6b56a529f95cc
+  {:member-id 17,
+   :estates ["MBEF91"],
+   :from-to {:from "2013-01-01"},
+   :name "Bygdegården, bokning Torbjörn, Pernilla",
+   :contact
+   [{:type :address,
+     :value "Bålerud 8, 545 92 Älgarås",
+     :preferred true}],
+   :_id :11eea26a44d541e8a5f6b56a529f95cc},
+  :28076cc84fba433bb905cceeaaa2762d
+  {:member-id 46,
+   :estates ["MBEF182"],
+   :from-to {:from "2013-01-01"},
+   :name "Lambertson, Kennet",
+   :contact
+   [{:type :phone, :value "0506-40274"}
+    {:type :phone, :value "070-2313811"}
+    {:type :email,
+     :value "kenneth.lambertson@telia.com",
+     :preferred true}
+    {:type :address, :value "Länsmansgatan 9, 72475 Västerås"}],
+   :_id :28076cc84fba433bb905cceeaaa2762d},
+  :4027ac1867134631b86557b4c02b6f03
+  {:member-id 18,
+   :estates ["MBEF95"],
+   :from-to {:from "2013-01-01"},
+   :name "Bratt, Roger",
+   :contact
+   [{:type :phone, :value "073-3820296"}
+    {:type :email, :value "roger@inix.se", :preferred true}],
+   :_id :4027ac1867134631b86557b4c02b6f03},
+  :2c5ed46703294e51900c3c3e17f5e5e1
+  {:member-id 28,
+   :estates ["MBEF49" "MBEF51"],
+   :from-to {:from "2013-01-01"},
+   :name "Jansson, Gunnar",
+   :contact
+   [{:type :email, :value "gunnaribale@gmail.com", :preferred true}
+    {:type :phone, :value "0506-15060"}
+    {:type :phone, :value "076-1498363"}
+    {:type :address, :value "Bålerud 14, 54592 Älgarås"}],
+   :_id :2c5ed46703294e51900c3c3e17f5e5e1},
+  :28bbf7f4c6fe4ac9a2350dfefc8907b2
+  {:member-id 45,
+   :estates ["MBEF71"],
+   :from-to {:from "2013-01-01"},
+   :name "Rosman, Jonas",
+   :contact
+   [{:type :phone, :value "0506-40118"}
+    {:type :email, :value "bockerud@bondeonline.se", :preferred true}],
+   :_id :28bbf7f4c6fe4ac9a2350dfefc8907b2},
+  :f3e37225bc6a42aca546d41deee184e9
+  {:member-id 55,
+   :estates ["MBEF156"],
+   :from-to {:from "2013-01-01"},
+   :name "Agrell, Yvonne",
+   :contact
+   [{:type :phone, :value "0506-43069"}
+    {:type :email, :value "yvonneagrell@gmail.com", :preferred true}],
+   :_id :f3e37225bc6a42aca546d41deee184e9},
+  :67cb47e45c714276afcab295e7414f65
+  {:member-id 8,
+   :estates ["MBEF57"],
+   :from-to {:from "2013-01-01"},
+   :name "Högberg, Per-Inge",
+   :contact
+   [{:type :phone, :value "0506-15010"}
+    {:type :phone, :value "070-8645373"}
+    {:type :email,
+     :value "den_vackra_kvinnan@yahoo.se",
+     :preferred true}],
+   :_id :67cb47e45c714276afcab295e7414f65},
+  :8d6a6464bc67453e9dd3ffa2f59ad09b
+  {:member-id 43,
+   :estates ["MBEF73"],
+   :from-to {:from "2013-01-01"},
+   :name "Hildenborg, Mikael",
+   :contact
+   [{:type :phone, :value "0704412854"}
+    {:type :email, :value "micael@hildenborg.com", :preferred true}
+    {:type :address, :value "Mölndalsvägen 3, 41263 Göteborg"}],
+   :_id :8d6a6464bc67453e9dd3ffa2f59ad09b},
+  :4d1c033c761e43cab988358ac09b3016
+  {:member-id 59,
+   :estates ["MBEF152"],
+   :from-to {:from "2013-01-01"},
+   :name "Arlt, Irene",
+   :contact
+   [{:type :phone, :value "0730-676347"}
+    {:type :phone, :value "+4989924646"}
+    {:type :email, :value "iarlt@mellenthin.org", :preferred true}
+    {:type :address, :value "Am Reichsberg 7, DE-82346 Andechs"}],
+   :_id :4d1c033c761e43cab988358ac09b3016},
+  :c998a612f5114891938e05c5d3fcd2e5
+  {:member-id 15,
+   :estates ["MBEF30"],
+   :from-to {:from "2013-01-01"},
+   :name "Nilsson, Jan. Iréne",
+   :contact
+   [{:type :phone, :value "0506-12932"}
+    {:type :phone, :value "076-8397343"}
+    {:type :email, :value "irene.w.nilsson@gmail.com", :preferred true}
+    {:type :address, :value "Strågatan 8, 54532 Töreboda"}],
+   :_id :c998a612f5114891938e05c5d3fcd2e5},
+  :a6fd0301995f4f3182bd52b6f9964c50
+  {:member-id 74,
+   :estates ["MBEF123"],
+   :from-to {:from "2013-01-01"},
+   :name "Ingvarsdotter, Gabriella. Wretling, Peter",
+   :contact
+   [{:type :phone, :value "070-4882771"}
+    {:type :phone, :value "070-5581919"}
+    {:type :email,
+     :value "peter.wretling6365@gmail.com",
+     :preferred true}
+    {:type :address, :value "Bangatan 35, Västerås"}
+    {:type :phone, :value "0709380130"}],
+   :_id :a6fd0301995f4f3182bd52b6f9964c50},
+  :d802e4f66dc2428d9bec0a22ec835883
+  {:member-id 44,
+   :estates ["MBEF72"],
+   :from-to {:from "2013-01-01"},
+   :name "Svensson, Sören. Annika S-Flodström",
+   :contact
+   [{:type :phone, :value "070-3643025"}
+    {:type :phone, :value "070-3644135"}
+    {:type :email, :value "soren@turbomx5.com"}
+    {:type :email, :value "annika@turbomx5.com", :preferred true}],
+   :_id :d802e4f66dc2428d9bec0a22ec835883},
+  :59f27505436a4aceb02b206c806996fd
+  {:member-id 51,
+   :estates ["MBEF98" "MBEF164" "MBEF62"],
+   :from-to {:from "2013-01-01"},
+   :name "Hagström, Bo. Rickard",
+   :contact
+   [{:type :email, :value "bo.hagstroem@gmail.com", :preferred true}
+    {:type :email, :value "hagstromslantbruk@gmail.com"}
+    {:type :address, :value "Åsebol 21, 54874 Gårdsjö"}
+    {:type :phone, :value "0506-15301"}
+    {:type :phone, :value "0706-644026"}
+    {:type :email, :value "hagge_h@tele2.se"}],
+   :_id :59f27505436a4aceb02b206c806996fd},
+  :6a10c947ddbd4d6bbb92e15030629292
+  {:member-id 64,
+   :estates ["MBEF130"],
+   :from-to {:from "2013-01-01"},
+   :name "Holzmair, Hans. Gertrud",
+   :contact
+   [{:type :phone, :value "+4989936299"}
+    {:type :email, :value "hans-holzmair@web.de", :preferred true}
+    {:type :address, :value "Lentnerweg 3, D-81927 München"}],
+   :_id :6a10c947ddbd4d6bbb92e15030629292},
+  :9fea7f1bc66349fcaa16b9b02134e576
+  {:member-id 3,
+   :estates ["MBEF110"],
+   :from-to {:from "2013-01-01"},
+   :name "Jörgensen, Ulla",
+   :contact
+   [{:type :phone, :value "0506-43012"}
+    {:type :email, :value "uj.myrhult@gmail.com", :preferred true}],
+   :_id :9fea7f1bc66349fcaa16b9b02134e576},
+  :1618baae6fcb4de4bf2afdcb8555163e
+  {:member-id 56,
+   :estates ["MBEF148"],
+   :from-to {:from "2013-01-01"},
+   :name "Karlsson, Kjell,Åsa (Börje Andersson)",
+   :contact
+   [{:type :phone, :value "070-6242174"}
+    {:type :email, :value "asanise@hotmail.com", :preferred true}
+    {:type :address,
+     :value "Eklunda, 59028 Borensberg, 0141-42174, 0706-242174"}],
+   :_id :1618baae6fcb4de4bf2afdcb8555163e},
+  :67cbd8acb0ca4471bdc2108eeb51c39e
+  {:member-id 6,
+   :estates ["MBEF53"],
+   :from-to {:from "2013-01-01"},
+   :name "Eriksson, Nils-Erik",
+   :contact
+   [{:type :phone, :value "0506-15090"}
+    {:type :phone, :value "073-0309970"}
+    {:type :email, :value "tjarbacka@gmail.com", :preferred true}],
+   :_id :67cbd8acb0ca4471bdc2108eeb51c39e},
+  :595b7f05a67641578afbe67221bf98f3
+  {:member-id 69,
+   :estates ["MBEF117"],
+   :from-to {:from "2013-01-01"},
+   :name "Karlsson, Kent. Margareta",
+   :contact
+   [{:type :phone, :value "033-152696"}
+    {:type :phone, :value "0703-223089"}
+    {:type :email, :value "kent.karlsson@barnvux.com", :preferred true}
+    {:type :address, :value "L:a Kyrkogatan 21 3tr, 50335 Borås"}],
+   :_id :595b7f05a67641578afbe67221bf98f3},
+  :c7d9d55058944d2cbe023c4411e532e9
+  {:member-id 75,
+   :estates ["MBEF108"],
+   :from-to {:from "2013-01-01"},
+   :name "Svarvarsson, Höskuldur",
+   :contact
+   [{:type :email, :value "hsvavars21@hotmail.com", :preferred true}],
+   :_id :c7d9d55058944d2cbe023c4411e532e9},
+  :7e5f3c524fa544d38b22055834451c73
+  {:member-id 62,
+   :estates ["MBEF139"],
+   :from-to {:from "2013-01-01"},
+   :name "Engstrand, Fredrik",
+   :contact
+   [{:type :phone, :value "0506-367143"}
+    {:type :phone, :value "070-8751522"}
+    {:type :email, :value "engstran_d@hotmail.com", :preferred true}
+    {:type :address, :value "Stora Bergsgatan11C, 54533 Töreboda"}],
+   :_id :7e5f3c524fa544d38b22055834451c73},
+  :baeb418d8c62482ea8ca757e95c72ee3
+  {:member-id 57,
+   :estates ["MBEF121"],
+   :from-to {:from "2013-01-01"},
+   :name "Andersson, Vivian",
+   :contact
+   [{:type :phone, :value "0506-12747"}
+    {:type :email, :value "vivian.norrab@tele2.se", :preferred true}
+    {:type :address, :value "N:a Bergsg 17, 54533 Töreboda"}],
+   :_id :baeb418d8c62482ea8ca757e95c72ee3},
+  :1ef6d3bac538457483ec77e6162e9d39
+  {:member-id 67,
+   :estates ["MBEF132"],
+   :from-to {:from "2013-01-01"},
+   :name "Qvist, Annika",
+   :contact
+   [{:type :phone, :value "0506-43026"}
+    {:type :phone, :value "0706-670026"}
+    {:type :email,
+     :value "annika.qvist808@spray.se",
+     :preferred true}],
+   :_id :1ef6d3bac538457483ec77e6162e9d39},
+  :ae29016b68b44fcc96645c03c831f1c3
+  {:member-id 14,
+   :estates ["MBEF29"],
+   :from-to {:from "2013-01-01"},
+   :name "Bjuren, Berit",
+   :contact
+   [{:type :phone, :value "0506-12601"}
+    {:type :phone, :value "070-3442601"}
+    {:type :email, :value "billy.bjuren@telia.com", :preferred true}
+    {:type :address, :value "Hallonstigen 7, 54505 Töreboda"}],
+   :_id :ae29016b68b44fcc96645c03c831f1c3},
+  :56117a37a11a4e08b5e44a3c01fa0618
+  {:member-id 42,
+   :estates ["MBEF76"],
+   :from-to {:from "2013-01-01"},
+   :name "Samuelsson, Monica o Berg, Sören",
+   :contact
+   [{:type :phone, :value "0506-10446"}
+    {:type :phone, :value "0739-838828"}
+    {:type :email, :value "sobg1@hotmail.com", :preferred true}
+    {:type :address, :value "54592 Älgarås"}],
+   :_id :56117a37a11a4e08b5e44a3c01fa0618},
+  :ee3379f5446e4a95a253c5bcb4daea86
+  {:member-id 9,
+   :estates ["MBEF64"],
+   :from-to {:from "2013-01-01"},
+   :name "Enoxon, Lillemor. Camilla. Veronica. Lock, Magdalena",
+   :contact
+   [{:type :phone, :value "0722-221642"}
+    {:type :phone, :value "070-2130923"}
+    {:type :email, :value "lenoxon@hotmail.com", :preferred true}],
+   :_id :ee3379f5446e4a95a253c5bcb4daea86},
+  :a69acdaefc5243bb983ad861c7275f12
+  {:member-id 24,
+   :estates ["MBEF58"],
+   :from-to {:from "2013-01-01"},
+   :name "Skagerstam, David. Persson, Sofia",
+   :contact
+   [{:type :phone, :value "070-9227192"}
+    {:type :email,
+     :value "davidskagerstam@hotmail.com",
+     :preferred true}
+    {:type :address, :value "Halna Bygården 65 54593 Töreboda"}
+    {:type :address, :value "Vasag 2, 54530 Töreboda"}],
+   :_id :a69acdaefc5243bb983ad861c7275f12},
+  :7c1d27560b32494e9d48b560f3c84bca
+  {:member-id 48,
+   :estates ["MBEF17"],
+   :from-to {:from "2013-01-01"},
+   :name "Goedhart, Chris",
+   :contact
+   [{:type :email, :value "chris.goedhart0@gmail.com", :preferred true}
+    {:type :address,
+     :value "Brandingdijk 422 3059 Rotterdam, Holland"}],
+   :_id :7c1d27560b32494e9d48b560f3c84bca},
+  :19d439621bde403cb8be78cecd639904
+  {:member-id 31,
+   :estates ["MBEF15"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Anders. Ylva",
+   :contact
+   [{:type :phone, :value "0506-15264"}
+    {:type :email, :value "anders@thorellmotor.se", :preferred true}],
+   :_id :19d439621bde403cb8be78cecd639904},
+  :daa51f0382f34a328eb6fd5cf52834db
+  {:member-id 73,
+   :estates ["MBEF114"],
+   :from-to {:from "2013-01-01"},
+   :name "Stabla, Peter. Sigrid (Nicolai)",
+   :contact
+   [{:type :phone, :value "+49-7529912925"}
+    {:type :email,
+     :value "nicolai.stabla@hotmail.com",
+     :preferred true}
+    {:type :address, :value "am Mittelberg 7, DE-88289 Waldburg"}
+    {:type :phone, :value "070-3536927"}
+    {:type :email, :value "pstabla@gmx.de"}],
+   :_id :daa51f0382f34a328eb6fd5cf52834db},
+  :d37d9fdd189c4a9f8566ade48d0ada72
+  {:member-id 61,
+   :estates ["MBEF119"],
+   :from-to {:from "2013-01-01"},
+   :name "Bratt, Christer. Silverstrand, Berit",
+   :contact
+   [{:type :phone, :value "0506-43004"}
+    {:type :phone, :value "0705-102922"}
+    {:type :email, :value "christer@brattsakeri.se", :preferred true}],
+   :_id :d37d9fdd189c4a9f8566ade48d0ada72},
+  :48fd02e98c504f0dbf74e079a2e6def8
+  {:member-id 58,
+   :estates ["MBEF144"],
+   :from-to {:from "2013-01-01"},
+   :name "Andersson, Wivan",
+   :contact
+   [{:type :phone, :value "0506-43049"}
+    {:type :email,
+     :value "wiwan.andersson@hotmail.com",
+     :preferred true}],
+   :_id :48fd02e98c504f0dbf74e079a2e6def8},
+  :be39597374cc4052aaa398e30753bc33
+  {:member-id 25,
+   :estates ["MBEF44"],
+   :from-to {:from "2013-01-01"},
+   :name "Suomalainen, Seppo. Sirka",
+   :contact
+   [{:type :phone, :value "0506-15088"}
+    {:type :phone, :value "070-4322666"}
+    {:type :address,
+     :value "Bålerud 11, 54592 Älgarås",
+     :preferred true}],
+   :_id :be39597374cc4052aaa398e30753bc33},
+  :d57eb1d8626e426e81b7d38fcc9fed1a
+  {:member-id 29,
+   :estates ["MBEF52"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Anna-Stina",
+   :contact
+   [{:type :phone, :value "0506-15052"}
+    {:type :email, :value "jannastina@gmail.com", :preferred true}],
+   :_id :d57eb1d8626e426e81b7d38fcc9fed1a},
+  :49434c08c401418e9388dd8ecfb5a7d3
+  {:member-id 76,
+   :estates ["MBEF92"],
+   :from-to {:from "2013-01-01"},
+   :name "Svensson, Ulf, Johansson, Camilla",
+   :contact
+   [{:type :phone, :value "0506-40158"}
+    {:type :phone, :value "070-3079906"}
+    {:type :email, :value "ulfocamilla@gmail.com", :preferred true}],
+   :_id :49434c08c401418e9388dd8ecfb5a7d3},
+  :033177fcaad54767899bee64c7492d60
+  {:member-id 36,
+   :estates ["MBEF20"],
+   :from-to {:from "2013-01-01"},
+   :name "Schön, Göran. Hagar",
+   :contact
+   [{:type :phone, :value "0506-15104"}
+    {:type :email, :value "hagar.schon@gmail.com", :preferred true}],
+   :_id :033177fcaad54767899bee64c7492d60},
+  :7c71dd66b3bb474ea310e2ffd434726a
+  {:member-id 2,
+   :estates ["MBEF124"],
+   :from-to {:from "2013-01-01"},
+   :name "Thyde, Herluf. Cronstam Thyde, Marianne",
+   :contact
+   [{:type :phone, :value "0506-43030"}
+    {:type :email, :value "symagasinet@yahoo.se", :preferred true}],
+   :_id :7c71dd66b3bb474ea310e2ffd434726a},
+  :4b38b2b535034b5a8d75c6e515fc9df2
+  {:member-id 4,
+   :estates ["MBEF54"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Stig-Evert",
+   :contact
+   [{:type :phone, :value "0506-15052"}
+    {:type :phone, :value "070-5893436"}
+    {:type :email, :value "stigevertj@gmail.com", :preferred true}],
+   :_id :4b38b2b535034b5a8d75c6e515fc9df2},
+  :8876d7ec09664d20b893e45f314eebe9
+  {:member-id 47,
+   :estates ["MBEF18"],
+   :from-to {:from "2013-01-01"},
+   :name "Lien, Johnny Ole",
+   :contact
+   [{:type :phone, :value "0506-15200"}
+    {:type :email, :value "sisjon7@gmail.com", :preferred true}
+    {:type :email, :value "orheim@tele2.no"}],
+   :_id :8876d7ec09664d20b893e45f314eebe9},
+  :7ab8446d2f6a42eb9cf1edc61a9e2bc4
+  {:member-id 16,
+   :estates ["MBEF170"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Sandra. (Gustavsson, Tobias)",
+   :contact
+   [{:type :email,
+     :value "info@tobbegustavssonsbygg.se",
+     :preferred true}
+    {:type :address, :value "box, 136, 54592 Älgarås"}],
+   :_id :7ab8446d2f6a42eb9cf1edc61a9e2bc4},
+  :684563d3b60a4f6ebaf5de02ffd2b339
+  {:member-id 13,
+   :estates ["MBEF69"],
+   :from-to {:from "2013-01-01"},
+   :name "Hjalmarsson, Roland. (Henrik)",
+   :contact
+   [{:type :phone, :value "0506-40229"}
+    {:type :phone, :value "076-0257194"}
+    {:type :email, :value "hjalle_dio@hotmail.com", :preferred true}],
+   :_id :684563d3b60a4f6ebaf5de02ffd2b339},
+  :2358562894124ed1bf4d1f3ecde2773f
+  {:member-id 60,
+   :estates ["MBEF129"],
+   :from-to {:from "2013-01-01"},
+   :name "Bengtsson, Karin",
+   :contact
+   [{:type :phone, :value "0506-43028"}
+    {:type :phone, :value "019-333314"}
+    {:type :email, :value "myrhult2@telia.com", :preferred true}
+    {:type :address, :value "Ramlösa gränd 5, 70228 Örebro"}],
+   :_id :2358562894124ed1bf4d1f3ecde2773f},
+  :92879154071742cbbc0d7605233d489e
+  {:member-id 52,
+   :estates ["MBEF60"],
+   :from-to {:from "2013-01-01"},
+   :name "Jansson, Sven-Olof",
+   :contact
+   [{:type :phone, :value "073-5035122"}
+    {:type :phone, :value "070-5190625"}
+    {:type :email, :value "backen1885@spray.se", :preferred true}],
+   :_id :92879154071742cbbc0d7605233d489e},
+  :9c98770499ed4feca5f747cd69fb57a8
+  {:member-id 7,
+   :estates ["MBEF50"],
+   :from-to {:from "2013-01-01"},
+   :name "Ek, Stellan",
+   :contact
+   [{:type :phone, :value "0506-15035"}
+    {:type :phone, :value "070-3364202"}
+    {:type :email, :value "stellan_ek@yahoo.se", :preferred true}],
+   :_id :9c98770499ed4feca5f747cd69fb57a8},
+  :0ea71630a2b74d639e9b2def48714cf3
+  {:member-id 34,
+   :estates ["MBEF19" "MBEF41"],
+   :from-to {:from "2013-01-01"},
+   :name "Pettersson, Elin",
+   :contact
+   [{:type :phone, :value "0506-16616"}
+    {:type :phone, :value "070-5868627"}
+    {:type :email,
+     :value "elin.pettersson@metsatissue.com",
+     :preferred true}
+    {:type :address, :value "Fiskarevägen 4, 54535 Töreboda"}],
+   :_id :0ea71630a2b74d639e9b2def48714cf3},
+  :542708066f544d05a5b7be072a791f60
+  {:member-id 10,
+   :estates ["MBEF162"],
+   :from-to {:from "2013-01-01"},
+   :name "Englund Linda",
+   :contact
+   [{:type :phone, :value "0506-16020"}
+    {:type :phone, :value "073-2068890"}
+    {:type :email,
+     :value "linda_englund85@hotmail.se",
+     :preferred true}
+    {:type :phone, :value "0506-54592"}],
+   :note "073-6721990 Linda",
+   :_id :542708066f544d05a5b7be072a791f60},
+  :174ab328b2a84e7794cfadeb8f9eb09e
+  {:member-id 1,
+   :estates ["MBEF127"],
+   :from-to {:from "2013-01-01"},
+   :name "Jangdal, Mats. Kabo, Ann",
+   :contact
+   [{:type :phone, :value "070-3883885"}
+    {:type :email, :value "mats@frihetsportalen.se", :preferred true}],
+   :_id :174ab328b2a84e7794cfadeb8f9eb09e},
+  :0029589d5d744ab1b535e45217937057
+  {:member-id 53,
+   :estates ["MBEF165"],
+   :from-to {:from "2013-01-01"},
+   :name "Torkilsson, Ronny. Anette",
+   :contact
+   [{:type :phone, :value "076-7706663"}
+    {:type :email, :value "ro2nyto@gmail.com", :preferred true}],
+   :_id :0029589d5d744ab1b535e45217937057},
+  :15f8505357534e2788b1f087b40f3edb
+  {:member-id 72,
+   :estates ["MBEF128"],
+   :from-to {:from "2013-01-01"},
+   :name "Spatz, Cornelia",
+   :contact
+   [{:type :phone, :value "0506-43001"}
+    {:type :email, :value "p.spatz@web.de", :preferred true}],
+   :_id :15f8505357534e2788b1f087b40f3edb},
+  :64b970d9bd644865a7e9601cfb5c942a
+  {:member-id 38,
+   :estates ["MBEF23"],
+   :from-to {:from "2013-01-01"},
+   :name "Ljungberg, Lars. Annica",
+   :contact
+   [{:type :phone, :value "019-333214"}
+    {:type :phone, :value "072-2218427"}
+    {:type :email, :value "loa.ljungberg@telia.com", :preferred true}
+    {:type :address, :value "Manillagatan 2, 70212 Örebro"}],
+   :_id :64b970d9bd644865a7e9601cfb5c942a},
+  :8fe795103b234de4b31f9f2f7b7e2dfd
+  {:member-id 33,
+   :estates ["MBEF7"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Keith",
+   :contact
+   [{:type :phone, :value "0500-438188"}
+    {:type :phone, :value "070-7595885"}
+    {:type :email,
+     :value "keith.johansson@beta.telenordia.se",
+     :preferred true}
+    {:type :address, :value "Spånvägen 21B, 54163 Skövde"}],
+   :_id :8fe795103b234de4b31f9f2f7b7e2dfd},
+  :2c467f1e2b2d426ebf43045d91b51980
+  {:member-id 49,
+   :estates ["MBEF176"],
+   :from-to {:from "2013-01-01"},
+   :name "Flyckt, Lars-Åke. Söder, Eva",
+   :contact
+   [{:type :phone, :value "0506-40508"}
+    {:type :email, :value "maloset01@gmail.com", :preferred true}
+    {:type :address, :value "54592 Älgarås"}],
+   :_id :2c467f1e2b2d426ebf43045d91b51980},
+  :46391c70130f47d98584eb384dfe4ec3
+  {:member-id 32,
+   :estates ["MBEF9"],
+   :from-to {:from "2013-01-01"},
+   :name "Andersson, Per-Erik. (Johansson, Ann-Charlotte)",
+   :contact
+   [{:type :phone, :value "0506-10160"}
+    {:type :phone, :value "073-1822327"}
+    {:type :email, :value "pererik@bandelen.se", :preferred true}],
+   :_id :46391c70130f47d98584eb384dfe4ec3},
+  :971c512762004a08b1929ec4361ac83f
+  {:member-id 54,
+   :estates ["MBEF133"],
+   :from-to {:from "2013-01-01"},
+   :name "Geier-Wehrmann, Michael",
+   :contact
+   [{:type :phone, :value "08-204907"}
+    {:type :email, :value "erutluv@gmx.de", :preferred true}
+    {:type :address, :value "Armfeltsgatan 16 3tr, 11534 Stockholm"}],
+   :_id :971c512762004a08b1929ec4361ac83f},
+  :ad1bf5e6f98a428dad9ef6fc263e857b
+  {:member-id 50,
+   :estates ["MBEF166"],
+   :from-to {:from "2013-01-01"},
+   :name "Englund, Sandra. Moberg, Mathias",
+   :contact
+   [{:type :phone, :value "0506-71212"}
+    {:type :phone, :value "073-800365"}
+    {:type :email,
+     :value "englund.sandra@hotmail.com",
+     :preferred true}
+    {:type :phone, :value "0506-54592"}],
+   :_id :ad1bf5e6f98a428dad9ef6fc263e857b},
+  :e8ff9ce99a8649bb90210f87486f6637
+  {:member-id 39,
+   :estates ["MBEF26"],
+   :from-to {:from "2013-01-01"},
+   :name "Josefsson, Bengt",
+   :contact
+   [{:type :phone, :value "0506-15214"}
+    {:type :phone, :value "0705913700"}
+    {:type :phone, :value "0501-10608"}
+    {:type :email, :value "bengtgs@gmail.com", :preferred true}
+    {:type :address, :value "box 146, 54222 Mariestad"}],
+   :_id :e8ff9ce99a8649bb90210f87486f6637},
+  :a98cc3108fd64c20a5fb85b94a14b603
+  {:member-id 71,
+   :estates ["MBEF113"],
+   :from-to {:from "2013-01-01"},
+   :name "Siehl, Tobias Erich. Nicole",
+   :contact
+   [{:type :phone, :value "0506-43041"}
+    {:type :phone, :value "072-2477870"}
+    {:type :email, :value "nwesterh@online.no", :preferred true}
+    {:type :address, :value "Mosnes, NO-4139 Fister"}
+    {:type :email, :value "tobias.siehl@yahoo.se"}],
+   :_id :a98cc3108fd64c20a5fb85b94a14b603},
+  :483bd5413f0d4b45abbcacd0e8bbb1e3
+  {:member-id 20,
+   :estates ["MBEF63"],
+   :from-to {:from "2013-01-01"},
+   :name "Persson, Conny. Gun-britt",
+   :contact
+   [{:type :phone, :value "0506-40241"}
+    {:type :phone, :value "076-7952754"}
+    {:type :email,
+     :value "gunbritt.persson1@tele2.se",
+     :preferred true}],
+   :_id :483bd5413f0d4b45abbcacd0e8bbb1e3},
+  :945e672a041244a4bf23056c098ae272
+  {:member-id 27,
+   :estates ["MBEF47" "MBEF48"],
+   :from-to {:from "2013-01-01"},
+   :name "Johansson, Torbjörn. Bengt",
+   :contact
+   [{:type :phone, :value "0506-15204"}
+    {:type :phone, :value "070-6315204"}
+    {:type :email, :value "t.pjohansson@telia.com", :preferred true}],
+   :_id :945e672a041244a4bf23056c098ae272},
+  :9663209d1f79471b92a8957a04f41624
+  {:member-id 5,
+   :estates ["MBEF10"],
+   :from-to {:from "2013-01-01"},
+   :name "Ryman, Lars. Gunnel",
+   :contact
+   [{:type :phone, :value "070-2153809"}
+    {:type :email, :value "larsryman@spray.se", :preferred true}],
+   :_id :9663209d1f79471b92a8957a04f41624},
+  :6c8c5766c1074b0da51d27c78698870c
+  {:member-id 35,
+   :estates ["MBEF43"],
+   :from-to {:from "2013-01-01"},
+   :name "Schön, Stefan. (Leppänen, Anette)",
+   :contact
+   [{:type :phone, :value "0506-15042"}
+    {:type :phone, :value "070-3277244"}
+    {:type :email,
+     :value "stefanschon65@hotmail.se",
+     :preferred true}],
+   :_id :6c8c5766c1074b0da51d27c78698870c},
+  :e56ff3ec3f7e4b97945c3a4be506d13c
+  {:member-id 22,
+   :estates ["MBEF102"],
+   :from-to {:from "2013-01-01"},
+   :name "Runvik, Anita",
+   :contact
+   [{:type :phone, :value "0605-40271"}
+    {:type :phone, :value "070-6540271"}
+    {:type :address,
+     :value "Högshult Skolan 9, 54592 Älgarås",
+     :preferred true}],
+   :_id :e56ff3ec3f7e4b97945c3a4be506d13c},
+  :93724352e25e476298d37ea1a8012994
+  {:member-id 66,
+   :estates ["MBEF118"],
+   :from-to {:from "2013-01-01"},
+   :name "Jansson, Anna",
+   :contact
+   [{:type :phone, :value "0506-43020"}
+    {:type :email, :value "anna.h.jansson@spray.se", :preferred true}],
+   :_id :93724352e25e476298d37ea1a8012994},
+  :cada85d42e414b8396c58654dc9c2781
+  {:member-id 30,
+   :estates ["MBEF14"],
+   :from-to {:from "2013-01-01"},
+   :name "Englund, Tony. Mari",
+   :contact
+   [{:type :phone, :value "0506-15223"}
+    {:type :email,
+     :value "tony.englund64.te@gmail.com",
+     :preferred true}],
+   :_id :cada85d42e414b8396c58654dc9c2781},
+  :9ff25b616f164e55932a965f526b6439
+  {:member-id 26,
+   :estates ["MBEF45"],
+   :from-to {:from "2013-01-01"},
+   :name "Mann, Roger",
+   :contact
+   [{:type :email, :value "Rogermann10@hotmail.com", :preferred true}],
+   :_id :9ff25b616f164e55932a965f526b6439},
+  :5fc32caf6f0b4e01a4bf459011e5f54a
+  {:member-id 21,
+   :estates ["MBEF65"],
+   :from-to {:from "2013-01-01"},
+   :name "Sundbro, Sven",
+   :contact
+   [{:type :phone, :value "070-5754556"}
+    {:type :email, :value "sven.sundbro@gmail.com", :preferred true}],
+   :_id :5fc32caf6f0b4e01a4bf459011e5f54a},
+  :53aa0f28efd1421e9ed2b605a2717ded
+  {:member-id 65,
+   :estates ["MBEF106"],
+   :from-to {:from "2013-01-01"},
+   :name "Isaksson, Sören. Lindgren, Anneli",
+   :contact
+   [{:type :phone, :value "0506-43064"}
+    {:type :email, :value "karlslund2@home.se", :preferred true}],
+   :_id :53aa0f28efd1421e9ed2b605a2717ded},
+  :da94e951876c40b0b3daa5d339ea2d14
+  {:member-id 37,
+   :estates ["MBEF28"],
+   :from-to {:from "2013-01-01"},
+   :name "Pettersson, Svante,Pia Eksell",
+   :contact
+   [{:type :phone, :value "0506-12357"}
+    {:type :email,
+     :value "pettersson.svante@telia.com",
+     :preferred true}
+    {:type :address, :value "Vadsbog 3, 54531 Töreboda"}],
+   :_id :da94e951876c40b0b3daa5d339ea2d14},
+  :e40806e4877e48a9a2306d9d1da5a0fc
+  {:member-id 63,
+   :estates ["MBEF136"],
+   :from-to {:from "2013-01-01"},
+   :name "Fhyr, Eva o Thore",
+   :contact
+   [{:type :phone, :value "0505-12330"}
+    {:type :email, :value "thore.fhyr@carlsborg.net", :preferred true}
+    {:type :address, :value "Strandv. 9 Karlsborg"}],
+   :_id :e40806e4877e48a9a2306d9d1da5a0fc},
+  :159d9e81789d4ca08c4d51316e1cccc9
+  {:member-id 77,
+   :estates ["MBEF159"],
+   :from-to {:from "2013-01-01"},
+   :name "van Haaften, Leendert. Louise",
+   :contact
+   [{:type :phone, :value "0506-43014"}
+    {:type :phone, :value "+31548595498"}
+    {:type :email, :value "l.vanhaaften@planet.nl", :preferred true}
+    {:type :address, :value "Kerkweg 3, 7448AC Haarle"}
+    {:type :phone, :value "+31653165319"}],
+   :_id :159d9e81789d4ca08c4d51316e1cccc9},
+  :904ff30800484dfabc32953531df23af
+  {:member-id 11,
+   :estates ["MBEF82"],
+   :from-to {:from "2013-01-01"},
+   :name "Olofsson, Johnny",
+   :contact
+   [{:type :phone, :value "0506-40200"}
+    {:type :phone, :value "072-5422626"}
+    {:type :email, :value "jkolofsson@outlook.com", :preferred true}],
+   :_id :904ff30800484dfabc32953531df23af},
+  :9d46508b412141628233c3775b0c7a76
+  {:member-id 12,
+   :estates ["MBEF103"],
+   :from-to {:from "2013-01-01"},
+   :name "Isaksson, Olof. Inger. SWEMEK",
+   :contact
+   [{:type :phone, :value "0506-40468"}
+    {:type :phone, :value "073-0620115"}
+    {:type :email, :value "sven@swemek.com", :preferred true}
+    {:type :phone, :value "0506-40130"}
+    {:type :email, :value "stenvadet@telia.com"}],
+   :_id :9d46508b412141628233c3775b0c7a76},
+  :46b4030adeed47a4b90ded1ff716cf85
+  {:member-id 68,
+   :estates ["MBEF135"],
+   :from-to {:from "2013-01-01"},
+   :name "Metz, Andreas",
+   :contact
+   [{:type :phone, :value "+49-1774859568"}
+    {:type :email,
+     :value "andreas.metz@systematec.de",
+     :preferred true}
+    {:type :address, :value "Hofanger 8, 86859 Igling, Germany"}],
+   :_id :46b4030adeed47a4b90ded1ff716cf85}},
+ :estate
+ {:44d6fe8d990245b5b442b214a43de732
+  {:estate-id "MBEF176",
+   :location "Mäloset 1:4",
+   :address "Mäloset 10, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :44d6fe8d990245b5b442b214a43de732},
+  :7347a3a007fc49ec96ac7cb482cff15d
+  {:estate-id "MBEF72",
+   :location "Lilla Lindåsen 1:12",
+   :address "Lindåsen Höjen 52, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :7347a3a007fc49ec96ac7cb482cff15d},
+  :e4a6ac6c158f4bc586e4d9cc790e9d0b
+  {:estate-id "MBEF118",
+   :location "Myrhult 1:65",
+   :address "Myrhult Mannhem 14, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :e4a6ac6c158f4bc586e4d9cc790e9d0b},
+  :16906722f368421092b398fccf1fd6ca
+  {:estate-id "MBEF136",
+   :location "Myrhult 1:82",
+   :address "Myrhult 38, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :16906722f368421092b398fccf1fd6ca},
+  :21c55ca91059449dabeab68c6b132dcb
+  {:estate-id "MBEF69",
+   :location "Älgarås 5:3",
+   :address "Älgarås Sörgården 47, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :21c55ca91059449dabeab68c6b132dcb},
+  :64f32921bca2427abb3e232cfbae46a7
+  {:estate-id "MBEF44",
+   :location "Bålerud 1:23",
+   :address "Bålerud 11, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :64f32921bca2427abb3e232cfbae46a7},
+  :a154662054f34dd1bb8f8d2ae9801221
+  {:estate-id "MBEF19",
+   :location "Björkulla 2:28",
+   :address "Sisjön Silverstrand 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :a154662054f34dd1bb8f8d2ae9801221},
+  :9945460201754dc1b86858769464675d
+  {:estate-id "MBEF82",
+   :location "Stora Lindåsen 6:1",
+   :address "Lindåsen Bredstorp 40, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9945460201754dc1b86858769464675d},
+  :4a5a037a3ba342cbaf118de7a44e88a2
+  {:estate-id "MBEF115",
+   :location "Myrhult 1:83",
+   :address "Myrhult 13, 54592 Älgarås",
+   :_id :4a5a037a3ba342cbaf118de7a44e88a2},
+  :b8b024127ffe47f08fde8fcaf66cf820
+  {:estate-id "MBEF103",
+   :location "Salpetersjudaretorp 1:10",
+   :address "Högsjult Högsås 10, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :b8b024127ffe47f08fde8fcaf66cf820},
+  :8b116cf7c861458a8e6d54e9d94fd55d
+  {:estate-id "MBEF48",
+   :location "Bålerud 6:2",
+   :address "Bålerud 8, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :8b116cf7c861458a8e6d54e9d94fd55d},
+  :9c158dfc5c3142a6bc707dc1f518a78d
+  {:estate-id "MBEF95",
+   :location "Stora Lindåsen 2:33",
+   :address "Lindåsen 27, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9c158dfc5c3142a6bc707dc1f518a78d},
+  :ff53f282a0474b3e9929accb9df78fc9
+  {:estate-id "MBEF166",
+   :location "Västra Nybygget 1:3",
+   :address "Mäloset västra nybygget 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :ff53f282a0474b3e9929accb9df78fc9},
+  :9e2e43099eae4530b6520edd9e34b5f7
+  {:estate-id "MBEF152",
+   :location "Högåsamossen 1:1",
+   :address "Myrhult Högåsamossen 62, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9e2e43099eae4530b6520edd9e34b5f7},
+  :027cdaa87f854694a6fb79c5fb8afd98
+  {:estate-id "MBEF144",
+   :location "Habelsbolet 1:33",
+   :address "Myrhult Dagstorp 48, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :027cdaa87f854694a6fb79c5fb8afd98},
+  :18ba9af67d9243828e4275e2dc484f0a
+  {:estate-id "MBEF116",
+   :location "Myrhult 1:79",
+   :address "Myrhult 15, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :18ba9af67d9243828e4275e2dc484f0a},
+  :98fcb14594854d01a3bc78056cc1e807
+  {:estate-id "MBEF182",
+   :location "Bockerud 1:5",
+   :address "Bockerud Nyborg 3, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :98fcb14594854d01a3bc78056cc1e807},
+  :8684d45094244e62b8eb4946af084119
+  {:estate-id "MBEF127",
+   :location "Myrhult 1:23",
+   :address "Myrhult 26, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :8684d45094244e62b8eb4946af084119},
+  :1fbecb8f2fa34099bfaf76e241d8588a
+  {:estate-id "MBEF41",
+   :location "Lillsjökärret 1:1",
+   :address "Bålerud Lillsjökärret 1, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :1fbecb8f2fa34099bfaf76e241d8588a},
+  :6d90e0a1833c45caae92493e8fb1a7ce
+  {:estate-id "MBEF51",
+   :location "Bålerud 8:2",
+   :address "Bålerud 14, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :6d90e0a1833c45caae92493e8fb1a7ce},
+  :a600206fa2274593a2ebe99486213b60
+  {:estate-id "MBEF28",
+   :location "Björkulla 3:2",
+   :address "Sisjön 18, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :a600206fa2274593a2ebe99486213b60},
+  :2570fd2da53147a18003ce7d95580b3c
+  {:estate-id "MBEF62",
+   :location "Stora Lindåsen 2:35",
+   :address "Lindåsen Västergården 9, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :2570fd2da53147a18003ce7d95580b3c},
+  :42bbddf39944463e96b27c1932f8ecb9
+  {:estate-id "MBEF52",
+   :location "Bålerud 1:25",
+   :address "Bålerud 15, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :42bbddf39944463e96b27c1932f8ecb9},
+  :f0038bc1c8c8477c8b2eb2088b085acb
+  {:estate-id "MBEF26",
+   :location "Björkulla 2:50",
+   :address "Sisjön 16, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :f0038bc1c8c8477c8b2eb2088b085acb},
+  :49948fbd6f974a068da28b8e8db7b850
+  {:estate-id "MBEF29",
+   :location "Björkulla 2:45",
+   :address "Sisjön 19, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :49948fbd6f974a068da28b8e8db7b850},
+  :56f8dde80e8b4b389f99baf670e2f6ab
+  {:estate-id "MBEF162",
+   :location "Älgarås 1:8",
+   :address "Älgarås Älgaråsgården 42, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :56f8dde80e8b4b389f99baf670e2f6ab},
+  :ee3553e4ef394684868b9592c43fc6e6
+  {:estate-id "MBEF53",
+   :location "Bålerud 1:22",
+   :address "Bålerud Tjärbacka 16, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :ee3553e4ef394684868b9592c43fc6e6},
+  :2a058ac67e3d4da28aca94b04547a947
+  {:estate-id "MBEF9",
+   :location "Töreboda Lillehult 3:1",
+   :address "Björkulla bandelen 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :2a058ac67e3d4da28aca94b04547a947},
+  :393ccb938d94414eb072e519c0781348
+  {:estate-id "MBEF76",
+   :location "Salpetersjudaretorp 1:17",
+   :address "Lindåsen Trälleholm 46, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :393ccb938d94414eb072e519c0781348},
+  :f468a2a052e24573984a3f15480bded6
+  {:estate-id "MBEF58",
+   :location "Lindåstorpet 3:1",
+   :address "Lindåsen Lindåstorpet 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :f468a2a052e24573984a3f15480bded6},
+  :2d02e37381824f55a04cb3e20db4194c
+  {:estate-id "MBEF124",
+   :location "Gärdesmossen 1:17",
+   :address "Myrhult Gärdesmossen 24, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :2d02e37381824f55a04cb3e20db4194c},
+  :fbf3206531bb4248897f0c3b0cf27379
+  {:estate-id "MBEF64",
+   :location "Stora Lindåsen 2:27",
+   :address "Lindåsen Stora Lindåsen 15, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :fbf3206531bb4248897f0c3b0cf27379},
+  :33f7173bf8fb4a8ab5dcfca8313ff498
+  {:estate-id "MBEF119",
+   :location "Småfalla 1:2",
+   :address "Myrhult Småfalla 16, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :33f7173bf8fb4a8ab5dcfca8313ff498},
+  :63603bb823094824bbb08b5fb1279e60
+  {:estate-id "MBEF20",
+   :location "Björkulla 2:27",
+   :address "Sisjön 10, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :63603bb823094824bbb08b5fb1279e60},
+  :f2f0c2b3c58946fca5a07b04d3b36b4f
+  {:estate-id "MBEF108",
+   :location "Bromossen 1:1",
+   :address "Myrhult Bromossen 4, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :f2f0c2b3c58946fca5a07b04d3b36b4f},
+  :00727d54d9574bd997eb3ecfbe736cc9
+  {:estate-id "MBEF170",
+   :location "Mäloset 1:2",
+   :address "Mäloset Kronorättarbostället 5, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :00727d54d9574bd997eb3ecfbe736cc9},
+  :345937fcd2884ac6a4f9f4037091f1ce
+  {:estate-id "MBEF7",
+   :location "Björkulla 2:9",
+   :address "Björkulla Gustavero 5, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :345937fcd2884ac6a4f9f4037091f1ce},
+  :9c85fefb457c4700b97a0dc23082943a
+  {:estate-id "MBEF55",
+   :location "Bäserud 1:4",
+   :address "Lindåsen Bäserud 6, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9c85fefb457c4700b97a0dc23082943a},
+  :1d3e591f60fd4eb7a56976246097e469
+  {:estate-id "MBEF30",
+   :location "Björkulla 2:44",
+   :address "Sisjön 20, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :1d3e591f60fd4eb7a56976246097e469},
+  :a04e0a85c32445ee880e244e657e197f
+  {:estate-id "MBEF91",
+   :location "Stora Lindåsen 2:2",
+   :address "Lindåsen Bygdegården 23, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :a04e0a85c32445ee880e244e657e197f},
+  :50ea4bcdd48048ffbffe2db82a27bfdc
+  {:estate-id "MBEF45",
+   :location "Bålerud 6:5",
+   :address "Bålerud Nordängen 10, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :50ea4bcdd48048ffbffe2db82a27bfdc},
+  :f1b191a78f8a45768077cb74a3a330c1
+  {:estate-id "MBEF10",
+   :location "Björkulla 1:16",
+   :address "Bålerud Olstorp 5, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :f1b191a78f8a45768077cb74a3a330c1},
+  :4493da2caa3e4761a06e129274c63779
+  {:estate-id "MBEF47",
+   :location "Bålerudshed 3:2",
+   :address "Bålerud Bålerudshed 6, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :4493da2caa3e4761a06e129274c63779},
+  :5e697a7e7281479da7a56e4a395a91a5
+  {:estate-id "MBEF110",
+   :location "Fredstorp 1:1",
+   :address "Myrhult Gömmet 8, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :5e697a7e7281479da7a56e4a395a91a5},
+  :7f9f7503994947aa8e7094bc1b093f7c
+  {:estate-id "MBEF23",
+   :location "Björkulla 2:36",
+   :address "Sisjön Fågelsången 13, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :7f9f7503994947aa8e7094bc1b093f7c},
+  :c36acd814fff4fa2a1ed848e00b154b2
+  {:estate-id "MBEF14",
+   :location "Bålerud 6:3",
+   :address "Bålerud Kyrkmossen 3, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :c36acd814fff4fa2a1ed848e00b154b2},
+  :9a1b9c275a55407cbf9dfceb769be535
+  {:estate-id "MBEF71",
+   :location "Bockerud 1:1",
+   :address "Bockerud 1, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9a1b9c275a55407cbf9dfceb769be535},
+  :95468175c08c4d618ce7e504f1a988fc
+  {:estate-id "MBEF15",
+   :location "Bålerud 6:4",
+   :address "Bålerud Eketorpet 4, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :95468175c08c4d618ce7e504f1a988fc},
+  :16238ee5c78344d9b5aedd57a500f8a5
+  {:estate-id "MBEF133",
+   :location "Myrhult 1:70",
+   :address "Myrhult 34, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :16238ee5c78344d9b5aedd57a500f8a5},
+  :103bcb76e8734314a1379370f771c16e
+  {:estate-id "MBEF27",
+   :location "Björkulla 2:26",
+   :address "Sisjön 17, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :103bcb76e8734314a1379370f771c16e},
+  :0617b80ef53c461ba8795b777ded11f5
+  {:estate-id "MBEF132",
+   :location "Myrhult 1:85",
+   :address "Myrhult 33, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :0617b80ef53c461ba8795b777ded11f5},
+  :5eb108d4b65f46bfb5d7a5978b3927cd
+  {:estate-id "MBEF43",
+   :location "Björkulla 2:19",
+   :address "Bålerud Sörgården, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :5eb108d4b65f46bfb5d7a5978b3927cd},
+  :c6d254914e264d90bd89466f69d200d9
+  {:estate-id "MBEF60",
+   :location "Stora Lindåsen 2:14",
+   :address "Lindåsen Backen 7, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :c6d254914e264d90bd89466f69d200d9},
+  :7bfa76605b964821ade850269ec5f277
+  {:estate-id "MBEF54",
+   :location "Bålerud 1:13",
+   :address "Bålerud Södra Tjärbacka 17, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :7bfa76605b964821ade850269ec5f277},
+  :ba58b5c0a6624dc4bd89de5b084b8643
+  {:estate-id "MBEF50",
+   :location "Bålerud 4:2",
+   :address "Bålerud 12, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :ba58b5c0a6624dc4bd89de5b084b8643},
+  :473c3b92e06f44c3ac5cc1ed3804d736
+  {:estate-id "MBEF130",
+   :location "Myrhult 1:76",
+   :address "Myrhult 31, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :473c3b92e06f44c3ac5cc1ed3804d736},
+  :1034d0646d2a4c13bc3372f61cac1e08
+  {:estate-id "MBEF159",
+   :location "Sjöbråten 1:11",
+   :address "Myrhult Sjöbråten 63, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :1034d0646d2a4c13bc3372f61cac1e08},
+  :c98a549d297242ce92e6d3e11f56cf45
+  {:estate-id "MBEF92",
+   :location "Stora Högshult 1:5",
+   :address "Högshult 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :c98a549d297242ce92e6d3e11f56cf45},
+  :59a80cade8834e198ad77cd74e41f85b
+  {:estate-id "MBEF102",
+   :location "Stora Högshult 2:2",
+   :address "Högshult Skolan 9, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :59a80cade8834e198ad77cd74e41f85b},
+  :c7061acbc09e4d078074afdb5d31bf76
+  {:estate-id "MBEF123",
+   :location "Myrhult 1:72",
+   :address "Myrhult 25, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :c7061acbc09e4d078074afdb5d31bf76},
+  :3dc9858885454791b1f02e89454969ba
+  {:estate-id "MBEF73",
+   :location "Lilla Lindåsen 1:10",
+   :address "Lindåsen Höjen 51, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :3dc9858885454791b1f02e89454969ba},
+  :69eff461d6544f1097cf771b407e4d93
+  {:estate-id "MBEF135",
+   :location "Myrhult 1:47",
+   :address "Myrhult Blomsterhult 36, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :69eff461d6544f1097cf771b407e4d93},
+  :3dc9c84cebdb4cd6ac75985adcabd94b
+  {:estate-id "MBEF114",
+   :location "Myrhult 1:86",
+   :address "Myrhult 11, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :3dc9c84cebdb4cd6ac75985adcabd94b},
+  :0f96e7930e584a628227fd38d59794e6
+  {:estate-id "MBEF128",
+   :location "Myrhult 1:34",
+   :address "Myrhult Gamla Missionshuset 29, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :0f96e7930e584a628227fd38d59794e6},
+  :d1a24ffd4d0c4c28aeedbb24dcc3061e
+  {:estate-id "MBEF156",
+   :location "Sjöbråten 1:10",
+   :address "Myrhult Sjöbråten 58, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :d1a24ffd4d0c4c28aeedbb24dcc3061e},
+  :1f059afa6c144472bdf2ebb38a3ff98e
+  {:estate-id "MBEF165",
+   :location "Älgarås 2:3",
+   :address "Älgarås Haghemmet 44, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :1f059afa6c144472bdf2ebb38a3ff98e},
+  :013fa65373bf40ef8c9e995bea90e5ff
+  {:estate-id "MBEF57",
+   :location "Älgarås Anderstorp 1:3",
+   :address "Lindåsen Anderstorp 3, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :013fa65373bf40ef8c9e995bea90e5ff},
+  :ea18d4504d8b449cac627c013bf71335
+  {:estate-id "MBEF164",
+   :location "Älgarås 6:1",
+   :address "Ladugården, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :ea18d4504d8b449cac627c013bf71335},
+  :359f8fb2fdbc4ca2a961799cb0a6dd42
+  {:estate-id "MBEF98",
+   :location "Stora Lindåsen 2:35",
+   :address "Högshult Stora Högshult 5, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :359f8fb2fdbc4ca2a961799cb0a6dd42},
+  :214ac747dd87469a8f1b99164147faed
+  {:estate-id "MBEF121",
+   :location "Näset 1:8",
+   :address "Myrhult Sjömarken, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :214ac747dd87469a8f1b99164147faed},
+  :56278feeb373421eb2aee74124ab84b6
+  {:estate-id "MBEF106",
+   :location "Stora Högshult 1:7",
+   :address "Myrhult Karlslund 2, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :56278feeb373421eb2aee74124ab84b6},
+  :6d08f4db54b441e5b08e680236038dda
+  {:estate-id "MBEF139",
+   :location "Myrhult 1:87",
+   :address "Myrhult Karlslund 40, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :6d08f4db54b441e5b08e680236038dda},
+  :44a2d47c2aec4667b9af8fdd56fd7826
+  {:estate-id "MBEF18",
+   :location "Björkulla 2:49",
+   :address "Sisjön 7, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :44a2d47c2aec4667b9af8fdd56fd7826},
+  :4d703022f86c45b0bb62dc2534ef956a
+  {:estate-id "MBEF117",
+   :location "Myrhult 1:28",
+   :address "Myrhult Wickbergs 21, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :4d703022f86c45b0bb62dc2534ef956a},
+  :7d6dc9c18ef142698d34c7c4f77fbe72
+  {:estate-id "MBEF65",
+   :location "Stora Lindåsen 2:36",
+   :address "Lindåsen 4, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :7d6dc9c18ef142698d34c7c4f77fbe72},
+  :9099027a6bd7489fb4c480419b35da9c
+  {:estate-id "MBEF113",
+   :location "Myrhult 1:2",
+   :address "Myrhult Nolängen 12, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :9099027a6bd7489fb4c480419b35da9c},
+  :761847065838421085228900cf727f50
+  {:estate-id "MBEF63",
+   :location "Stora Lindåsen 2:43",
+   :address "Lindåsen 14, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :761847065838421085228900cf727f50},
+  :54ec877314a34c29934bea317d3512a1
+  {:estate-id "MBEF17",
+   :location "Björkulla 2:48",
+   :address "Sisjön Lillesjön 3, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :54ec877314a34c29934bea317d3512a1},
+  :3b8c52610ded4da7831d2dd919c6e55f
+  {:estate-id "MBEF129",
+   :location "Myrhult 1:64",
+   :address "Myrhult Knuta 30, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :3b8c52610ded4da7831d2dd919c6e55f},
+  :27e43336da8a4daca40815a75f7eb98c
+  {:estate-id "MBEF148",
+   :location "Myrhult 1:16",
+   :address "Myrhult Sörfallsskogen 52, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :27e43336da8a4daca40815a75f7eb98c},
+  :312b0ad2a21447fea52afd50c537266e
+  {:estate-id "MBEF49",
+   :location "Bålerud 8:1",
+   :address "Bålerud 9, 54592 Älgarås",
+   :billing-interval
+   {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
+    :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
+   :_id :312b0ad2a21447fea52afd50c537266e}}}
