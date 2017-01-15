@@ -2,6 +2,7 @@
 	(:require [fiberui.config       :refer :all])
 	(:require [fiberui.db      :as db       :refer :all])
 	(:require [fiberui.data      :as data       :refer :all])
+	(:require [fiberui.utils      :as utils       :refer :all])
 	(:require [clj-time.core              :as t])
 	(:require [clj-time.format            :as f])
 	(:require [clj-time.local             :as l])
@@ -63,24 +64,30 @@
 			(button :id :member-ok-btn :text "Spara")])]))
 
 (declare get-filtered-members)
+(declare set-listbox)
+(declare update-listbox)
+
+(def members-list-panel (atom nil))
 
 (defn list-members-panel
 	[]
 	(border-panel
 		;:width window-width
 		;:height window-height
-		:north
-			(horizontal-panel
+		:north (horizontal-panel
 				;:height 100
 				:items [
-					(checkbox :id :invert-members :text "Invertera?")
-					(text :id :search-text :columns 50 :listen [:key-pressed (fn [e] (println e))])])
-		:center
-			(listbox :id :member-listbox :model [])))
+					(checkbox :id :invert-search :text "Invertera?")
+					(checkbox :id :and-search :text "And?")
+					(text :id :search-text
+						  :columns 50
+						  :listen [#{:insert-update :remove-update} (fn [e] (update-listbox @members-list-panel))])])
+		:center (scrollable (text :id :member-listbox :multi-line? true :editable? false :rows 20)
+							:vscroll :always :border 5)))
 
 (defn set-listbox
 	[panel box-id data]
-	(config! (select panel [box-id]) :model data))
+	(config! (select panel [box-id]) :text (str/join "\n" data)))
 
 (defn search-words
 	[txt search-txt]
@@ -88,12 +95,20 @@
 
 (defn get-filtered-members
 	[panel]
-	(let [members (db/get-all-members)
+	;(println panel)
+	(let [members    (db/get-all-members)
 		  member-txt (map data/mk-member-str members)
-		  search-txt (text (select panel [:#search-text]))]
+		  search-txt (text (select panel [:#search-text]))
+		  invert-search (value (select panel [:#invert-search]))
+		  and-search    (value (select panel [:#and-search]))]
+		(println "Search-txt:" search-txt "Invert:" invert-search "and-search:" and-search)
 		(if (str/blank? search-txt)
 			member-txt
 			(filter #(search-words % search-txt) member-txt))))
+
+(defn update-listbox
+	[panel]
+	(set-listbox panel :#member-listbox (get-filtered-members panel)))
 
 (defn menu-handler
 	[event id]
@@ -102,13 +117,12 @@
 
 (defn do-dialog
 	[e mk-panel]
-	(let [panel (mk-panel)
-		  a-panel (set-listbox panel :#member-listbox (get-filtered-members panel))
-		  dialog-window (dialog :width 500 :height 400
-		  						:content a-panel
-	                			:option-type :ok-cancel
-	                			:success-fn (fn [p] (text (select (to-root p) [:#name]))))]
-	(show! dialog-window)))
+	(let [panel (set-var members-list-panel (mk-panel))
+		  dialog-window (dialog :content @members-list-panel
+	                			:option-type :default
+	                			:success-fn (fn [p] (return-from-dialog p :ok)))]
+		(update-listbox @members-list-panel)
+		(-> dialog-window pack! show!)))
 
 (def main-frame
 	(frame

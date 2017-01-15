@@ -15,6 +15,12 @@
                 (throw (Exception. (str name " is empty")))
                 value))))
 
+(defn set-var 
+    "set value of atom"
+    [the-atom value]
+    (swap! the-atom (fn [x] value))
+    value)
+
 (defn not-nil?
     [params]
     (not (nil? params)))
