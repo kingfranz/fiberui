@@ -23,15 +23,12 @@
 
 ; create new member
 ; edit member
-; list all members
-; search on name
-; search on member-nr
+; search members
 ; disable member
 ; enter payments
 ;
 ; create new estate
 ; edit estate
-; list all estates
 ; disable estate
 ; search on estate name, address
 ; enter activities
@@ -42,86 +39,135 @@
 ; produce invoices
 ; enter taxrate, what is taxable, usage fees, fastbit fees, membership fees
 
-(def create-member-frame
-	(vertical-panel :id :create-member-frame :items [
-		(horizontal-panel :items [
-			(label "Medlemsnummer:")
-			(text :id :member-id-field)])
-		(horizontal-panel :items [
-			(label "Namn:")
-			(text :id :member-name-field)])
-		(horizontal-panel :items [
-			(label "Startdatum:")
-			(text :id :member-start-field)]) ; (date-input )
-		(horizontal-panel :items [
-			(label "Fastigheter:")
-			(text :id :member-estates-field)])
-		(horizontal-panel :items [
-			(label "Kontakter:")
-			(text :id :member-contact-field)])
-		(horizontal-panel :items [
-			(button :id :member-cancel-btn :text "Avbryt")
-			(button :id :member-ok-btn :text "Spara")])]))
-
-(declare get-filtered-members)
-(declare set-listbox)
-(declare update-listbox)
-
-(def members-list-panel (atom nil))
-
-(defn list-members-panel
+(defn do-new-member
 	[]
-	(border-panel
-		;:width window-width
-		;:height window-height
-		:north (horizontal-panel
-				;:height 100
-				:items [
-					(checkbox :id :invert-search :text "Invertera?")
-					(checkbox :id :and-search :text "And?")
-					(text :id :search-text
-						  :columns 50
-						  :listen [#{:insert-update :remove-update} (fn [e] (update-listbox @members-list-panel))])])
-		:center (scrollable (text :id :member-listbox :multi-line? true :editable? false :rows 20)
-							:vscroll :always :border 5)))
+	(let [panel (vertical-panel :items [
+					(horizontal-panel :items [
+						(label "Medlemsnummer:") [:fill-h 20]
+						(text :id :member-id-field :margin 3 :halign :right)
+						[:fill-h 300]])
+					[:fill-v 10]
 
-(defn set-listbox
-	[panel box-id data]
-	(config! (select panel [box-id]) :text (str/join "\n" data)))
+					(horizontal-panel :items [
+						(label "Namn:") [:fill-h 20]
+						(text :id :member-name-field :margin 3 :columns 50)])
+					[:fill-v 10]
+
+					(horizontal-panel :items [
+						(label "Startdatum:") [:fill-h 20]
+						(text :id :member-start-field :margin 3)]) ; (date-input )
+					[:fill-v 30]
+					:separator
+					
+					[:fill-v 10]
+					(label "Fastigheter:")
+					[:fill-v 10]
+					(horizontal-panel :items [
+						(button :id :member-estate-field-1 :text "Välj") [:fill-h 50]
+						(button :id :member-estate-field-2 :text "Välj") [:fill-h 50]
+						(button :id :member-estate-field-3 :text "Välj") [:fill-h 50]
+						(button :id :member-estate-field-4 :text "Välj")])
+					[:fill-v 30]
+					:separator
+
+					[:fill-v 10]
+					(label :text "Kontakter:")
+					[:fill-v 10]
+					(horizontal-panel :items [
+						(combobox :id :member-contact-type-1 :model ["Adress" "E-Post" "Telefon"])
+						[:fill-h 20]
+						(text :id :member-contact-field-1 :margin 3)])
+					[:fill-v 10]
+					(horizontal-panel :items [
+						(combobox :id :member-contact-type-2 :model ["Adress" "E-Post" "Telefon"])
+						[:fill-h 20]
+						(text :id :member-contact-field-2 :margin 3)])
+					[:fill-v 10]
+					(horizontal-panel :items [
+						(combobox :id :member-contact-type-3 :model ["Adress" "E-Post" "Telefon"])
+						[:fill-h 20]
+						(text :id :member-contact-field-3 :margin 3)])
+					[:fill-v 10]
+					(horizontal-panel :items [
+						(combobox :id :member-contact-type-4 :model ["Adress" "E-Post" "Telefon"])
+						[:fill-h 20]
+						(text :id :member-contact-field-4 :margin 3)])])
+
+		  get-member-id (fn [] (str/trim (value (select panel [:#member-id-field]))))
+		  get-name      (fn [] (str/trim (value (select panel [:#member-name-field]))))
+		  get-start     (fn [] (str/trim (value (select panel [:#member-start-field]))))
+		  member-id-ok? (fn [] (and (is-pos-int-str? (get-member-id))
+		  							(not (db/member-id-exist? (get-member-id)))))
+		  member-name-ok? (fn [] (utils/not-blank? (get-name)))
+		  member-start-ok? (fn [] (and (utils/not-blank? (get-start))
+		  							   (utils/date? (get-start))))
+		  
+		  dialog-window (dialog :content panel
+		  						:title "Ny medlem"
+	                			:options [(button :text "OK"
+	                							  :listen [:action (fn [e] (if (and (member-id-ok?)
+	                							  									(member-name-ok?)
+	                							  									(member-start-ok?))
+	                														   (return-from-dialog e :ok)
+	                														   (alert e "Fel medlems#")))])
+	                					 (button :text "Cancel"
+	                							 :listen [:action (fn [e] (return-from-dialog e :cancel))])])]
+		(-> dialog-window pack! show!)))
+
 
 (defn search-words
-	[txt search-txt]
-	(some true? (map #(str/includes? txt %) (str/split search-txt #" +"))))
+	[txt search-txt invert-search and-search]
+	(let [match-list (map #(str/includes? (str/lower-case txt) %) (str/split (str/lower-case search-txt) #" +"))]
+		(if invert-search
+			(if and-search
+				(not (not (some false? match-list)))
+				(not (some true? match-list)))
+			(if and-search
+				(not (some false? match-list))
+				(some true? match-list)))))
 
-(defn get-filtered-members
-	[panel]
-	;(println panel)
-	(let [members    (db/get-all-members)
-		  member-txt (map data/mk-member-str members)
-		  search-txt (text (select panel [:#search-text]))
-		  invert-search (value (select panel [:#invert-search]))
-		  and-search    (value (select panel [:#and-search]))]
-		(println "Search-txt:" search-txt "Invert:" invert-search "and-search:" and-search)
-		(if (str/blank? search-txt)
-			member-txt
-			(filter #(search-words % search-txt) member-txt))))
+(defn do-list-members
+	[]
+	(let [member-data (db/get-all-members)
+		  members     (sort-by :member-id member-data)
+		  member-map  (map #(hash-map :id (:member-id %) :name (:name %) :contact (preferred-contact %)) members)
 
-(defn update-listbox
-	[panel]
-	(set-listbox panel :#member-listbox (get-filtered-members panel)))
+		  panel (top-bottom-split
+					(horizontal-panel :items [
+						(checkbox :id :invert-search :text "Invertera?")
+						[:fill-h 20]
+						(checkbox :id :and-search :text "And?")
+						[:fill-h 20]
+						(text :id :search-text :font "ARIAL-BOLD-24")])
+					(scrollable
+						(table :id :member-list :font "ARIAL-12")
+						:vscroll :always
+						:hscroll :always)
+					:size [640 :by 600]
+					:divider-location 30)
 
-(defn menu-handler
-	[event id]
-	(println "event:" event " id:" id)
-	(println "action:" (.getActionCommand event)))
-
-(defn do-dialog
-	[e mk-panel]
-	(let [panel (set-var members-list-panel (mk-panel))
-		  dialog-window (dialog :content @members-list-panel
-	                			:option-type :default
-	                			:success-fn (fn [p] (return-from-dialog p :ok)))]
-		(update-listbox @members-list-panel)
+		  search-txt       (fn [] (text (select panel [:#search-text])))
+		  invert-search    (fn [] (value (select panel [:#invert-search])))
+		  and-search       (fn [] (value (select panel [:#and-search])))
+		  set-list         (fn [data] (config! (select panel [:#member-list]) :model data))
+		  filtered-members (fn [] (if (str/blank? (search-txt))
+									  member-map
+									  (filter #(search-words (data/mk-member-str %)
+									  						 (search-txt)
+									  						 (invert-search)
+									  						 (and-search))
+									  		  member-map)))
+		  update-list (fn [] (set-list [:columns [:id :name :contact]
+		  								:rows (vec (filtered-members))]))
+		  
+		  dialog-window (dialog :content panel
+	                			:option-type :default)]
+		(listen (select panel [:#invert-search]) :action (fn [e] (update-list)))
+		(listen (select panel [:#and-search]) :action (fn [e] (update-list)))
+		(listen (select panel [:#search-text]) #{:insert-update :remove-update} (fn [e] (update-list)))
+		(update-list)
+		;(println (count member-data) (count members) (count member-txt))
+		(request-focus! (select panel [:#search-text]))
 		(-> dialog-window pack! show!)))
 
 (def main-frame
@@ -135,29 +181,26 @@
 				:id :system-menu
 				:text "System"
 				:items [
-					(menu-item :id :calc-member-fees :text "Beräkna medlemsavgifter")
-					(menu-item :id :calc-usage-fees :text "Beräkna användningsavgifter")
-					(menu-item :id :make-invoices :text "Skapa fakturor")
-					(menu-item :id :configurate :text "Konfigurera")])
+					(menu-item :text "Beräkna medlemsavgifter")
+					(menu-item :text "Beräkna användningsavgifter")
+					(menu-item :text "Skapa fakturor")
+					(menu-item :text "Konfigurera")])
 			(menu
 				:id :member-menu
 				:text "Medlemmar"
 				:items [
-					(menu-item :text "Ny medlem" :listen [:action (fn [e] (menu-handler e :new-member))])
-					(menu-item :text "Ändra medlem" :listen [:action (fn [e] (menu-handler e :edit-member))])
-					(menu-item :text "Lista medlemmar" :listen [:action (fn [e] (do-dialog e list-members-panel))])
-               
-					(menu-item :id :search-member :text "Sök medlem")
-					(menu-item :id :disable-member :text "Avregistrera medlem")
-					(menu-item :id :payment-member :text "Bokför medlemsavgifter")])
+					(menu-item :text "Ny medlem" :listen [:action (fn [e] (do-new-member))])
+					(menu-item :text "Ändra medlem")
+					(menu-item :text "Sök medlemmar" :listen [:action (fn [e] (do-list-members))])
+					(menu-item :text "Avregistrera medlem")
+					(menu-item :text "Bokför medlemsavgifter")])
 			(menu
 				:id :estate-menu
 				:text "Fastigheter"
 				:items [
-					(menu-item :id :new-estate :text "Ny fastighet")
-					(menu-item :id :edit-estate :text "Ändra fastighet")
-					(menu-item :id :list-estates :text "lista fastigheter")
-					(menu-item :id :disable-estate :text "Avregistrera fastighet")
-					(menu-item :id :search-estate :text "Sök fastighet")
-					(menu-item :id :edit-activities :text "Bokför aktiviteter")
-					(menu-item :id :payment-estates :text "Bokför betalningar")])])))
+					(menu-item :text "Ny fastighet")
+					(menu-item :text "Ändra fastighet")
+					(menu-item :text "Avregistrera fastighet")
+					(menu-item :text "Sök fastighet")
+					(menu-item :text "Bokför aktiviteter")
+					(menu-item :text "Bokför betalningar")])])))

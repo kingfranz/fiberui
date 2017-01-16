@@ -7,6 +7,7 @@
     (:require [seesaw.graphics        :refer :all])
     (:require [seesaw.color        :refer :all])
     (:require [seesaw.font        :refer :all])
+    (:require [seesaw.dev        :refer :all])
     (:require [taoensso.timbre            :as timbre
              :refer [log  trace  debug  info  warn  error  fatal  report
                      logf tracef debugf infof warnf errorf fatalf reportf spy get-env]])

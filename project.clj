@@ -10,4 +10,5 @@
                  [gardendb "0.2.0"]]
   :main ^:skip-aot fiberui.core
   :target-path "target/%s"
+  :resource-paths ["resources/jdatepicker.jar"]
   :profiles {:uberjar {:aot :all}})

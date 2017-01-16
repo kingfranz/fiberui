@@ -23,7 +23,7 @@
 (defn preferred-contact
 	[member]
 	(if-let [pref (filter #(:preferred %) (:contact member))]
-		(:value pref)
+		(:value (first pref))
 		(throw (Exception. (str (:name member) " har ingen vald kontakt")))))
 
 (defn mk-member-str
@@ -151,20 +151,20 @@
       (throw (Exception. "Invalid estate data")))
     house))
 
-(defn mk-cust
-    [{:keys [first_name last_name extra street zip_code city email1 email2 phone1 phone2 is_member from note custnr]}]
-    (let [name {:first (utils/must-string :first first_name)
-                :last (utils/must-string
-                :last last_name
-                :extra extra)}
-          cont1 [{:type :address :value {:street   (utils/must-string :street street)
-                                         :zip-code (utils/must-string :zip-code zip_code)
-                                         :city     (utils/must-string :city city)}}]
-          cont2   (if (utils/is-string? email1) (conj cont1 {:type :email :value email1 :preferred true}) cont1)
-          cont3   (if (utils/is-string? email2) (conj cont2 {:type :email :value email2}) cont2)
-          cont4   (if (utils/is-string? phone1) (conj cont3 {:type :phone :value phone1 :preferred true}) cont3)
-          contact (if (utils/is-string? phone2) (conj cont4 {:type :phone :value phone2}) cont4)
-          memb    (if (checked? is_member) {:from (utils/must-string :from from)} nil)
-          cust-nr (if (utils/is-pos-int-str? from) (utils/parse-int custnr) nil)]
-        {:name name :contact contact :debit-credit [] :estates [] :note note :member memb :customer-nr cust-nr}))
+;(defn mk-cust
+;    [{:keys [first_name last_name extra street zip_code city email1 email2 phone1 phone2 is_member from note custnr]}]
+;    (let [name {:first (utils/must-string :first first_name)
+;                :last (utils/must-string
+;                :last last_name
+;                :extra extra)}
+;          cont1 [{:type :address :value {:street   (utils/must-string :street street)
+;                                         :zip-code (utils/must-string :zip-code zip_code)
+;                                         :city     (utils/must-string :city city)}}]
+;          cont2   (if (utils/is-string? email1) (conj cont1 {:type :email :value email1 :preferred true}) cont1)
+;          cont3   (if (utils/is-string? email2) (conj cont2 {:type :email :value email2}) cont2)
+;          cont4   (if (utils/is-string? phone1) (conj cont3 {:type :phone :value phone1 :preferred true}) cont3)
+;          contact (if (utils/is-string? phone2) (conj cont4 {:type :phone :value phone2}) cont4)
+;          memb    (if (checked? is_member) {:from (utils/must-string :from from)} nil)
+;          cust-nr (if (utils/is-pos-int-str? from) (utils/parse-int custnr) nil)]
+;        {:name name :contact contact :debit-credit [] :estates [] :note note :member memb :customer-nr cust-nr}))
 

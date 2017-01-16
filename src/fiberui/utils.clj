@@ -25,12 +25,13 @@
     [params]
     (not (nil? params)))
 
-(defn checked? [c]
-    (and c (= c "on")))
+(defn not-blank?
+    [s]
+    (not (str/blank? s)))
 
 (defn is-string?
     [s]
-    (and (not-nil? s) (string? s) (> (count (trim s)) 0)))
+    (and (not-nil? s) (string? s) (not-blank? (trim s))))
 
 (defn parse-int [s]
     (Integer. (re-find  #"\d+" (trim s))))
