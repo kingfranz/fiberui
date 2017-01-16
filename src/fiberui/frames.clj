@@ -126,13 +126,9 @@
 				(not (some false? match-list))
 				(some true? match-list)))))
 
-(defn do-list-members
-	[]
-	(let [member-data (db/get-all-members)
-		  members     (sort-by :member-id member-data)
-		  member-map  (map #(hash-map :id (:member-id %) :name (:name %) :contact (preferred-contact %)) members)
-
-		  panel (top-bottom-split
+(defn do-dialog
+	[data-list columns]
+	(let [panel (top-bottom-split
 					(horizontal-panel :items [
 						(checkbox :id :invert-search :text "Invertera?")
 						[:fill-h 20]
@@ -140,7 +136,7 @@
 						[:fill-h 20]
 						(text :id :search-text :font "ARIAL-BOLD-24")])
 					(scrollable
-						(table :id :member-list :font "ARIAL-12")
+						(table :id :data-table :font "ARIAL-12")
 						:vscroll :always
 						:hscroll :always)
 					:size [640 :by 600]
@@ -149,16 +145,16 @@
 		  search-txt       (fn [] (text (select panel [:#search-text])))
 		  invert-search    (fn [] (value (select panel [:#invert-search])))
 		  and-search       (fn [] (value (select panel [:#and-search])))
-		  set-list         (fn [data] (config! (select panel [:#member-list]) :model data))
-		  filtered-members (fn [] (if (str/blank? (search-txt))
-									  member-map
-									  (filter #(search-words (data/mk-member-str %)
+		  set-list         (fn [data] (config! (select panel [:#data-table]) :model data))
+		  filtered-list (fn [] (if (str/blank? (search-txt))
+									  data-list
+									  (filter #(search-words (:text %)
 									  						 (search-txt)
 									  						 (invert-search)
 									  						 (and-search))
-									  		  member-map)))
-		  update-list (fn [] (set-list [:columns [:id :name :contact]
-		  								:rows (vec (filtered-members))]))
+									  		  data-list)))
+		  update-list (fn [] (set-list [:columns columns
+		  								:rows (vec (filtered-list))]))
 		  
 		  dialog-window (dialog :content panel
 	                			:option-type :default)]
@@ -166,9 +162,27 @@
 		(listen (select panel [:#and-search]) :action (fn [e] (update-list)))
 		(listen (select panel [:#search-text]) #{:insert-update :remove-update} (fn [e] (update-list)))
 		(update-list)
-		;(println (count member-data) (count members) (count member-txt))
-		(request-focus! (select panel [:#search-text]))
 		(-> dialog-window pack! show!)))
+
+(defn search-estates
+	[]
+	(do-dialog (->> (db/get-all-estates)
+					(sort-by :estate-id)
+					(map #(hash-map :id       (:estate-id %)
+									:location (:location %)
+									:address  (:address %)
+									:text     (str (:estate-id %) (:location %) (:address %)))))
+				[:id :location :address]))
+
+(defn search-members
+	[]
+	(do-dialog (->> (db/get-all-members)
+					(sort-by :member-id)
+					(map #(hash-map :id      (:member-id %)
+									:name    (:name %)
+									:contact (preferred-contact %)
+									:text    (str (:member-id %) (:name %) (preferred-contact %)))))
+				[:id :name :contact]))
 
 (def main-frame
 	(frame
@@ -191,7 +205,7 @@
 				:items [
 					(menu-item :text "Ny medlem" :listen [:action (fn [e] (do-new-member))])
 					(menu-item :text "Ändra medlem")
-					(menu-item :text "Sök medlemmar" :listen [:action (fn [e] (do-list-members))])
+					(menu-item :text "Sök medlemmar" :listen [:action (fn [e] (search-members))])
 					(menu-item :text "Avregistrera medlem")
 					(menu-item :text "Bokför medlemsavgifter")])
 			(menu
@@ -201,6 +215,6 @@
 					(menu-item :text "Ny fastighet")
 					(menu-item :text "Ändra fastighet")
 					(menu-item :text "Avregistrera fastighet")
-					(menu-item :text "Sök fastighet")
+					(menu-item :text "Sök fastighet" :listen [:action (fn [e] (search-estates))])
 					(menu-item :text "Bokför aktiviteter")
 					(menu-item :text "Bokför betalningar")])])))

@@ -20,6 +20,10 @@
 	[]
 	(db/documents :member))
 
+(defn get-all-estates
+	[]
+	(db/documents :estate))
+
 (defn member-id-exist?
 	[id]
 	(let [id-num (utils/parse-int id)

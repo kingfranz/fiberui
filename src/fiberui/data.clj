@@ -90,6 +90,11 @@
                                	  :member/estates]))
 
 ;;------------------------------------------------------------------------------------
+
+(defn mk-estate-str
+	[estate]
+	(str "ID: " (:estate-id estate) " " (:location estate) " " (:address estate)))
+
 (def ^:private estate-example
 	{:estate-id        "MBEF82"
 	 :location         "Myrhult 1:2"
