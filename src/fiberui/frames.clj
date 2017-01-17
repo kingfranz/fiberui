@@ -124,24 +124,23 @@
 		  panel (vertical-panel :items [
 					(horizontal-panel :items [
 						(label "Medlemsnummer:") [:fill-h 20]
-						(text :id :member-id-field :margin 3 :halign :right)
-						[:fill-h 300]])
+						(text :id :member-id-field :margin 3 :halign :right :columns 10)])
 					[:fill-v 10]
 
 					(horizontal-panel :items [
 						(label "Namn:") [:fill-h 20]
-						(text :id :member-name-field :margin 3 :columns 50)
-						[:fill-h 300]])
+						(text :id :member-name-field :margin 3)])
 					[:fill-v 10]
 
 					(horizontal-panel :items [
 						(label "Startdatum:") [:fill-h 20]
-						(text :id :member-start-field :margin 3)])
+						(text :id :member-start-field :margin 3 :columns 10)])
 					[:fill-v 30]
 					:separator
 					
 					[:fill-v 10]
-					(label "Fastigheter:")
+					(flow-panel :items [
+						(label :text "Fastigheter" :halign :center)])
 					[:fill-v 10]
 					(horizontal-panel :items [
 						(button :id :member-estate-field-1 :text "Välj")
@@ -155,7 +154,8 @@
 					:separator
 
 					[:fill-v 10]
-					(label :text "Kontakter:")
+					(flow-panel :items [
+						(label :text "Kontakter" :halign :center)])
 					[:fill-v 10]
 					(horizontal-panel :items [
 						(combobox :id :member-contact-type-1 :model (vec (keys contact-types)))
@@ -175,20 +175,29 @@
 					(horizontal-panel :items [
 						(combobox :id :member-contact-type-4 :model (vec (keys contact-types)))
 						[:fill-h 20]
-						(text :id :member-contact-field-4 :margin 3)])])
+						(text :id :member-contact-field-4 :margin 3)])
+					[:fill-v 30]])
 
 		  get-member-id (fn [] (str/trim (value (select panel [:#member-id-field]))))
 		  get-name      (fn [] (str/trim (value (select panel [:#member-name-field]))))
 		  get-start     (fn [] (str/trim (value (select panel [:#member-start-field]))))
-		  get-contact   (fn [idx] (let [cont-type (->> idx (mk-idx-tag "member-contact-type-") (select panel) selection (get contact-types))
-		  								cont-val  (->> idx (mk-idx-tag "member-contact-field-") (select panel) value str/trim)]
+		  get-contact   (fn [idx] (let [cont-type (->> idx
+		  											   (mk-idx-tag "member-contact-type-")
+		  											   (select panel)
+		  											   selection
+		  											   (get contact-types))
+		  								cont-val  (->> idx
+		  											   (mk-idx-tag "member-contact-field-")
+		  											   (select panel)
+		  											   value
+		  											   str/trim)]
 		  						(println "contact:" idx "type:" cont-type "val:" cont-val)
 		  							(if (str/blank? cont-val)
 		  								nil
 		  								(hash-map :type cont-type :value cont-val))))
 
 		  get-estate (fn [idx]  (let [id-val (->> idx (mk-idx-tag "member-estate-field-") (select panel) text)]
-		  	(println "estate:" idx "val:" id-val)
+		  	;(println "estate:" idx "val:" id-val)
 		  							(if (or (str/blank? id-val) (= id-val "Välj"))
 		  								nil
 		  								id-val)))
@@ -240,11 +249,54 @@
 
 		(-> dialog-window pack! show!)))
 
-(defn testa
+(defn do-config
 	[]
-	(println "RET:" (show! (dialog :content (button :text "aaa")
-			:option-type :ok-cancel
-	        :success-fn (fn [e] (return-from-dialog e :ok))))))
+	(let [panel (grid-panel :columns 4 :hgap 10 :vgap 10 :items [
+		 	(label :halign :center :text "")
+		 	(label :halign :center :text "Belopp SEK" :font "ARIAL-12")
+		 	(label :halign :center :text "Moms %" :font "ARIAL-12")
+		 	(label :halign :center :text "Startdatum" :font "ARIAL-12")
+
+		 	(label :halign :right :text "Medlemsavgift:" :font "ARIAL-12")
+		 	(spinner :id :membership-fee :model (spinner-model 500 :from 0 :to 1000 :by 1.0))
+		 	(spinner :id :membership-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
+		 	(text :id :membership-fee-start :tip "Format YYYY-MM-DD")
+		 	
+		 	(label :halign :right :text "Användningsavgift:" :font "ARIAL-12")
+		 	(spinner :id :connection-fee :model (spinner-model 40 :from 0 :to 1000 :by 1.0))
+		 	(spinner :id :connection-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
+		 	(text :id :connection-fee-start :tip "Format YYYY-MM-DD")
+		 	
+		 	(label :halign :right :text "Operatörsavgift:" :font "ARIAL-12")
+		 	(spinner :id :operator-fee :model (spinner-model 90 :from 0 :to 1000 :by 1.0))
+		 	(spinner :id :operator-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
+		 	(text :id :operator-fee-start :tip "Format YYYY-MM-DD")])
+
+		  get-membership-fee (fn [] {:fee (value (select panel [:#membership-fee]))
+		  							 :tax (/ (value (select panel [:#membership-fee-tax])) 100.0)
+		  							 :start (f/parse (f/formatters :date) (value (select panel [:#membership-fee-start])))})
+		  get-connection-fee (fn [] {:fee (value (select panel [:#connection-fee]))
+		  						:tax (/ (value (select panel [:#connection-fee-tax])) 100.0)
+		  						:start (f/parse (f/formatters :date) (value (select panel [:#connection-fee-start])))})
+		  get-operator-fee (fn [] {:fee (value (select panel [:#operator-fee]))
+		  						   :tax (/ (value (select panel [:#operator-fee-tax])) 100.0)
+		  						   :start (f/parse (f/formatters :date) (value (select panel [:#operator-fee-start])))})
+		  make-config (fn [e] (let [fees {:entered    (l/local-now)
+		  								  :membership (get-membership-fee)
+		  								  :connection (get-connection-fee)
+		  								  :operator   (get-operator-fee)}]
+		  						(if (= (s/conform config-spec fees) :clojure.spec/invalid)
+    								(do (alert e (s/explain-str config-spec fees)) false)
+    								(do (db/add-config fees) true))))
+
+		  dialog-window (dialog :content panel
+		  						:title "Konfigurering"
+	                			:options [(button :text "OK"
+	                							  :listen [:action (fn [e] (if (make-config e)
+	                							  							   (return-from-dialog e :ok)))])
+	                					 (button :text "Cancel"
+	                							 :listen [:action (fn [e] (return-from-dialog e :cancel))])])]
+		(-> dialog-window pack! show!)))
 
 (def main-frame
 	(frame
@@ -257,10 +309,10 @@
 				:id :system-menu
 				:text "System"
 				:items [
-					(menu-item :text "Beräkna medlemsavgifter" :listen [:action (fn [e] (testa))])
+					(menu-item :text "Beräkna medlemsavgifter")
 					(menu-item :text "Beräkna användningsavgifter")
 					(menu-item :text "Skapa fakturor")
-					(menu-item :text "Konfigurera")])
+					(menu-item :text "Konfigurera" :listen [:action (fn [e] (do-config))])])
 			(menu
 				:id :member-menu
 				:text "Medlemmar"

@@ -54,7 +54,11 @@
 
 (defn date?
     [x]
-    (and (is-string? x) (f/parse x)))
+    (and (is-string? x) (f/parse (f/formatters :date) x)))
+
+(defn date-time?
+    [x]
+    (and (is-string? x) (f/parse (f/formatters :mysql) x)))
 
 (defn is-estate-id?
     [x]
@@ -63,5 +67,10 @@
 (defn is-pos-int? 
     "doc-string"
     [x]
-    (and (int? x) (>= x 0)))
+    (and (integer? x) (pos? x)))
+
+; return current dat & time as a string
+(defn now-str
+    []
+    (f/unparse (f/formatters :mysql) (l/local-now)))
 

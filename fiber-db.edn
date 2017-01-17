@@ -1,7 +1,7 @@
 
 ;; GardenDB v0.1
 ;; Extensible Data Notional (edn)
-;; Tue Jan 17 11:05:09 CET 2017
+;; Tue Jan 17 23:19:53 CET 2017
 ;; fiber-db.edn
 
 
@@ -1470,4 +1470,24 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :312b0ad2a21447fea52afd50c537266e}}}
+   :_id :312b0ad2a21447fea52afd50c537266e}},
+ :config
+ {:aa4729c9f4fe43e39f6cfbae4b473b19
+  {:entered
+   #object[org.joda.time.DateTime 0x4564e763 "2017-01-17T23:19:53.068+01:00"],
+   :membership
+   {:fee 500,
+    :tax 0.0,
+    :start
+    #object[org.joda.time.DateTime 0x47ebb349 "2016-01-01T00:00:00.000Z"]},
+   :connection
+   {:fee 40,
+    :tax 0.25,
+    :start
+    #object[org.joda.time.DateTime 0x365878b1 "2016-01-01T00:00:00.000Z"]},
+   :operator
+   {:fee 90,
+    :tax 0.25,
+    :start
+    #object[org.joda.time.DateTime 0x7db7e47 "2016-01-01T00:00:00.000Z"]},
+   :_id :aa4729c9f4fe43e39f6cfbae4b473b19}}}

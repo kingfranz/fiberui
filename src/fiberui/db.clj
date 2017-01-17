@@ -16,6 +16,10 @@
     [house]
     (db/put! :estate house))
 
+(defn add-config
+    [conf]
+    (db/put! :config conf))
+
 (defn get-all-members
 	[]
 	(db/documents :member))
