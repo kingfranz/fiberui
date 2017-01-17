@@ -1,7 +1,7 @@
 
 ;; GardenDB v0.1
 ;; Extensible Data Notional (edn)
-;; Tue Jan 17 11:05:09 CET 2017
+;; Thu Jan 12 22:16:06 CET 2017
 ;; fiber-db.edn
 
 
@@ -219,16 +219,6 @@
     {:type :address,
      :value "Eklunda, 59028 Borensberg, 0141-42174, 0706-242174"}],
    :_id :1618baae6fcb4de4bf2afdcb8555163e},
-  :981bba0720ce43aaabf24ca054d8fa28
-  {:member-id 99,
-   :_id :981bba0720ce43aaabf24ca054d8fa28,
-   :estates ["MBEF113"],
-   :name "Kalle Kula",
-   :from-to {:from "2017-01-20"},
-   :contact
-   [{:value "Huset 11, 12345 Staden",
-     :type :address,
-     :preferred true}]},
   :67cbd8acb0ca4471bdc2108eeb51c39e
   {:member-id 6,
    :estates ["MBEF53"],

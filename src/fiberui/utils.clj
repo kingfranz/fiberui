@@ -31,7 +31,7 @@
 
 (defn is-string?
     [s]
-    (and (not-nil? s) (string? s) (not-blank? (trim s))))
+    (and (not-nil? s) (string? s) (not-blank? s)))
 
 (defn parse-int [s]
     (Integer. (re-find  #"\d+" (trim s))))

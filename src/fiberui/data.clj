@@ -46,10 +46,12 @@
 	 :note          ""})
 
 ;;------------------------------------------------------------------------------------
+; [[:addr {:value aaaaaaaa, :type :address, :preferred true}] [:addr {:value bbbbbbbbb, :type :address}]]
 
 (defn contains-preferred?
 	[contacts]
-	(->> contacts (filter :preferred) not-empty))
+	;(println "contains:" contacts)
+	(->> contacts (map second) (filter :preferred) not-empty))
 
 (s/def :fiber/date           date?)
 (s/def :fiber/amount         number?)

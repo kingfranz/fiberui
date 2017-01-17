@@ -26,8 +26,5 @@
 
 (defn member-id-exist?
 	[id]
-	(let [id-num (utils/parse-int id)
-		  result (db/query :member :where [#(= id-num (:member-id %))])]
-		;(println "id:" id-num "result:" result)
-		(not (empty? result))))
+	(not (empty? (db/query :member :where [#(= id (:member-id %))]))))
 
