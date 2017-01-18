@@ -41,4 +41,4 @@
 (defn -main
 	[& args]
 	(db/db-init)
-	(-> main-frame (move! :to [500 100]) show!))
+	(-> (main-frame) (move! :to [500 100]) show!))

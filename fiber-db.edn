@@ -1,7 +1,7 @@
 
 ;; GardenDB v0.1
 ;; Extensible Data Notional (edn)
-;; Tue Jan 17 23:19:53 CET 2017
+;; Wed Jan 18 21:31:44 CET 2017
 ;; fiber-db.edn
 
 
@@ -219,16 +219,6 @@
     {:type :address,
      :value "Eklunda, 59028 Borensberg, 0141-42174, 0706-242174"}],
    :_id :1618baae6fcb4de4bf2afdcb8555163e},
-  :981bba0720ce43aaabf24ca054d8fa28
-  {:member-id 99,
-   :_id :981bba0720ce43aaabf24ca054d8fa28,
-   :estates ["MBEF113"],
-   :name "Kalle Kula",
-   :from-to {:from "2017-01-20"},
-   :contact
-   [{:value "Huset 11, 12345 Staden",
-     :type :address,
-     :preferred true}]},
   :67cbd8acb0ca4471bdc2108eeb51c39e
   {:member-id 6,
    :estates ["MBEF53"],
@@ -833,7 +823,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :44d6fe8d990245b5b442b214a43de732},
+   :_id :44d6fe8d990245b5b442b214a43de732,
+   :activity [{:year 2017, :months #{}}]},
   :7347a3a007fc49ec96ac7cb482cff15d
   {:estate-id "MBEF72",
    :location "Lilla Lindåsen 1:12",
@@ -841,7 +832,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :7347a3a007fc49ec96ac7cb482cff15d},
+   :_id :7347a3a007fc49ec96ac7cb482cff15d,
+   :activity [{:year 2017, :months #{}}]},
   :e4a6ac6c158f4bc586e4d9cc790e9d0b
   {:estate-id "MBEF118",
    :location "Myrhult 1:65",
@@ -849,7 +841,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :e4a6ac6c158f4bc586e4d9cc790e9d0b},
+   :_id :e4a6ac6c158f4bc586e4d9cc790e9d0b,
+   :activity [{:year 2017, :months #{}}]},
   :16906722f368421092b398fccf1fd6ca
   {:estate-id "MBEF136",
    :location "Myrhult 1:82",
@@ -857,7 +850,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :16906722f368421092b398fccf1fd6ca},
+   :_id :16906722f368421092b398fccf1fd6ca,
+   :activity [{:year 2017, :months #{}}]},
   :21c55ca91059449dabeab68c6b132dcb
   {:estate-id "MBEF69",
    :location "Älgarås 5:3",
@@ -865,7 +859,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :21c55ca91059449dabeab68c6b132dcb},
+   :_id :21c55ca91059449dabeab68c6b132dcb,
+   :activity [{:year 2017, :months #{}}]},
   :64f32921bca2427abb3e232cfbae46a7
   {:estate-id "MBEF44",
    :location "Bålerud 1:23",
@@ -873,7 +868,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :64f32921bca2427abb3e232cfbae46a7},
+   :_id :64f32921bca2427abb3e232cfbae46a7,
+   :activity [{:year 2017, :months #{}}]},
   :a154662054f34dd1bb8f8d2ae9801221
   {:estate-id "MBEF19",
    :location "Björkulla 2:28",
@@ -881,7 +877,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :a154662054f34dd1bb8f8d2ae9801221},
+   :_id :a154662054f34dd1bb8f8d2ae9801221,
+   :activity [{:year 2017, :months #{}}]},
   :9945460201754dc1b86858769464675d
   {:estate-id "MBEF82",
    :location "Stora Lindåsen 6:1",
@@ -889,12 +886,14 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9945460201754dc1b86858769464675d},
+   :_id :9945460201754dc1b86858769464675d,
+   :activity [{:year 2017, :months #{}}]},
   :4a5a037a3ba342cbaf118de7a44e88a2
   {:estate-id "MBEF115",
    :location "Myrhult 1:83",
    :address "Myrhult 13, 54592 Älgarås",
-   :_id :4a5a037a3ba342cbaf118de7a44e88a2},
+   :_id :4a5a037a3ba342cbaf118de7a44e88a2,
+   :activity [{:year 2017, :months #{}}]},
   :b8b024127ffe47f08fde8fcaf66cf820
   {:estate-id "MBEF103",
    :location "Salpetersjudaretorp 1:10",
@@ -902,7 +901,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :b8b024127ffe47f08fde8fcaf66cf820},
+   :_id :b8b024127ffe47f08fde8fcaf66cf820,
+   :activity [{:year 2017, :months #{}}]},
   :8b116cf7c861458a8e6d54e9d94fd55d
   {:estate-id "MBEF48",
    :location "Bålerud 6:2",
@@ -910,7 +910,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :8b116cf7c861458a8e6d54e9d94fd55d},
+   :_id :8b116cf7c861458a8e6d54e9d94fd55d,
+   :activity [{:year 2017, :months #{}}]},
   :9c158dfc5c3142a6bc707dc1f518a78d
   {:estate-id "MBEF95",
    :location "Stora Lindåsen 2:33",
@@ -918,7 +919,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9c158dfc5c3142a6bc707dc1f518a78d},
+   :_id :9c158dfc5c3142a6bc707dc1f518a78d,
+   :activity [{:year 2017, :months #{}}]},
   :ff53f282a0474b3e9929accb9df78fc9
   {:estate-id "MBEF166",
    :location "Västra Nybygget 1:3",
@@ -926,7 +928,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :ff53f282a0474b3e9929accb9df78fc9},
+   :_id :ff53f282a0474b3e9929accb9df78fc9,
+   :activity [{:year 2017, :months #{}}]},
   :9e2e43099eae4530b6520edd9e34b5f7
   {:estate-id "MBEF152",
    :location "Högåsamossen 1:1",
@@ -934,7 +937,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9e2e43099eae4530b6520edd9e34b5f7},
+   :_id :9e2e43099eae4530b6520edd9e34b5f7,
+   :activity [{:year 2017, :months #{}}]},
   :027cdaa87f854694a6fb79c5fb8afd98
   {:estate-id "MBEF144",
    :location "Habelsbolet 1:33",
@@ -942,7 +946,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :027cdaa87f854694a6fb79c5fb8afd98},
+   :_id :027cdaa87f854694a6fb79c5fb8afd98,
+   :activity [{:year 2017, :months #{}}]},
   :18ba9af67d9243828e4275e2dc484f0a
   {:estate-id "MBEF116",
    :location "Myrhult 1:79",
@@ -950,7 +955,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :18ba9af67d9243828e4275e2dc484f0a},
+   :_id :18ba9af67d9243828e4275e2dc484f0a,
+   :activity [{:year 2017, :months #{}}]},
   :98fcb14594854d01a3bc78056cc1e807
   {:estate-id "MBEF182",
    :location "Bockerud 1:5",
@@ -958,7 +964,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :98fcb14594854d01a3bc78056cc1e807},
+   :_id :98fcb14594854d01a3bc78056cc1e807,
+   :activity [{:year 2017, :months #{}}]},
   :8684d45094244e62b8eb4946af084119
   {:estate-id "MBEF127",
    :location "Myrhult 1:23",
@@ -966,7 +973,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :8684d45094244e62b8eb4946af084119},
+   :_id :8684d45094244e62b8eb4946af084119,
+   :activity [{:year 2017, :months #{}}]},
   :1fbecb8f2fa34099bfaf76e241d8588a
   {:estate-id "MBEF41",
    :location "Lillsjökärret 1:1",
@@ -974,7 +982,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :1fbecb8f2fa34099bfaf76e241d8588a},
+   :_id :1fbecb8f2fa34099bfaf76e241d8588a,
+   :activity [{:year 2017, :months #{}}]},
   :6d90e0a1833c45caae92493e8fb1a7ce
   {:estate-id "MBEF51",
    :location "Bålerud 8:2",
@@ -982,7 +991,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :6d90e0a1833c45caae92493e8fb1a7ce},
+   :_id :6d90e0a1833c45caae92493e8fb1a7ce,
+   :activity [{:year 2017, :months #{}}]},
   :a600206fa2274593a2ebe99486213b60
   {:estate-id "MBEF28",
    :location "Björkulla 3:2",
@@ -990,7 +1000,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :a600206fa2274593a2ebe99486213b60},
+   :_id :a600206fa2274593a2ebe99486213b60,
+   :activity [{:year 2017, :months #{}}]},
   :2570fd2da53147a18003ce7d95580b3c
   {:estate-id "MBEF62",
    :location "Stora Lindåsen 2:35",
@@ -998,7 +1009,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :2570fd2da53147a18003ce7d95580b3c},
+   :_id :2570fd2da53147a18003ce7d95580b3c,
+   :activity [{:year 2017, :months #{}}]},
   :42bbddf39944463e96b27c1932f8ecb9
   {:estate-id "MBEF52",
    :location "Bålerud 1:25",
@@ -1006,7 +1018,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :42bbddf39944463e96b27c1932f8ecb9},
+   :_id :42bbddf39944463e96b27c1932f8ecb9,
+   :activity [{:year 2017, :months #{}}]},
   :f0038bc1c8c8477c8b2eb2088b085acb
   {:estate-id "MBEF26",
    :location "Björkulla 2:50",
@@ -1014,7 +1027,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :f0038bc1c8c8477c8b2eb2088b085acb},
+   :_id :f0038bc1c8c8477c8b2eb2088b085acb,
+   :activity [{:year 2017, :months #{}}]},
   :49948fbd6f974a068da28b8e8db7b850
   {:estate-id "MBEF29",
    :location "Björkulla 2:45",
@@ -1022,7 +1036,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :49948fbd6f974a068da28b8e8db7b850},
+   :_id :49948fbd6f974a068da28b8e8db7b850,
+   :activity [{:year 2017, :months #{}}]},
   :56f8dde80e8b4b389f99baf670e2f6ab
   {:estate-id "MBEF162",
    :location "Älgarås 1:8",
@@ -1030,7 +1045,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :56f8dde80e8b4b389f99baf670e2f6ab},
+   :_id :56f8dde80e8b4b389f99baf670e2f6ab,
+   :activity [{:year 2017, :months #{}}]},
   :ee3553e4ef394684868b9592c43fc6e6
   {:estate-id "MBEF53",
    :location "Bålerud 1:22",
@@ -1038,7 +1054,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :ee3553e4ef394684868b9592c43fc6e6},
+   :_id :ee3553e4ef394684868b9592c43fc6e6,
+   :activity [{:year 2017, :months #{}}]},
   :2a058ac67e3d4da28aca94b04547a947
   {:estate-id "MBEF9",
    :location "Töreboda Lillehult 3:1",
@@ -1046,7 +1063,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :2a058ac67e3d4da28aca94b04547a947},
+   :_id :2a058ac67e3d4da28aca94b04547a947,
+   :activity [{:year 2017, :months #{1 3 2}}]},
   :393ccb938d94414eb072e519c0781348
   {:estate-id "MBEF76",
    :location "Salpetersjudaretorp 1:17",
@@ -1054,7 +1072,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :393ccb938d94414eb072e519c0781348},
+   :_id :393ccb938d94414eb072e519c0781348,
+   :activity [{:year 2017, :months #{}}]},
   :f468a2a052e24573984a3f15480bded6
   {:estate-id "MBEF58",
    :location "Lindåstorpet 3:1",
@@ -1062,7 +1081,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :f468a2a052e24573984a3f15480bded6},
+   :_id :f468a2a052e24573984a3f15480bded6,
+   :activity [{:year 2017, :months #{}}]},
   :2d02e37381824f55a04cb3e20db4194c
   {:estate-id "MBEF124",
    :location "Gärdesmossen 1:17",
@@ -1070,7 +1090,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :2d02e37381824f55a04cb3e20db4194c},
+   :_id :2d02e37381824f55a04cb3e20db4194c,
+   :activity [{:year 2017, :months #{}}]},
   :fbf3206531bb4248897f0c3b0cf27379
   {:estate-id "MBEF64",
    :location "Stora Lindåsen 2:27",
@@ -1078,7 +1099,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :fbf3206531bb4248897f0c3b0cf27379},
+   :_id :fbf3206531bb4248897f0c3b0cf27379,
+   :activity [{:year 2017, :months #{}}]},
   :33f7173bf8fb4a8ab5dcfca8313ff498
   {:estate-id "MBEF119",
    :location "Småfalla 1:2",
@@ -1086,7 +1108,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :33f7173bf8fb4a8ab5dcfca8313ff498},
+   :_id :33f7173bf8fb4a8ab5dcfca8313ff498,
+   :activity [{:year 2017, :months #{}}]},
   :63603bb823094824bbb08b5fb1279e60
   {:estate-id "MBEF20",
    :location "Björkulla 2:27",
@@ -1094,7 +1117,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :63603bb823094824bbb08b5fb1279e60},
+   :_id :63603bb823094824bbb08b5fb1279e60,
+   :activity [{:year 2017, :months #{}}]},
   :f2f0c2b3c58946fca5a07b04d3b36b4f
   {:estate-id "MBEF108",
    :location "Bromossen 1:1",
@@ -1102,7 +1126,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :f2f0c2b3c58946fca5a07b04d3b36b4f},
+   :_id :f2f0c2b3c58946fca5a07b04d3b36b4f,
+   :activity [{:year 2017, :months #{}}]},
   :00727d54d9574bd997eb3ecfbe736cc9
   {:estate-id "MBEF170",
    :location "Mäloset 1:2",
@@ -1110,7 +1135,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :00727d54d9574bd997eb3ecfbe736cc9},
+   :_id :00727d54d9574bd997eb3ecfbe736cc9,
+   :activity [{:year 2017, :months #{}}]},
   :345937fcd2884ac6a4f9f4037091f1ce
   {:estate-id "MBEF7",
    :location "Björkulla 2:9",
@@ -1118,7 +1144,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :345937fcd2884ac6a4f9f4037091f1ce},
+   :_id :345937fcd2884ac6a4f9f4037091f1ce,
+   :activity [{:year 2017, :months #{}}]},
   :9c85fefb457c4700b97a0dc23082943a
   {:estate-id "MBEF55",
    :location "Bäserud 1:4",
@@ -1126,7 +1153,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9c85fefb457c4700b97a0dc23082943a},
+   :_id :9c85fefb457c4700b97a0dc23082943a,
+   :activity [{:year 2017, :months #{}}]},
   :1d3e591f60fd4eb7a56976246097e469
   {:estate-id "MBEF30",
    :location "Björkulla 2:44",
@@ -1134,7 +1162,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :1d3e591f60fd4eb7a56976246097e469},
+   :_id :1d3e591f60fd4eb7a56976246097e469,
+   :activity [{:year 2017, :months #{}}]},
   :a04e0a85c32445ee880e244e657e197f
   {:estate-id "MBEF91",
    :location "Stora Lindåsen 2:2",
@@ -1142,7 +1171,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :a04e0a85c32445ee880e244e657e197f},
+   :_id :a04e0a85c32445ee880e244e657e197f,
+   :activity [{:year 2017, :months #{}}]},
   :50ea4bcdd48048ffbffe2db82a27bfdc
   {:estate-id "MBEF45",
    :location "Bålerud 6:5",
@@ -1150,7 +1180,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :50ea4bcdd48048ffbffe2db82a27bfdc},
+   :_id :50ea4bcdd48048ffbffe2db82a27bfdc,
+   :activity [{:year 2017, :months #{}}]},
   :f1b191a78f8a45768077cb74a3a330c1
   {:estate-id "MBEF10",
    :location "Björkulla 1:16",
@@ -1158,7 +1189,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :f1b191a78f8a45768077cb74a3a330c1},
+   :_id :f1b191a78f8a45768077cb74a3a330c1,
+   :activity [{:year 2017, :months #{}}]},
   :4493da2caa3e4761a06e129274c63779
   {:estate-id "MBEF47",
    :location "Bålerudshed 3:2",
@@ -1166,7 +1198,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :4493da2caa3e4761a06e129274c63779},
+   :_id :4493da2caa3e4761a06e129274c63779,
+   :activity [{:year 2017, :months #{}}]},
   :5e697a7e7281479da7a56e4a395a91a5
   {:estate-id "MBEF110",
    :location "Fredstorp 1:1",
@@ -1174,7 +1207,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :5e697a7e7281479da7a56e4a395a91a5},
+   :_id :5e697a7e7281479da7a56e4a395a91a5,
+   :activity [{:year 2017, :months #{}}]},
   :7f9f7503994947aa8e7094bc1b093f7c
   {:estate-id "MBEF23",
    :location "Björkulla 2:36",
@@ -1182,7 +1216,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :7f9f7503994947aa8e7094bc1b093f7c},
+   :_id :7f9f7503994947aa8e7094bc1b093f7c,
+   :activity [{:year 2017, :months #{}}]},
   :c36acd814fff4fa2a1ed848e00b154b2
   {:estate-id "MBEF14",
    :location "Bålerud 6:3",
@@ -1190,7 +1225,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :c36acd814fff4fa2a1ed848e00b154b2},
+   :_id :c36acd814fff4fa2a1ed848e00b154b2,
+   :activity [{:year 2017, :months #{}}]},
   :9a1b9c275a55407cbf9dfceb769be535
   {:estate-id "MBEF71",
    :location "Bockerud 1:1",
@@ -1198,7 +1234,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9a1b9c275a55407cbf9dfceb769be535},
+   :_id :9a1b9c275a55407cbf9dfceb769be535,
+   :activity [{:year 2017, :months #{}}]},
   :95468175c08c4d618ce7e504f1a988fc
   {:estate-id "MBEF15",
    :location "Bålerud 6:4",
@@ -1206,7 +1243,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :95468175c08c4d618ce7e504f1a988fc},
+   :_id :95468175c08c4d618ce7e504f1a988fc,
+   :activity [{:year 2017, :months #{}}]},
   :16238ee5c78344d9b5aedd57a500f8a5
   {:estate-id "MBEF133",
    :location "Myrhult 1:70",
@@ -1214,7 +1252,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :16238ee5c78344d9b5aedd57a500f8a5},
+   :_id :16238ee5c78344d9b5aedd57a500f8a5,
+   :activity [{:year 2017, :months #{}}]},
   :103bcb76e8734314a1379370f771c16e
   {:estate-id "MBEF27",
    :location "Björkulla 2:26",
@@ -1222,7 +1261,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :103bcb76e8734314a1379370f771c16e},
+   :_id :103bcb76e8734314a1379370f771c16e,
+   :activity [{:year 2017, :months #{}}]},
   :0617b80ef53c461ba8795b777ded11f5
   {:estate-id "MBEF132",
    :location "Myrhult 1:85",
@@ -1230,7 +1270,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :0617b80ef53c461ba8795b777ded11f5},
+   :_id :0617b80ef53c461ba8795b777ded11f5,
+   :activity [{:year 2017, :months #{}}]},
   :5eb108d4b65f46bfb5d7a5978b3927cd
   {:estate-id "MBEF43",
    :location "Björkulla 2:19",
@@ -1238,7 +1279,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :5eb108d4b65f46bfb5d7a5978b3927cd},
+   :_id :5eb108d4b65f46bfb5d7a5978b3927cd,
+   :activity [{:year 2017, :months #{}}]},
   :c6d254914e264d90bd89466f69d200d9
   {:estate-id "MBEF60",
    :location "Stora Lindåsen 2:14",
@@ -1246,7 +1288,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :c6d254914e264d90bd89466f69d200d9},
+   :_id :c6d254914e264d90bd89466f69d200d9,
+   :activity [{:year 2017, :months #{}}]},
   :7bfa76605b964821ade850269ec5f277
   {:estate-id "MBEF54",
    :location "Bålerud 1:13",
@@ -1254,7 +1297,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :7bfa76605b964821ade850269ec5f277},
+   :_id :7bfa76605b964821ade850269ec5f277,
+   :activity [{:year 2017, :months #{}}]},
   :ba58b5c0a6624dc4bd89de5b084b8643
   {:estate-id "MBEF50",
    :location "Bålerud 4:2",
@@ -1262,7 +1306,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :ba58b5c0a6624dc4bd89de5b084b8643},
+   :_id :ba58b5c0a6624dc4bd89de5b084b8643,
+   :activity [{:year 2017, :months #{}}]},
   :473c3b92e06f44c3ac5cc1ed3804d736
   {:estate-id "MBEF130",
    :location "Myrhult 1:76",
@@ -1270,7 +1315,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :473c3b92e06f44c3ac5cc1ed3804d736},
+   :_id :473c3b92e06f44c3ac5cc1ed3804d736,
+   :activity [{:year 2017, :months #{}}]},
   :1034d0646d2a4c13bc3372f61cac1e08
   {:estate-id "MBEF159",
    :location "Sjöbråten 1:11",
@@ -1278,7 +1324,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :1034d0646d2a4c13bc3372f61cac1e08},
+   :_id :1034d0646d2a4c13bc3372f61cac1e08,
+   :activity [{:year 2017, :months #{}}]},
   :c98a549d297242ce92e6d3e11f56cf45
   {:estate-id "MBEF92",
    :location "Stora Högshult 1:5",
@@ -1286,7 +1333,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :c98a549d297242ce92e6d3e11f56cf45},
+   :_id :c98a549d297242ce92e6d3e11f56cf45,
+   :activity [{:year 2017, :months #{}}]},
   :59a80cade8834e198ad77cd74e41f85b
   {:estate-id "MBEF102",
    :location "Stora Högshult 2:2",
@@ -1294,7 +1342,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :59a80cade8834e198ad77cd74e41f85b},
+   :_id :59a80cade8834e198ad77cd74e41f85b,
+   :activity [{:year 2017, :months #{}}]},
   :c7061acbc09e4d078074afdb5d31bf76
   {:estate-id "MBEF123",
    :location "Myrhult 1:72",
@@ -1302,7 +1351,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :c7061acbc09e4d078074afdb5d31bf76},
+   :_id :c7061acbc09e4d078074afdb5d31bf76,
+   :activity [{:year 2017, :months #{}}]},
   :3dc9858885454791b1f02e89454969ba
   {:estate-id "MBEF73",
    :location "Lilla Lindåsen 1:10",
@@ -1310,7 +1360,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :3dc9858885454791b1f02e89454969ba},
+   :_id :3dc9858885454791b1f02e89454969ba,
+   :activity [{:year 2017, :months #{}}]},
   :69eff461d6544f1097cf771b407e4d93
   {:estate-id "MBEF135",
    :location "Myrhult 1:47",
@@ -1318,7 +1369,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :69eff461d6544f1097cf771b407e4d93},
+   :_id :69eff461d6544f1097cf771b407e4d93,
+   :activity [{:year 2017, :months #{}}]},
   :3dc9c84cebdb4cd6ac75985adcabd94b
   {:estate-id "MBEF114",
    :location "Myrhult 1:86",
@@ -1326,7 +1378,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :3dc9c84cebdb4cd6ac75985adcabd94b},
+   :_id :3dc9c84cebdb4cd6ac75985adcabd94b,
+   :activity [{:year 2017, :months #{}}]},
   :0f96e7930e584a628227fd38d59794e6
   {:estate-id "MBEF128",
    :location "Myrhult 1:34",
@@ -1334,7 +1387,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :0f96e7930e584a628227fd38d59794e6},
+   :_id :0f96e7930e584a628227fd38d59794e6,
+   :activity [{:year 2017, :months #{}}]},
   :d1a24ffd4d0c4c28aeedbb24dcc3061e
   {:estate-id "MBEF156",
    :location "Sjöbråten 1:10",
@@ -1342,7 +1396,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :d1a24ffd4d0c4c28aeedbb24dcc3061e},
+   :_id :d1a24ffd4d0c4c28aeedbb24dcc3061e,
+   :activity [{:year 2017, :months #{7 1 4 6 3 12 2 11 9 5 10 8}}]},
   :1f059afa6c144472bdf2ebb38a3ff98e
   {:estate-id "MBEF165",
    :location "Älgarås 2:3",
@@ -1350,7 +1405,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :1f059afa6c144472bdf2ebb38a3ff98e},
+   :_id :1f059afa6c144472bdf2ebb38a3ff98e,
+   :activity [{:year 2017, :months #{}}]},
   :013fa65373bf40ef8c9e995bea90e5ff
   {:estate-id "MBEF57",
    :location "Älgarås Anderstorp 1:3",
@@ -1358,7 +1414,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :013fa65373bf40ef8c9e995bea90e5ff},
+   :_id :013fa65373bf40ef8c9e995bea90e5ff,
+   :activity [{:year 2017, :months #{}}]},
   :ea18d4504d8b449cac627c013bf71335
   {:estate-id "MBEF164",
    :location "Älgarås 6:1",
@@ -1366,7 +1423,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :ea18d4504d8b449cac627c013bf71335},
+   :_id :ea18d4504d8b449cac627c013bf71335,
+   :activity [{:year 2017, :months #{}}]},
   :359f8fb2fdbc4ca2a961799cb0a6dd42
   {:estate-id "MBEF98",
    :location "Stora Lindåsen 2:35",
@@ -1374,7 +1432,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :359f8fb2fdbc4ca2a961799cb0a6dd42},
+   :_id :359f8fb2fdbc4ca2a961799cb0a6dd42,
+   :activity [{:year 2017, :months #{}}]},
   :214ac747dd87469a8f1b99164147faed
   {:estate-id "MBEF121",
    :location "Näset 1:8",
@@ -1382,7 +1441,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :214ac747dd87469a8f1b99164147faed},
+   :_id :214ac747dd87469a8f1b99164147faed,
+   :activity [{:year 2017, :months #{1}}]},
   :56278feeb373421eb2aee74124ab84b6
   {:estate-id "MBEF106",
    :location "Stora Högshult 1:7",
@@ -1390,7 +1450,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :56278feeb373421eb2aee74124ab84b6},
+   :_id :56278feeb373421eb2aee74124ab84b6,
+   :activity [{:year 2017, :months #{}}]},
   :6d08f4db54b441e5b08e680236038dda
   {:estate-id "MBEF139",
    :location "Myrhult 1:87",
@@ -1398,7 +1459,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :6d08f4db54b441e5b08e680236038dda},
+   :_id :6d08f4db54b441e5b08e680236038dda,
+   :activity [{:year 2017, :months #{}}]},
   :44a2d47c2aec4667b9af8fdd56fd7826
   {:estate-id "MBEF18",
    :location "Björkulla 2:49",
@@ -1406,7 +1468,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :44a2d47c2aec4667b9af8fdd56fd7826},
+   :_id :44a2d47c2aec4667b9af8fdd56fd7826,
+   :activity [{:year 2017, :months #{}}]},
   :4d703022f86c45b0bb62dc2534ef956a
   {:estate-id "MBEF117",
    :location "Myrhult 1:28",
@@ -1414,7 +1477,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :4d703022f86c45b0bb62dc2534ef956a},
+   :_id :4d703022f86c45b0bb62dc2534ef956a,
+   :activity [{:year 2017, :months #{}}]},
   :7d6dc9c18ef142698d34c7c4f77fbe72
   {:estate-id "MBEF65",
    :location "Stora Lindåsen 2:36",
@@ -1422,7 +1486,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :7d6dc9c18ef142698d34c7c4f77fbe72},
+   :_id :7d6dc9c18ef142698d34c7c4f77fbe72,
+   :activity [{:year 2017, :months #{}}]},
   :9099027a6bd7489fb4c480419b35da9c
   {:estate-id "MBEF113",
    :location "Myrhult 1:2",
@@ -1430,7 +1495,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :9099027a6bd7489fb4c480419b35da9c},
+   :_id :9099027a6bd7489fb4c480419b35da9c,
+   :activity [{:year 2017, :months #{}}]},
   :761847065838421085228900cf727f50
   {:estate-id "MBEF63",
    :location "Stora Lindåsen 2:43",
@@ -1438,7 +1504,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :761847065838421085228900cf727f50},
+   :_id :761847065838421085228900cf727f50,
+   :activity [{:year 2017, :months #{}}]},
   :54ec877314a34c29934bea317d3512a1
   {:estate-id "MBEF17",
    :location "Björkulla 2:48",
@@ -1446,7 +1513,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :54ec877314a34c29934bea317d3512a1},
+   :_id :54ec877314a34c29934bea317d3512a1,
+   :activity [{:year 2017, :months #{}}]},
   :3b8c52610ded4da7831d2dd919c6e55f
   {:estate-id "MBEF129",
    :location "Myrhult 1:64",
@@ -1454,7 +1522,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :3b8c52610ded4da7831d2dd919c6e55f},
+   :_id :3b8c52610ded4da7831d2dd919c6e55f,
+   :activity [{:year 2017, :months #{}}]},
   :27e43336da8a4daca40815a75f7eb98c
   {:estate-id "MBEF148",
    :location "Myrhult 1:16",
@@ -1462,7 +1531,8 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :27e43336da8a4daca40815a75f7eb98c},
+   :_id :27e43336da8a4daca40815a75f7eb98c,
+   :activity [{:year 2017, :months #{}}]},
   :312b0ad2a21447fea52afd50c537266e
   {:estate-id "MBEF49",
    :location "Bålerud 8:1",
@@ -1470,24 +1540,5 @@
    :billing-interval
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
-   :_id :312b0ad2a21447fea52afd50c537266e}},
- :config
- {:aa4729c9f4fe43e39f6cfbae4b473b19
-  {:entered
-   #object[org.joda.time.DateTime 0x4564e763 "2017-01-17T23:19:53.068+01:00"],
-   :membership
-   {:fee 500,
-    :tax 0.0,
-    :start
-    #object[org.joda.time.DateTime 0x47ebb349 "2016-01-01T00:00:00.000Z"]},
-   :connection
-   {:fee 40,
-    :tax 0.25,
-    :start
-    #object[org.joda.time.DateTime 0x365878b1 "2016-01-01T00:00:00.000Z"]},
-   :operator
-   {:fee 90,
-    :tax 0.25,
-    :start
-    #object[org.joda.time.DateTime 0x7db7e47 "2016-01-01T00:00:00.000Z"]},
-   :_id :aa4729c9f4fe43e39f6cfbae4b473b19}}}
+   :_id :312b0ad2a21447fea52afd50c537266e,
+   :activity [{:year 2017, :months #{}}]}}}

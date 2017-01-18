@@ -168,10 +168,10 @@
 
 (s/def :conf/fee       is-pos-int?)
 (s/def :conf/tax       (s/and double? #(>= % 0.0) #(< % 1.0)))
-(s/def :conf/start     #(instance? org.joda.time.DateTime %))
+(s/def :conf/start     utils/date?)
 (s/def :conf/fee-entry (s/keys :req-un [:conf/fee :conf/tax :conf/start]))
 
-(s/def :conf/entered    #(instance? org.joda.time.DateTime %))
+(s/def :conf/entered    utils/date-time?)
 (s/def :conf/membership :conf/fee-entry)
 (s/def :conf/connection :conf/fee-entry)
 (s/def :conf/operator   :conf/fee-entry)

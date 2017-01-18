@@ -274,14 +274,14 @@
 
 		  get-membership-fee (fn [] {:fee (value (select panel [:#membership-fee]))
 		  							 :tax (/ (value (select panel [:#membership-fee-tax])) 100.0)
-		  							 :start (f/parse (f/formatters :date) (value (select panel [:#membership-fee-start])))})
+		  							 :start (value (select panel [:#membership-fee-start]))})
 		  get-connection-fee (fn [] {:fee (value (select panel [:#connection-fee]))
 		  						:tax (/ (value (select panel [:#connection-fee-tax])) 100.0)
-		  						:start (f/parse (f/formatters :date) (value (select panel [:#connection-fee-start])))})
+		  						:start (value (select panel [:#connection-fee-start]))})
 		  get-operator-fee (fn [] {:fee (value (select panel [:#operator-fee]))
 		  						   :tax (/ (value (select panel [:#operator-fee-tax])) 100.0)
-		  						   :start (f/parse (f/formatters :date) (value (select panel [:#operator-fee-start])))})
-		  make-config (fn [e] (let [fees {:entered    (l/local-now)
+		  						   :start (value (select panel [:#operator-fee-start]))})
+		  make-config (fn [e] (let [fees {:entered    (utils/now-str)
 		  								  :membership (get-membership-fee)
 		  								  :connection (get-connection-fee)
 		  								  :operator   (get-operator-fee)}]
@@ -298,13 +298,14 @@
 	                							 :listen [:action (fn [e] (return-from-dialog e :cancel))])])]
 		(-> dialog-window pack! show!)))
 
-(def main-frame
-	(frame
+(defn main-frame
+	[]
+	(let [panel (frame
 		:id :main-frame
 		:on-close :exit
 		:width window-width
 		:height window-height
-		:menubar (menubar :items [
+		:menubar (menubar :id :menu-bar :items [
 			(menu
 				:id :system-menu
 				:text "System"
@@ -330,5 +331,87 @@
 					(menu-item :text "Ändra fastighet")
 					(menu-item :text "Avregistrera fastighet")
 					(menu-item :text "Sök fastighet" :listen [:action (fn [e] (search-estates))])
-					(menu-item :text "Bokför aktiviteter")
-					(menu-item :text "Bokför betalningar")])])))
+					(menu-item :id :enter-activities :text "Bokför aktiviteter")
+					(menu-item :text "Bokför betalningar")])]))
+
+		mk-tag (fn [est nu] (keyword (str (:estate-id est) "-" nu)))
+		mk-select-tag (fn [id nu] (keyword (str "#" id "-" nu)))
+
+		mk-boxes (fn [estate]
+			(let [sel-set   (if-let [s1 (first (filter #(= (:year %) (t/year (l/local-now))) (:activity estate)))]
+								(:months s1)
+								#{})
+				  grid (grid-panel :columns 13 :items (concat [
+						(button :id (mk-tag estate "button") :text "Alla" :font "ARIAL-BOLD-14")]
+						(map #(checkbox :id (mk-tag estate (str %))
+										:text (nth ["Jan" "Feb" "Mar" "Apr" "Maj" "Jun"
+												    "Jul" "Aug" "Sep" "Okt" "Nov" "Dec"] (dec %))
+										:font "ARIAL-12"
+										:selected? (contains? sel-set %))
+							 (range 1 13))))
+				  set-box-on (fn [i]
+				  	(config! (select grid [(mk-select-tag (:estate-id estate) i)]) :selected? true))
+				  ]
+				(listen (select grid [(mk-select-tag (:estate-id estate) "button")]) :action (fn [e]
+					(doseq [i (range 1 13)] (set-box-on i))))
+				grid))
+
+		activity-entry (fn [member]
+			(let [estates (db/get-estates-from-member member)
+				  houses (mapcat #(vector (label :text (:address %) :halign :left :font "ARIAL-BOLD-16")
+				  						  (mk-boxes %)) estates)]
+				(grid-panel :vgap 5 :columns 1 :items (concat [
+					(label :text (:name member) :halign :left :font "ARIAL-BOLD-16")]
+					houses
+					[:separator]))))
+
+		restore-frame (fn [e] (config! (select panel [:JMenuItem]) :enabled? true)
+							  (config! panel :content (flow-panel :items [])))
+
+		update-entries (fn []
+			(let [estate-ids (mapcat :estates (db/get-members-with-estates))
+				  is-selected? (fn [id i] (config (select panel [(mk-select-tag id i)]) :selected?))
+				  mk-selected-set (fn [id] (set (remove nil? (map #(if (is-selected? id %) %) (range 1 13)))))
+				  estate-list (map #(hash-map :estate-id % :months (mk-selected-set %)) estate-ids)]
+				(db/set-persist false)
+				(doseq [list-entry estate-list
+						:let [the-estate (db/get-estate (:estate-id list-entry))
+							  year (t/year (l/local-now))
+							  act-list (:activity the-estate)
+							  activities (if act-list
+							  				 (remove #(= (:year %) year) act-list)
+							  				 [])
+							  new-act (conj activities {:year year :months (:months list-entry)})
+							  ;a1 (println "new-act:" new-act)
+							  new-estate (assoc the-estate :activity new-act)]]
+					(db/add-estate new-estate))
+				(db/set-persist true)
+				))
+
+		activities (fn []
+			(let [entries (map activity-entry (db/get-members-with-estates))
+				  act   (vertical-panel :items [
+							(scrollable (vertical-panel :items entries))
+							:separator
+							[:fill-v 20]
+							(horizontal-panel :items [
+								(button :text "OK"
+										:listen [:action (fn [e]
+											(update-entries)
+											(restore-frame e)
+											)])
+								[:fill-h 100]
+								(button :text "Cancel"
+										:listen [:action (fn [e]
+											(restore-frame e))])])
+							[:fill-v 20]
+							])]
+				act))
+
+		handle-activities (fn [e]
+			(config! (select panel [:JMenuItem]) :enabled? false)
+			;(println "content:" (config panel :content))
+			(config! panel :content (activities)))
+	]
+	(listen (select panel [:#enter-activities]) :action (fn [e] (handle-activities e)))
+	panel))
