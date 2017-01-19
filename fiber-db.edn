@@ -1,7 +1,7 @@
 
 ;; GardenDB v0.1
 ;; Extensible Data Notional (edn)
-;; Wed Jan 18 21:31:44 CET 2017
+;; Thu Jan 19 15:32:54 CET 2017
 ;; fiber-db.edn
 
 
@@ -1064,7 +1064,7 @@
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
    :_id :2a058ac67e3d4da28aca94b04547a947,
-   :activity [{:year 2017, :months #{1 3 2}}]},
+   :activity [{:year 2017, :months #{}}]},
   :393ccb938d94414eb072e519c0781348
   {:estate-id "MBEF76",
    :location "Salpetersjudaretorp 1:17",
@@ -1442,7 +1442,7 @@
    {:current {:from "2017-01-01", :to "2017-12-31", :months 3},
     :next {:from "2018-01-01", :to "2018-12-31", :months 3}},
    :_id :214ac747dd87469a8f1b99164147faed,
-   :activity [{:year 2017, :months #{1}}]},
+   :activity [{:year 2017, :months #{}}]},
   :56278feeb373421eb2aee74124ab84b6
   {:estate-id "MBEF106",
    :location "Stora Högshult 1:7",

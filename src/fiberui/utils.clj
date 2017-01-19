@@ -74,3 +74,7 @@
     []
     (f/unparse (f/formatters :mysql) (l/local-now)))
 
+(defn year
+    []
+    (t/year (l/local-now)))
+
