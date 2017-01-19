@@ -44,6 +44,19 @@
 	[s idx]
 	[(keyword (str "#" s idx))])
 
+(defn restore-main-frame
+	[main-panel]
+	(config! (select main-panel [:JMenuItem]) :enabled? true)
+	(config! (select main-panel [:JMenu]) :enabled? true)
+	(config! (select main-panel [:JMenuBar]) :enabled? true)
+	(config! main-panel :content (flow-panel :items [])))
+
+(defn disable-main-menu
+	[main-panel]
+	(config! (select main-panel [:JMenuItem]) :enabled? false)
+	(config! (select main-panel [:JMenu]) :enabled? false)
+	(config! (select main-panel [:JMenuBar]) :enabled? false))
+
 (defn search-words
 	[txt search-txt invert-search and-search]
 	(let [match-list (map #(str/includes? (str/lower-case txt) %) (str/split (str/lower-case search-txt) #" +"))]
@@ -119,64 +132,72 @@
 				[:id :name :contact]))
 
 (defn do-new-member
-	[]
+	[main-panel]
 	(let [contact-types {"Adress" :address "E-Post" :email "Telefon" :phone}
-		  panel (vertical-panel :items [
+		  fnt "ARIAL-BOLD-14"
+		  panel (border-panel :border 25 :center (vertical-panel :items [
 					(horizontal-panel :items [
-						(label "Medlemsnummer:") [:fill-h 20]
-						(text :id :member-id-field :margin 3 :halign :right :columns 10)])
+						(label :text "Medlemsnummer:" :font fnt)
+						[:fill-h 20]
+						(text :id :member-id-field :margin 3 :font fnt)])
 					[:fill-v 10]
 
 					(horizontal-panel :items [
-						(label "Namn:") [:fill-h 20]
-						(text :id :member-name-field :margin 3)])
+						(label :text "Namn:" :font fnt)
+						[:fill-h 20]
+						(text :id :member-name-field :margin 3 :font fnt)])
 					[:fill-v 10]
 
 					(horizontal-panel :items [
-						(label "Startdatum:") [:fill-h 20]
-						(text :id :member-start-field :margin 3 :columns 10)])
+						(label :text "Startdatum:" :font fnt)
+						[:fill-h 20]
+						(text :id :member-start-field :margin 3 :font fnt)])
 					[:fill-v 30]
 					:separator
 					
 					[:fill-v 10]
 					(flow-panel :items [
-						(label :text "Fastigheter" :halign :center)])
+						(label :text "Fastigheter" :halign :center :font fnt)])
 					[:fill-v 10]
 					(horizontal-panel :items [
-						(button :id :member-estate-field-1 :text "Välj")
+						(button :id :member-estate-field-1 :text "Välj" :font fnt)
 						[:fill-h 50]
-						(button :id :member-estate-field-2 :text "Välj")
+						(button :id :member-estate-field-2 :text "Välj" :font fnt)
 						[:fill-h 50]
-						(button :id :member-estate-field-3 :text "Välj")
+						(button :id :member-estate-field-3 :text "Välj" :font fnt)
 						[:fill-h 50]
-						(button :id :member-estate-field-4 :text "Välj")])
+						(button :id :member-estate-field-4 :text "Välj" :font fnt)])
 					[:fill-v 30]
 					:separator
 
 					[:fill-v 10]
 					(flow-panel :items [
-						(label :text "Kontakter" :halign :center)])
+						(label :text "Kontakter" :halign :center :font fnt)])
 					[:fill-v 10]
 					(horizontal-panel :items [
-						(combobox :id :member-contact-type-1 :model (vec (keys contact-types)))
+						(combobox :id :member-contact-type-1 :model (vec (keys contact-types)) :font fnt)
 						[:fill-h 20]
-						(text :id :member-contact-field-1 :margin 3)])
+						(text :id :member-contact-field-1 :margin 3)] :font fnt)
 					[:fill-v 10]
 					(horizontal-panel :items [
-						(combobox :id :member-contact-type-2 :model (vec (keys contact-types)))
+						(combobox :id :member-contact-type-2 :model (vec (keys contact-types)) :font fnt)
 						[:fill-h 20]
-						(text :id :member-contact-field-2 :margin 3)])
+						(text :id :member-contact-field-2 :margin 3)] :font fnt)
 					[:fill-v 10]
 					(horizontal-panel :items [
-						(combobox :id :member-contact-type-3 :model (vec (keys contact-types)))
+						(combobox :id :member-contact-type-3 :model (vec (keys contact-types)) :font fnt)
 						[:fill-h 20]
-						(text :id :member-contact-field-3 :margin 3)])
+						(text :id :member-contact-field-3 :margin 3)] :font fnt)
 					[:fill-v 10]
 					(horizontal-panel :items [
-						(combobox :id :member-contact-type-4 :model (vec (keys contact-types)))
+						(combobox :id :member-contact-type-4 :model (vec (keys contact-types)) :font fnt)
 						[:fill-h 20]
-						(text :id :member-contact-field-4 :margin 3)])
-					[:fill-v 30]])
+						(text :id :member-contact-field-4 :margin 3 :font fnt)])
+					[:fill-v 30]
+					(horizontal-panel :items [
+						(button :id :ok-button :text "OK")
+						[:fill-h 50]
+						(button :id :cancel-button :text "Cancel")])]))
 
 		  get-member-id (fn [] (str/trim (value (select panel [:#member-id-field]))))
 		  get-name      (fn [] (str/trim (value (select panel [:#member-name-field]))))
@@ -197,7 +218,6 @@
 		  								(hash-map :type cont-type :value cont-val))))
 
 		  get-estate (fn [idx]  (let [id-val (->> idx (mk-idx-tag "member-estate-field-") (select panel) text)]
-		  	;(println "estate:" idx "val:" id-val)
 		  							(if (or (str/blank? id-val) (= id-val "Välj"))
 		  								nil
 		  								id-val)))
@@ -232,45 +252,49 @@
     												(do (db/add-member memb) true))))))))
 		  estate-clicked (fn [idx]  (let [ret (search-estates)]
 										(config! (select panel (mk-idx-tag "member-estate-field-" idx))
-												 :text (if (nil? ret) "Välj" ret))))
-		  
-		  dialog-window (dialog :content panel
-		  						:title "Ny medlem"
-	                			:options [(button :text "OK"
-	                							  :listen [:action (fn [e] (if (make-member e)
-	                														   (return-from-dialog e :ok)))])
-	                					 (button :text "Cancel"
-	                							 :listen [:action (fn [e] (return-from-dialog e :cancel))])])]
+												 :text (if (nil? ret) "Välj" ret))))]
 
 		(listen (select panel [:#member-estate-field-1]) :action (fn [e] (estate-clicked 1)))
 		(listen (select panel [:#member-estate-field-2]) :action (fn [e] (estate-clicked 2)))
 		(listen (select panel [:#member-estate-field-3]) :action (fn [e] (estate-clicked 3)))
 		(listen (select panel [:#member-estate-field-4]) :action (fn [e] (estate-clicked 4)))
+		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-member e)
+	                								   			 (restore-main-frame main-panel))))
+		(listen (select panel [:#cancel-button]) :action (fn [e] (restore-main-frame main-panel)))
 
-		(-> dialog-window pack! show!)))
+		panel))
 
 (defn do-config
-	[]
-	(let [panel (grid-panel :columns 4 :hgap 10 :vgap 10 :items [
-		 	(label :halign :center :text "")
-		 	(label :halign :center :text "Belopp SEK" :font "ARIAL-12")
-		 	(label :halign :center :text "Moms %" :font "ARIAL-12")
-		 	(label :halign :center :text "Startdatum" :font "ARIAL-12")
+	[main-panel]
+	(let [fnt "ARIAL-BOLD-16"
+		panel (border-panel :border 50 :center (vertical-panel :items [
+		[:fill-v 50]
+		(grid-panel :columns 4 :hgap 10 :vgap 10 :items [
+		 	(label :halign :center :text "" :font fnt)
+		 	(label :halign :center :text "Belopp SEK" :font fnt)
+		 	(label :halign :center :text "Moms %" :font fnt)
+		 	(label :halign :center :text "Startdatum" :font fnt)
 
-		 	(label :halign :right :text "Medlemsavgift:" :font "ARIAL-12")
+		 	(label :halign :right :text "Medlemsavgift:" :font fnt)
 		 	(spinner :id :membership-fee :model (spinner-model 500 :from 0 :to 1000 :by 1.0))
 		 	(spinner :id :membership-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
-		 	(text :id :membership-fee-start :tip "Format YYYY-MM-DD")
+		 	(text :id :membership-fee-start :tip "Format YYYY-MM-DD" :font fnt)
 		 	
-		 	(label :halign :right :text "Användningsavgift:" :font "ARIAL-12")
+		 	(label :halign :right :text "Användningsavgift:" :font fnt)
 		 	(spinner :id :connection-fee :model (spinner-model 40 :from 0 :to 1000 :by 1.0))
 		 	(spinner :id :connection-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
-		 	(text :id :connection-fee-start :tip "Format YYYY-MM-DD")
+		 	(text :id :connection-fee-start :tip "Format YYYY-MM-DD" :font fnt)
 		 	
-		 	(label :halign :right :text "Operatörsavgift:" :font "ARIAL-12")
+		 	(label :halign :right :text "Operatörsavgift:" :font fnt)
 		 	(spinner :id :operator-fee :model (spinner-model 90 :from 0 :to 1000 :by 1.0))
 		 	(spinner :id :operator-fee-tax :model (spinner-model 25.0 :from 0.0 :to 99.9 :by 0.1) :tip "0.0 - 99.9")
-		 	(text :id :operator-fee-start :tip "Format YYYY-MM-DD")])
+		 	(text :id :operator-fee-start :tip "Format YYYY-MM-DD" :font fnt)])
+		[:fill-v 50]
+		(horizontal-panel :items [
+		 	(button :id :ok-button :text "OK" :font fnt)
+		 	[:fill-h 30]
+		 	(button :id :cancel-button :text "Cancel" :font fnt)
+		 	])]))
 
 		  get-membership-fee (fn [] {:fee (value (select panel [:#membership-fee]))
 		  							 :tax (/ (value (select panel [:#membership-fee-tax])) 100.0)
@@ -287,16 +311,14 @@
 		  								  :operator   (get-operator-fee)}]
 		  						(if (= (s/conform config-spec fees) :clojure.spec/invalid)
     								(do (alert e (s/explain-str config-spec fees)) false)
-    								(do (db/add-config fees) true))))
+    								(do (db/add-config fees) true))))]
 
-		  dialog-window (dialog :content panel
-		  						:title "Konfigurering"
-	                			:options [(button :text "OK"
-	                							  :listen [:action (fn [e] (if (make-config e)
-	                							  							   (return-from-dialog e :ok)))])
-	                					 (button :text "Cancel"
-	                							 :listen [:action (fn [e] (return-from-dialog e :cancel))])])]
-		(-> dialog-window pack! show!)))
+		(listen (select panel [:#ok-button]) :action (fn [e]
+			(if (make-config e)
+				(restore-main-frame main-panel))))
+		(listen (select panel [:#cancel-button]) :action (fn [e]
+			(restore-main-frame main-panel)))
+		panel))
 
 (defn mk-estate-tag
 	[est nu]
@@ -311,19 +333,6 @@
 	(if-let [s1 (first (filter #(= (:year %) (utils/year)) (:activity estate)))]
 		(:months s1)
 		#{}))
-
-(defn restore-main-frame
-	[main-panel]
-	(config! (select main-panel [:JMenuItem]) :enabled? true)
-	(config! (select main-panel [:JMenu]) :enabled? true)
-	(config! (select main-panel [:JMenuBar]) :enabled? true)
-	(config! main-panel :content (flow-panel :items [])))
-
-(defn disable-main-menu
-	[main-panel]
-	(config! (select main-panel [:JMenuItem]) :enabled? false)
-	(config! (select main-panel [:JMenu]) :enabled? false)
-	(config! (select main-panel [:JMenuBar]) :enabled? false))
 
 (defn activity-frame
 	[main-panel]
@@ -404,12 +413,12 @@
 					(menu-item :text "Beräkna medlemsavgifter")
 					(menu-item :text "Beräkna användningsavgifter")
 					(menu-item :text "Skapa fakturor")
-					(menu-item :text "Konfigurera" :listen [:action (fn [e] (do-config))])])
+					(menu-item :id :config-system :text "Konfigurera")])
 			(menu
 				:id :member-menu
 				:text "Medlemmar"
 				:items [
-					(menu-item :text "Ny medlem" :listen [:action (fn [e] (do-new-member))])
+					(menu-item :id :add-member :text "Ny medlem")
 					(menu-item :text "Ändra medlem")
 					(menu-item :id :member-search :text "Sök medlemmar")
 					(menu-item :text "Avregistrera medlem")
@@ -425,6 +434,14 @@
 					(menu-item :id :enter-activities :text "Bokför aktiviteter")
 					(menu-item :text "Bokför betalningar")])]))
 	]
+	(listen (select panel [:#config-system]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :content (do-config panel))))
+	
+	(listen (select panel [:#add-member]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :content (do-new-member panel))))
+	
 	(listen (select panel [:#enter-activities]) :action (fn [e]
 		(disable-main-menu panel)
 		(config! panel :content (activity-frame panel))))
