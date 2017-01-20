@@ -38,6 +38,10 @@
 	[id]
 	(not (empty? (db/query :member :where [#(= id (:member-id %))]))))
 
+(defn estate-id-exist?
+	[id]
+	(not (empty? (db/query :estate :where [#(= id (:estate-id %))]))))
+
 (defn get-owner-from-estate
 	[house]
 	(first (db/query :member :where [#(some #{(:estate-id house)} (:estates %))])))

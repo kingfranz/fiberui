@@ -149,6 +149,12 @@
 					[:fill-v 10]
 
 					(horizontal-panel :items [
+						(label :text "Note:" :font fnt)
+						[:fill-h 20]
+						(text :id :member-note-field :margin 3 :font fnt)])
+					[:fill-v 10]
+
+					(horizontal-panel :items [
 						(label :text "Startdatum:" :font fnt)
 						[:fill-h 20]
 						(text :id :member-start-field :margin 3 :font fnt)])
@@ -201,6 +207,7 @@
 
 		  get-member-id (fn [] (str/trim (value (select panel [:#member-id-field]))))
 		  get-name      (fn [] (str/trim (value (select panel [:#member-name-field]))))
+		  get-note      (fn [] (str/trim (value (select panel [:#member-note-field]))))
 		  get-start     (fn [] (str/trim (value (select panel [:#member-start-field]))))
 		  get-contact   (fn [idx] (let [cont-type (->> idx
 		  											   (mk-idx-tag "member-contact-type-")
@@ -228,6 +235,7 @@
 		  contact-ok? (fn [] (utils/is-string? (value (select panel [:#member-contact-field-1]))))
 		  member-ctor (fn [] (hash-map :member-id (utils/parse-int (get-member-id))
 		  							   :name (get-name)
+		  							   :note (get-note)
 		  							   :contact (vec (remove nil? [(assoc (get-contact 1) :preferred true)
 		  							   							   (get-contact 2)
 		  							   			 				   (get-contact 3)
@@ -259,6 +267,73 @@
 		(listen (select panel [:#member-estate-field-3]) :action (fn [e] (estate-clicked 3)))
 		(listen (select panel [:#member-estate-field-4]) :action (fn [e] (estate-clicked 4)))
 		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-member e)
+	                								   			 (restore-main-frame main-panel))))
+		(listen (select panel [:#cancel-button]) :action (fn [e] (restore-main-frame main-panel)))
+
+		panel))
+
+(defn do-new-estate
+	[main-panel]
+	(let [fnt "ARIAL-BOLD-14"
+		  panel (border-panel :border 25 :center (vertical-panel :items [
+					[:fill-v 100]
+					(horizontal-panel :items [
+						(label :text "Projektnummer:" :font fnt)
+						[:fill-h 20]
+						(text :id :estate-id-field :margin 3 :font fnt)])
+					[:fill-v 10]
+
+					(horizontal-panel :items [
+						(label :text "Location:" :font fnt)
+						[:fill-h 20]
+						(text :id :estate-loc-field :margin 3 :font fnt)])
+					[:fill-v 10]
+
+					(horizontal-panel :items [
+						(label :text "Adress:" :font fnt)
+						[:fill-h 20]
+						(text :id :estate-address-field :margin 3 :font fnt)])
+					[:fill-v 10]
+
+					(horizontal-panel :items [
+						(label :text "Note:" :font fnt)
+						[:fill-h 20]
+						(text :id :estate-note-field :margin 3 :font fnt)])
+					[:fill-v 100]
+					:separator
+					
+					[:fill-v 20]
+					(horizontal-panel :items [
+						(button :id :ok-button :text "OK")
+						[:fill-h 50]
+						(button :id :cancel-button :text "Cancel")])]))
+
+		  get-estate-id (fn [] (str/trim (value (select panel [:#estate-id-field]))))
+		  get-loc       (fn [] (str/trim (value (select panel [:#estate-loc-field]))))
+		  get-note      (fn [] (str/trim (value (select panel [:#estate-note-field]))))
+		  get-address   (fn [] (str/trim (value (select panel [:#estate-address-field]))))
+
+		  estate-id-ok? (fn [] (and (utils/is-string? (get-estate-id))
+		  							(not (db/estate-id-exist? (get-estate-id)))))
+		  estate-loc-ok? (fn [] (utils/is-string? (get-loc)))
+		  estate-address-ok? (fn [] (utils/is-string? (get-address)))
+		  estate-ctor (fn [] (hash-map :estate-id (utils/parse-int (get-estate-id))
+		  							   :location (get-loc)
+		  							   :address (get-address)
+		  							   :note (get-note)))
+		  make-estate (fn [e] (if-not (estate-id-ok?)
+		  						(do (alert e "Fel fastighets#") false)
+		  						(if-not (estate-loc-ok?)
+		  							(do (alert e "Ogiltig location") false)
+		  							(if-not (estate-address-ok?)
+		  								(do (alert e "Ogiltig adress") false)
+		  								(let [est (estate-ctor)]
+		  									(println est)
+		  									(if (= (s/conform estate-spec est) :clojure.spec/invalid)
+    											(do (alert e (s/explain-str estate-spec est)) false)
+    											(do (db/add-estate est) true)))))))]
+
+		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-estate e)
 	                								   			 (restore-main-frame main-panel))))
 		(listen (select panel [:#cancel-button]) :action (fn [e] (restore-main-frame main-panel)))
 
@@ -427,7 +502,7 @@
 				:id :estate-menu
 				:text "Fastigheter"
 				:items [
-					(menu-item :text "Ny fastighet")
+					(menu-item :id :add-estate :text "Ny fastighet")
 					(menu-item :text "Ändra fastighet")
 					(menu-item :text "Avregistrera fastighet")
 					(menu-item :id :estate-search :text "Sök fastighet")
@@ -441,6 +516,10 @@
 	(listen (select panel [:#add-member]) :action (fn [e]
 		(disable-main-menu panel)
 		(config! panel :content (do-new-member panel))))
+	
+	(listen (select panel [:#add-estate]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :content (do-new-estate panel))))
 	
 	(listen (select panel [:#enter-activities]) :action (fn [e]
 		(disable-main-menu panel)
