@@ -58,8 +58,8 @@
 (s/def :fiber/from           date?)
 (s/def :fiber/to             date?)
 (s/def :fiber/from-to        (s/keys :req-un [:fiber/from] :opt-un [:fiber/to]))
-(s/def :fiber/note           is-string?)
-(s/def :fiber/type           #{:membership-fee})
+(s/def :fiber/note           string?)
+(s/def :fiber/type           #{:membership-fee :connection-fee :operator-fee})
 (s/def :fiber/dc-entry       (s/keys :req-un [:fiber/date :fiber/amount :fiber/type] :opt-un [:fiber/note]))
 (s/def :addr/value           is-string?)
 (s/def :addr/type            #{:address})
@@ -78,16 +78,16 @@
 (s/def :member/contact       (s/and (s/+ :member/contact-entry)
 									contains-preferred?))
 (s/def :member/member-id     is-pos-int?)
-(s/def :member/estates       (s/+ is-estate-id?))
-(s/def :fiber/debit-credit   (s/+ :fiber/dc-entry))
+(s/def :member/estates       (s/* is-estate-id?))
+(s/def :fiber/debit-credit   (s/* :fiber/dc-entry))
 
 ;;------------------------------------------------------------------------------------
 
 (def member-spec (s/keys :req-un [:member/member-id
 								  :member/name
                                	  :member/contact
-                               	  :fiber/from-to]
-                         :opt-un [:fiber/debit-credit
+                               	  :fiber/from-to
+                        		  :fiber/debit-credit
                          		  :fiber/note
                                	  :member/estates]))
 
@@ -101,9 +101,8 @@
 	{:estate-id        "MBEF82"
 	 :location         "Myrhult 1:2"
 	 :address          "Lindåsen Höjen 52, 54592 Älgarås"
-	 :debit-credit     [{:date "2016-12-5" :amount 500 :type :usage-fee :note ""}]
-	 :billing-interval {:current {:from "2016-01-01" :to "2016-12-31" :months 3}
-						:next    {:from "2016-01-01" :to "2016-12-31" :months 3}}
+	 :debit-credit     [{:date "2016-12-5" :amount 40 :type :connection-fee :note ""}]
+	 :billing-interval [{:year 2016 :months 3} {:year 2017 :months 12}]
 	 :activity         [{:year 2016 :months #{1 2 3 10 11 12}}]
 	 :note             ""})
 
@@ -111,23 +110,22 @@
 
 (s/def :estate/year             int?)
 (s/def :billing/months          int?)
-(s/def :billing/current         (s/keys :req-un [:fiber/from :fiber/to :billing/months]))
-(s/def :billing/next            (s/keys :req-un [::from ::to :billing/months]))
-(s/def :estate/months           (s/and set? #(superset? #{1 2 3 4 5 6 7 8 9 10 11 12} %)))
-(s/def :estate/activity-entry   (s/keys :req-un [:estate/year :estate/months]))
+(s/def :activity/months         (s/and set? #(superset? #{1 2 3 4 5 6 7 8 9 10 11 12} %)))
+(s/def :estate/activity-entry   (s/keys :req-un [:estate/year :activity/months]))
+(s/def :estate/billing-entry    (s/keys :req-un [:estate/year :billing/months]))
 
 (s/def :estate/address          is-string?)
 (s/def :estate/location         is-string?)
-(s/def :estate/billing-interval (s/keys :req-un [:billing/current :billing/next]))
-(s/def :estate/activity         (s/* :estate/activity-entry))
+(s/def :estate/billing-interval (s/+ :estate/billing-entry))
+(s/def :estate/activity         (s/+ :estate/activity-entry))
 (s/def :estate/estate-id        is-estate-id?)
 
 ;;------------------------------------------------------------------------------------
 
 (def estate-spec (s/keys :req-un [:estate/estate-id
 									:estate/location
-									:estate/address]
-                           :opt-un [:fiber/note
+									:estate/address
+                        			:fiber/note
                            			:fiber/debit-credit
                                     :estate/billing-interval
                                     :estate/activity]))
@@ -180,3 +178,19 @@
 								  :conf/membership
 								  :conf/connection
 								  :conf/operator]))
+
+(defn validate-config
+	[co]
+	(if (= (s/conform config-spec co) :clojure.spec/invalid)
+    	(do
+    		(error "------- Invalid config -----------")
+    		(error (s/explain-str config-spec co))
+    		(error "-------------------------------------")
+    		(throw (Exception. "Invalid config data")))
+    	co))
+
+;;------------------------------------------------------------------------------------
+
+(defn calc-saldo
+	[d-c]
+	(reduce + (map :amount d-c)))

@@ -33,6 +33,12 @@
     [s]
     (and (not-nil? s) (string? s) (not-blank? s)))
 
+(defn this-year?
+    [s]
+    (if-let [d (f/parse s)]
+        (= (t/year d) (t/year (l/local-now)))
+        (throw (Exception. (str "this-year?: " s " is not a date string")))))
+
 (defn parse-int [s]
     (Integer. (re-find  #"\d+" (trim s))))
 
@@ -50,7 +56,7 @@
 
 (defn valid-phone?
     [e]
-    (and (is-string? e) (re-matches #"(\+[1-9])|(0)[0-9 -]+" e)))
+    (and (is-string? e) (re-matches #"[0-9 +-]+" e)))
 
 (defn date?
     [x]
@@ -78,3 +84,6 @@
     []
     (t/year (l/local-now)))
 
+(defn today-str
+    []
+    (f/unparse (f/formatters :date) (l/local-now)))

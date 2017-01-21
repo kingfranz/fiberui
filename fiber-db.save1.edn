@@ -1,7 +1,7 @@
 
 ;; GardenDB v0.1
 ;; Extensible Data Notional (edn)
-;; Sat Jan 21 16:24:27 CET 2017
+;; Sat Jan 21 13:28:59 CET 2017
 ;; fiber-db.edn
 
 
@@ -17,11 +17,7 @@
     {:type :email, :value "toresson_a@hotmail.com", :preferred true}],
    :_id :3ec1cdec1ed14258932e2601378179d0,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :6aa54d830fd24a16b9b7fffa13dfc84b
   {:member-id 40,
    :estates ["MBEF27"],
@@ -34,11 +30,7 @@
     {:type :address, :value "Torsgatan 6, 54233 Mariestad"}],
    :_id :6aa54d830fd24a16b9b7fffa13dfc84b,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :da8de0ab33c94209a960c8f83baaa236
   {:member-id 78,
    :estates ["MBEF115"],
@@ -50,11 +42,7 @@
     {:type :email, :value "regina@reginasfullkorn.com"}],
    :_id :da8de0ab33c94209a960c8f83baaa236,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :4809f94335d34aed8e5b3fafb2d362f8
   {:member-id 23,
    :estates ["MBEF55"],
@@ -65,11 +53,7 @@
     {:type :email, :value "baserud.gard@gmail.com", :preferred true}],
    :_id :4809f94335d34aed8e5b3fafb2d362f8,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :11eea26a44d541e8a5f6b56a529f95cc
   {:member-id 17,
    :estates ["MBEF91"],
@@ -81,11 +65,7 @@
      :preferred true}],
    :_id :11eea26a44d541e8a5f6b56a529f95cc,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :28076cc84fba433bb905cceeaaa2762d
   {:member-id 46,
    :estates ["MBEF182"],
@@ -100,11 +80,7 @@
     {:type :address, :value "Länsmansgatan 9, 72475 Västerås"}],
    :_id :28076cc84fba433bb905cceeaaa2762d,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :4027ac1867134631b86557b4c02b6f03
   {:member-id 18,
    :estates ["MBEF95"],
@@ -115,11 +91,7 @@
     {:type :email, :value "roger@inix.se", :preferred true}],
    :_id :4027ac1867134631b86557b4c02b6f03,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :2c5ed46703294e51900c3c3e17f5e5e1
   {:member-id 28,
    :estates ["MBEF49" "MBEF51"],
@@ -132,11 +104,7 @@
     {:type :address, :value "Bålerud 14, 54592 Älgarås"}],
    :_id :2c5ed46703294e51900c3c3e17f5e5e1,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :28bbf7f4c6fe4ac9a2350dfefc8907b2
   {:member-id 45,
    :estates ["MBEF71"],
@@ -147,11 +115,7 @@
     {:type :email, :value "bockerud@bondeonline.se", :preferred true}],
    :_id :28bbf7f4c6fe4ac9a2350dfefc8907b2,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :f3e37225bc6a42aca546d41deee184e9
   {:member-id 55,
    :estates ["MBEF156"],
@@ -162,11 +126,7 @@
     {:type :email, :value "yvonneagrell@gmail.com", :preferred true}],
    :_id :f3e37225bc6a42aca546d41deee184e9,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :67cb47e45c714276afcab295e7414f65
   {:member-id 8,
    :estates ["MBEF57"],
@@ -180,11 +140,7 @@
      :preferred true}],
    :_id :67cb47e45c714276afcab295e7414f65,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :8d6a6464bc67453e9dd3ffa2f59ad09b
   {:member-id 43,
    :estates ["MBEF73"],
@@ -196,11 +152,7 @@
     {:type :address, :value "Mölndalsvägen 3, 41263 Göteborg"}],
    :_id :8d6a6464bc67453e9dd3ffa2f59ad09b,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :4d1c033c761e43cab988358ac09b3016
   {:member-id 59,
    :estates ["MBEF152"],
@@ -213,11 +165,7 @@
     {:type :address, :value "Am Reichsberg 7, DE-82346 Andechs"}],
    :_id :4d1c033c761e43cab988358ac09b3016,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :c998a612f5114891938e05c5d3fcd2e5
   {:member-id 15,
    :estates ["MBEF30"],
@@ -230,11 +178,7 @@
     {:type :address, :value "Strågatan 8, 54532 Töreboda"}],
    :_id :c998a612f5114891938e05c5d3fcd2e5,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :a6fd0301995f4f3182bd52b6f9964c50
   {:member-id 74,
    :estates ["MBEF123"],
@@ -250,11 +194,7 @@
     {:type :phone, :value "0709380130"}],
    :_id :a6fd0301995f4f3182bd52b6f9964c50,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :d802e4f66dc2428d9bec0a22ec835883
   {:member-id 44,
    :estates ["MBEF72"],
@@ -267,11 +207,7 @@
     {:type :email, :value "annika@turbomx5.com", :preferred true}],
    :_id :d802e4f66dc2428d9bec0a22ec835883,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :59f27505436a4aceb02b206c806996fd
   {:member-id 51,
    :estates ["MBEF98" "MBEF164" "MBEF62"],
@@ -286,11 +222,7 @@
     {:type :email, :value "hagge_h@tele2.se"}],
    :_id :59f27505436a4aceb02b206c806996fd,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :6a10c947ddbd4d6bbb92e15030629292
   {:member-id 64,
    :estates ["MBEF130"],
@@ -302,11 +234,7 @@
     {:type :address, :value "Lentnerweg 3, D-81927 München"}],
    :_id :6a10c947ddbd4d6bbb92e15030629292,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :9fea7f1bc66349fcaa16b9b02134e576
   {:member-id 3,
    :estates ["MBEF110"],
@@ -317,11 +245,7 @@
     {:type :email, :value "uj.myrhult@gmail.com", :preferred true}],
    :_id :9fea7f1bc66349fcaa16b9b02134e576,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :1618baae6fcb4de4bf2afdcb8555163e
   {:member-id 56,
    :estates ["MBEF148"],
@@ -334,11 +258,7 @@
      :value "Eklunda, 59028 Borensberg, 0141-42174, 0706-242174"}],
    :_id :1618baae6fcb4de4bf2afdcb8555163e,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :67cbd8acb0ca4471bdc2108eeb51c39e
   {:member-id 6,
    :estates ["MBEF53"],
@@ -350,11 +270,7 @@
     {:type :email, :value "tjarbacka@gmail.com", :preferred true}],
    :_id :67cbd8acb0ca4471bdc2108eeb51c39e,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :595b7f05a67641578afbe67221bf98f3
   {:member-id 69,
    :estates ["MBEF117"],
@@ -367,11 +283,7 @@
     {:type :address, :value "L:a Kyrkogatan 21 3tr, 50335 Borås"}],
    :_id :595b7f05a67641578afbe67221bf98f3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :c7d9d55058944d2cbe023c4411e532e9
   {:member-id 75,
    :estates ["MBEF108"],
@@ -381,11 +293,7 @@
    [{:type :email, :value "hsvavars21@hotmail.com", :preferred true}],
    :_id :c7d9d55058944d2cbe023c4411e532e9,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :7e5f3c524fa544d38b22055834451c73
   {:member-id 62,
    :estates ["MBEF139"],
@@ -398,11 +306,7 @@
     {:type :address, :value "Stora Bergsgatan11C, 54533 Töreboda"}],
    :_id :7e5f3c524fa544d38b22055834451c73,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :baeb418d8c62482ea8ca757e95c72ee3
   {:member-id 57,
    :estates ["MBEF121"],
@@ -414,11 +318,7 @@
     {:type :address, :value "N:a Bergsg 17, 54533 Töreboda"}],
    :_id :baeb418d8c62482ea8ca757e95c72ee3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :1ef6d3bac538457483ec77e6162e9d39
   {:member-id 67,
    :estates ["MBEF132"],
@@ -432,11 +332,7 @@
      :preferred true}],
    :_id :1ef6d3bac538457483ec77e6162e9d39,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :ae29016b68b44fcc96645c03c831f1c3
   {:member-id 14,
    :estates ["MBEF29"],
@@ -449,11 +345,7 @@
     {:type :address, :value "Hallonstigen 7, 54505 Töreboda"}],
    :_id :ae29016b68b44fcc96645c03c831f1c3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :56117a37a11a4e08b5e44a3c01fa0618
   {:member-id 42,
    :estates ["MBEF76"],
@@ -466,11 +358,7 @@
     {:type :address, :value "54592 Älgarås"}],
    :_id :56117a37a11a4e08b5e44a3c01fa0618,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :ee3379f5446e4a95a253c5bcb4daea86
   {:member-id 9,
    :estates ["MBEF64"],
@@ -482,11 +370,7 @@
     {:type :email, :value "lenoxon@hotmail.com", :preferred true}],
    :_id :ee3379f5446e4a95a253c5bcb4daea86,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :a69acdaefc5243bb983ad861c7275f12
   {:member-id 24,
    :estates ["MBEF58"],
@@ -501,11 +385,7 @@
     {:type :address, :value "Vasag 2, 54530 Töreboda"}],
    :_id :a69acdaefc5243bb983ad861c7275f12,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :7c1d27560b32494e9d48b560f3c84bca
   {:member-id 48,
    :estates ["MBEF17"],
@@ -517,11 +397,7 @@
      :value "Brandingdijk 422 3059 Rotterdam, Holland"}],
    :_id :7c1d27560b32494e9d48b560f3c84bca,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :19d439621bde403cb8be78cecd639904
   {:member-id 31,
    :estates ["MBEF15"],
@@ -532,11 +408,7 @@
     {:type :email, :value "anders@thorellmotor.se", :preferred true}],
    :_id :19d439621bde403cb8be78cecd639904,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :daa51f0382f34a328eb6fd5cf52834db
   {:member-id 73,
    :estates ["MBEF114"],
@@ -552,11 +424,7 @@
     {:type :email, :value "pstabla@gmx.de"}],
    :_id :daa51f0382f34a328eb6fd5cf52834db,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :d37d9fdd189c4a9f8566ade48d0ada72
   {:member-id 61,
    :estates ["MBEF119"],
@@ -568,11 +436,7 @@
     {:type :email, :value "christer@brattsakeri.se", :preferred true}],
    :_id :d37d9fdd189c4a9f8566ade48d0ada72,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :48fd02e98c504f0dbf74e079a2e6def8
   {:member-id 58,
    :estates ["MBEF144"],
@@ -585,11 +449,7 @@
      :preferred true}],
    :_id :48fd02e98c504f0dbf74e079a2e6def8,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :be39597374cc4052aaa398e30753bc33
   {:member-id 25,
    :estates ["MBEF44"],
@@ -603,11 +463,7 @@
      :preferred true}],
    :_id :be39597374cc4052aaa398e30753bc33,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :d57eb1d8626e426e81b7d38fcc9fed1a
   {:member-id 29,
    :estates ["MBEF52"],
@@ -618,11 +474,7 @@
     {:type :email, :value "jannastina@gmail.com", :preferred true}],
    :_id :d57eb1d8626e426e81b7d38fcc9fed1a,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :49434c08c401418e9388dd8ecfb5a7d3
   {:member-id 76,
    :estates ["MBEF92"],
@@ -634,11 +486,7 @@
     {:type :email, :value "ulfocamilla@gmail.com", :preferred true}],
    :_id :49434c08c401418e9388dd8ecfb5a7d3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :033177fcaad54767899bee64c7492d60
   {:member-id 36,
    :estates ["MBEF20"],
@@ -649,11 +497,7 @@
     {:type :email, :value "hagar.schon@gmail.com", :preferred true}],
    :_id :033177fcaad54767899bee64c7492d60,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :7c71dd66b3bb474ea310e2ffd434726a
   {:member-id 2,
    :estates ["MBEF124"],
@@ -664,11 +508,7 @@
     {:type :email, :value "symagasinet@yahoo.se", :preferred true}],
    :_id :7c71dd66b3bb474ea310e2ffd434726a,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :4b38b2b535034b5a8d75c6e515fc9df2
   {:member-id 4,
    :estates ["MBEF54"],
@@ -680,11 +520,7 @@
     {:type :email, :value "stigevertj@gmail.com", :preferred true}],
    :_id :4b38b2b535034b5a8d75c6e515fc9df2,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :8876d7ec09664d20b893e45f314eebe9
   {:member-id 47,
    :estates ["MBEF18"],
@@ -696,11 +532,7 @@
     {:type :email, :value "orheim@tele2.no"}],
    :_id :8876d7ec09664d20b893e45f314eebe9,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :7ab8446d2f6a42eb9cf1edc61a9e2bc4
   {:member-id 16,
    :estates ["MBEF170"],
@@ -713,11 +545,7 @@
     {:type :address, :value "box, 136, 54592 Älgarås"}],
    :_id :7ab8446d2f6a42eb9cf1edc61a9e2bc4,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :684563d3b60a4f6ebaf5de02ffd2b339
   {:member-id 13,
    :estates ["MBEF69"],
@@ -729,11 +557,7 @@
     {:type :email, :value "hjalle_dio@hotmail.com", :preferred true}],
    :_id :684563d3b60a4f6ebaf5de02ffd2b339,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :2358562894124ed1bf4d1f3ecde2773f
   {:member-id 60,
    :estates ["MBEF129"],
@@ -746,11 +570,7 @@
     {:type :address, :value "Ramlösa gränd 5, 70228 Örebro"}],
    :_id :2358562894124ed1bf4d1f3ecde2773f,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :92879154071742cbbc0d7605233d489e
   {:member-id 52,
    :estates ["MBEF60"],
@@ -762,11 +582,7 @@
     {:type :email, :value "backen1885@spray.se", :preferred true}],
    :_id :92879154071742cbbc0d7605233d489e,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :9c98770499ed4feca5f747cd69fb57a8
   {:member-id 7,
    :estates ["MBEF50"],
@@ -778,11 +594,7 @@
     {:type :email, :value "stellan_ek@yahoo.se", :preferred true}],
    :_id :9c98770499ed4feca5f747cd69fb57a8,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :0ea71630a2b74d639e9b2def48714cf3
   {:member-id 34,
    :estates ["MBEF19" "MBEF41"],
@@ -797,11 +609,7 @@
     {:type :address, :value "Fiskarevägen 4, 54535 Töreboda"}],
    :_id :0ea71630a2b74d639e9b2def48714cf3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :542708066f544d05a5b7be072a791f60
   {:member-id 10,
    :estates ["MBEF162"],
@@ -816,11 +624,7 @@
     {:type :phone, :value "0506-54592"}],
    :note "",
    :_id :542708066f544d05a5b7be072a791f60,
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :174ab328b2a84e7794cfadeb8f9eb09e
   {:member-id 1,
    :estates ["MBEF127"],
@@ -831,11 +635,7 @@
     {:type :email, :value "mats@frihetsportalen.se", :preferred true}],
    :_id :174ab328b2a84e7794cfadeb8f9eb09e,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :0029589d5d744ab1b535e45217937057
   {:member-id 53,
    :estates ["MBEF165"],
@@ -846,11 +646,7 @@
     {:type :email, :value "ro2nyto@gmail.com", :preferred true}],
    :_id :0029589d5d744ab1b535e45217937057,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :15f8505357534e2788b1f087b40f3edb
   {:member-id 72,
    :estates ["MBEF128"],
@@ -861,11 +657,7 @@
     {:type :email, :value "p.spatz@web.de", :preferred true}],
    :_id :15f8505357534e2788b1f087b40f3edb,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :64b970d9bd644865a7e9601cfb5c942a
   {:member-id 38,
    :estates ["MBEF23"],
@@ -878,11 +670,7 @@
     {:type :address, :value "Manillagatan 2, 70212 Örebro"}],
    :_id :64b970d9bd644865a7e9601cfb5c942a,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :8fe795103b234de4b31f9f2f7b7e2dfd
   {:member-id 33,
    :estates ["MBEF7"],
@@ -897,11 +685,7 @@
     {:type :address, :value "Spånvägen 21B, 54163 Skövde"}],
    :_id :8fe795103b234de4b31f9f2f7b7e2dfd,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :2c467f1e2b2d426ebf43045d91b51980
   {:member-id 49,
    :estates ["MBEF176"],
@@ -913,11 +697,7 @@
     {:type :address, :value "54592 Älgarås"}],
    :_id :2c467f1e2b2d426ebf43045d91b51980,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :46391c70130f47d98584eb384dfe4ec3
   {:member-id 32,
    :estates ["MBEF9"],
@@ -929,11 +709,7 @@
     {:type :email, :value "pererik@bandelen.se", :preferred true}],
    :_id :46391c70130f47d98584eb384dfe4ec3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :971c512762004a08b1929ec4361ac83f
   {:member-id 54,
    :estates ["MBEF133"],
@@ -945,11 +721,7 @@
     {:type :address, :value "Armfeltsgatan 16 3tr, 11534 Stockholm"}],
    :_id :971c512762004a08b1929ec4361ac83f,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :ad1bf5e6f98a428dad9ef6fc263e857b
   {:member-id 50,
    :estates ["MBEF166"],
@@ -964,11 +736,7 @@
     {:type :phone, :value "0506-54592"}],
    :_id :ad1bf5e6f98a428dad9ef6fc263e857b,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :e8ff9ce99a8649bb90210f87486f6637
   {:member-id 39,
    :estates ["MBEF26"],
@@ -982,11 +750,7 @@
     {:type :address, :value "box 146, 54222 Mariestad"}],
    :_id :e8ff9ce99a8649bb90210f87486f6637,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :a98cc3108fd64c20a5fb85b94a14b603
   {:member-id 71,
    :estates ["MBEF113"],
@@ -1000,11 +764,7 @@
     {:type :email, :value "tobias.siehl@yahoo.se"}],
    :_id :a98cc3108fd64c20a5fb85b94a14b603,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :483bd5413f0d4b45abbcacd0e8bbb1e3
   {:member-id 20,
    :estates ["MBEF63"],
@@ -1018,11 +778,7 @@
      :preferred true}],
    :_id :483bd5413f0d4b45abbcacd0e8bbb1e3,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :945e672a041244a4bf23056c098ae272
   {:member-id 27,
    :estates ["MBEF47" "MBEF48"],
@@ -1034,11 +790,7 @@
     {:type :email, :value "t.pjohansson@telia.com", :preferred true}],
    :_id :945e672a041244a4bf23056c098ae272,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :9663209d1f79471b92a8957a04f41624
   {:member-id 5,
    :estates ["MBEF10"],
@@ -1049,11 +801,7 @@
     {:type :email, :value "larsryman@spray.se", :preferred true}],
    :_id :9663209d1f79471b92a8957a04f41624,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :6c8c5766c1074b0da51d27c78698870c
   {:member-id 35,
    :estates ["MBEF43"],
@@ -1067,11 +815,7 @@
      :preferred true}],
    :_id :6c8c5766c1074b0da51d27c78698870c,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :e56ff3ec3f7e4b97945c3a4be506d13c
   {:member-id 22,
    :estates ["MBEF102"],
@@ -1085,11 +829,7 @@
      :preferred true}],
    :_id :e56ff3ec3f7e4b97945c3a4be506d13c,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :93724352e25e476298d37ea1a8012994
   {:member-id 66,
    :estates ["MBEF118"],
@@ -1100,11 +840,7 @@
     {:type :email, :value "anna.h.jansson@spray.se", :preferred true}],
    :_id :93724352e25e476298d37ea1a8012994,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :cada85d42e414b8396c58654dc9c2781
   {:member-id 30,
    :estates ["MBEF14"],
@@ -1117,11 +853,7 @@
      :preferred true}],
    :_id :cada85d42e414b8396c58654dc9c2781,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :9ff25b616f164e55932a965f526b6439
   {:member-id 26,
    :estates ["MBEF45"],
@@ -1131,11 +863,7 @@
    [{:type :email, :value "Rogermann10@hotmail.com", :preferred true}],
    :_id :9ff25b616f164e55932a965f526b6439,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :5fc32caf6f0b4e01a4bf459011e5f54a
   {:member-id 21,
    :estates ["MBEF65"],
@@ -1146,11 +874,7 @@
     {:type :email, :value "sven.sundbro@gmail.com", :preferred true}],
    :_id :5fc32caf6f0b4e01a4bf459011e5f54a,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :53aa0f28efd1421e9ed2b605a2717ded
   {:member-id 65,
    :estates ["MBEF106"],
@@ -1161,11 +885,7 @@
     {:type :email, :value "karlslund2@home.se", :preferred true}],
    :_id :53aa0f28efd1421e9ed2b605a2717ded,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :da94e951876c40b0b3daa5d339ea2d14
   {:member-id 37,
    :estates ["MBEF28"],
@@ -1179,11 +899,7 @@
     {:type :address, :value "Vadsbog 3, 54531 Töreboda"}],
    :_id :da94e951876c40b0b3daa5d339ea2d14,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :e40806e4877e48a9a2306d9d1da5a0fc
   {:member-id 63,
    :estates ["MBEF136"],
@@ -1195,11 +911,7 @@
     {:type :address, :value "Strandv. 9 Karlsborg"}],
    :_id :e40806e4877e48a9a2306d9d1da5a0fc,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :159d9e81789d4ca08c4d51316e1cccc9
   {:member-id 77,
    :estates ["MBEF159"],
@@ -1213,11 +925,7 @@
     {:type :phone, :value "+31653165319"}],
    :_id :159d9e81789d4ca08c4d51316e1cccc9,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :904ff30800484dfabc32953531df23af
   {:member-id 11,
    :estates ["MBEF82"],
@@ -1229,11 +937,7 @@
     {:type :email, :value "jkolofsson@outlook.com", :preferred true}],
    :_id :904ff30800484dfabc32953531df23af,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :9d46508b412141628233c3775b0c7a76
   {:member-id 12,
    :estates ["MBEF103"],
@@ -1247,11 +951,7 @@
     {:type :email, :value "stenvadet@telia.com"}],
    :_id :9d46508b412141628233c3775b0c7a76,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]},
+   :debit-credit []},
   :46b4030adeed47a4b90ded1ff716cf85
   {:member-id 68,
    :estates ["MBEF135"],
@@ -1265,11 +965,7 @@
     {:type :address, :value "Hofanger 8, 86859 Igling, Germany"}],
    :_id :46b4030adeed47a4b90ded1ff716cf85,
    :note "",
-   :debit-credit
-   [{:date "2017-01-21",
-     :amount -500.0,
-     :type :membership-fee,
-     :note ""}]}},
+   :debit-credit []}},
  :estate
  {:44d6fe8d990245b5b442b214a43de732
   {:estate-id "MBEF176",

@@ -26,6 +26,10 @@
     [conf]
     (db/put! :config conf))
 
+(defn get-latest-config
+	[]
+	(last (sort-by :entered (db/documents :config))))
+
 (defn get-all-members
 	[]
 	(db/documents :member))
@@ -56,5 +60,20 @@
 
 (defn get-members-with-estates
 	[]
-	(sort-by :name (db/query :member :where [#(and (:estates %) (not-empty (:estates %)))])))
+	(sort-by :name (db/query :member :where [#(not-empty (:estates %))])))
+
+(defn active-member?
+	[member]
+	(nil? (get-in member [:from-to :to])))
+
+(defn membership-charged?
+	[member]
+	(seq (filter #(and (utils/this-year? (:date %))
+					   (= (:type %) :membership-fee)
+					   (neg? (:amount %)))
+				 (:debit-credit member))))
+
+(defn get-members-not-charged
+	[]
+	(sort-by :name (db/query :member :where [#(not (membership-charged? %))])))
 

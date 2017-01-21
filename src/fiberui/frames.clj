@@ -473,6 +473,41 @@
 				act))]
 	(activities)))
 
+(defn calc-membership-dialog
+	[]
+	(try
+		(let [latest-config (db/get-latest-config)
+			  calc-fee (* (->> latest-config :membership :fee) (->> latest-config :membership :tax (+ 1.0)) -1.0)
+			  new-fee {:date (utils/today-str) :amount calc-fee :type :membership-fee :note ""}
+			  update-list (fn [] (try
+			  						(let [l1 (db/get-members-not-charged)
+			  							  l2 (map #(assoc % :debit-credit (conj (:debit-credit %) new-fee)) l1)
+			  							  l3 (map data/validate-member l2)]
+			  							(db/set-persist false)
+			  							(doseq [member l3]
+			  								(db/add-member member))
+			  							(db/set-persist true)
+			  							true)
+			  						(catch Exception e
+	            						(do
+	            							(error (Exception. e))
+	            							(alert "Ett fel uppstod, kolla logfilen!")
+	            							false))))
+			  
+			  dialog-window (dialog :content (label (str "Antal medlemmar som blir debiterade: "
+			  											 (count (db/get-members-not-charged))
+			  											 " Vill du verkställa?"))
+		                			:option-type :ok-cancel
+		                			:success-fn (fn [e] (if (update-list)
+		                									(return-from-dialog e :ok))))]
+			(-> dialog-window pack! show!))
+		(catch Exception e
+			(do
+				(error (Exception. e))
+				(alert "Ett fel uppstod, kolla logfilen!")
+				false))))
+
+
 (defn main-frame
 	[]
 	(let [panel (frame
@@ -485,7 +520,7 @@
 				:id :system-menu
 				:text "System"
 				:items [
-					(menu-item :text "Beräkna medlemsavgifter")
+					(menu-item :id :calc-membership :text "Beräkna medlemsavgifter")
 					(menu-item :text "Beräkna användningsavgifter")
 					(menu-item :text "Skapa fakturor")
 					(menu-item :id :config-system :text "Konfigurera")])
@@ -525,6 +560,11 @@
 		(disable-main-menu panel)
 		(config! panel :content (activity-frame panel))))
 	
+	(listen (select panel [:#calc-membership]) :action (fn [e]
+		(disable-main-menu panel)
+		(calc-membership-dialog)
+		(restore-main-frame panel)))
+
 	(listen (select panel [:#member-search]) :action (fn [e]
 		(disable-main-menu panel)
 		(search-members)
