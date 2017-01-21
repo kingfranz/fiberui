@@ -131,6 +131,35 @@
 									:text    (str (:member-id %) (:name %) (preferred-contact %)))))
 				[:id :name :contact]))
 
+(defn list-invoice-members
+	[]
+	(search-dialog (->> (db/get-all-members)
+						(filter #(not (zero? (utils/sum-debit-credit % [:membership-fee]))))
+						(sort-by :member-id)
+						(map #(hash-map :id      (:member-id %)
+										:name    (:name %)
+										:contact (preferred-contact %)
+										:skuld   (utils/sum-debit-credit % :membership-fee)
+								        :text    (str (:member-id %) (:name %) (preferred-contact %)))))
+				[:id :name :contact :skuld]))
+
+(defn list-invoice-usage
+	[]
+	(let [mk-pay (fn [x] (let [member (db/get-owner-from-estate x)
+							   con-fee (utils/sum-debit-credit x [:connection-fee])
+							   op-fee (utils/sum-debit-credit x [:operator-fee])]
+							(hash-map :fastighet (:address x)
+								      :medlemsnr (:member-id member)
+								      :namn (:name member)
+								      :kontakt (preferred-contact member)
+								      :belopp (format "a: %.2f o: %.2f :s %.2f" con-fee op-fee (+ con-fee op-fee))
+								      :text (str (:address x) (:member-id member) (:name member) (preferred-contact member)))))]
+	(search-dialog (->> (db/get-all-estates)
+						(filter #(not (zero? (utils/sum-debit-credit % [:connection-fee :operator-fee]))))
+						(map mk-pay)
+						(sort-by :medlemsnr))
+				[:medlemsnr :namn :fastighet :kontakt :belopp])))
+
 (defn do-new-member
 	[main-panel]
 	(let [contact-types {"Adress" :address "E-Post" :email "Telefon" :phone}
@@ -522,7 +551,8 @@
 				:items [
 					(menu-item :id :calc-membership :text "Beräkna medlemsavgifter")
 					(menu-item :text "Beräkna användningsavgifter")
-					(menu-item :text "Skapa fakturor")
+					(menu-item :id :invoice-member :text "Skapa fakturor (medlemsavgift)")
+					(menu-item :id :invoice-usage :text "Skapa fakturor (användning)")
 					(menu-item :id :config-system :text "Konfigurera")])
 			(menu
 				:id :member-menu
@@ -563,6 +593,16 @@
 	(listen (select panel [:#calc-membership]) :action (fn [e]
 		(disable-main-menu panel)
 		(calc-membership-dialog)
+		(restore-main-frame panel)))
+
+	(listen (select panel [:#invoice-member]) :action (fn [e]
+		(disable-main-menu panel)
+		(list-invoice-members)
+		(restore-main-frame panel)))
+
+	(listen (select panel [:#invoice-usage]) :action (fn [e]
+		(disable-main-menu panel)
+		(list-invoice-usage)
 		(restore-main-frame panel)))
 
 	(listen (select panel [:#member-search]) :action (fn [e]

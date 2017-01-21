@@ -15,6 +15,11 @@
                 (throw (Exception. (str name " is empty")))
                 value))))
 
+(defn pr1
+	[s e]
+	(println s e)
+	e)
+
 (defn set-var 
     "set value of atom"
     [the-atom value]
@@ -87,3 +92,10 @@
 (defn today-str
     []
     (f/unparse (f/formatters :date) (l/local-now)))
+
+(defn sum-debit-credit
+	[entry tags]
+	(if-let [sum (->> entry :debit-credit (filter #(some #{(:type %)} tags)) (map :amount) (reduce +))]
+		sum
+		0.0))
+
