@@ -39,9 +39,9 @@
     (and (not-nil? s) (string? s) (not-blank? s)))
 
 (defn this-year?
-    [s]
+    [y s]
     (if-let [d (f/parse s)]
-        (= (t/year d) (t/year (l/local-now)))
+        (= (t/year d) y)
         (throw (Exception. (str "this-year?: " s " is not a date string")))))
 
 (defn parse-int [s]
@@ -58,7 +58,7 @@
 (defn valid-email?
     [e]
     (and (is-string? e) (re-matches #"(?i)[^@]+@[A-Z0-9.-]+\.[A-Z]{2,4}" e)))
-
+	
 (defn valid-phone?
     [e]
     (and (is-string? e) (re-matches #"[0-9 +-]+" e)))
@@ -89,13 +89,11 @@
     []
     (t/year (l/local-now)))
 
+(defn month
+    []
+    (t/month (l/local-now)))
+
 (defn today-str
     []
     (f/unparse (f/formatters :date) (l/local-now)))
-
-(defn sum-debit-credit
-	[entry tags]
-	(if-let [sum (->> entry :debit-credit (filter #(some #{(:type %)} tags)) (map :amount) (reduce +))]
-		sum
-		0.0))
 

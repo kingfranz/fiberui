@@ -51,7 +51,9 @@
 (defn update-all-estates
     []
     (let [all (db/get-all-estates)
-          all-1 (map #(assoc % :note "" :debit-credit [] :billing-interval [{:year 2016 :months 3} {:year 2017 :months 3}]) all)]
+          all-1 (map #(assoc % :note ""
+                               :debit-credit [] 
+                               :billing-interval [{:year 2016 :months 3} {:year 2017 :months 3}]) all)]
         (doseq [estate all-1]
             (data/validate-estate estate))
         (set-persist false)
@@ -71,5 +73,6 @@
 (defn -main
 	[& args]
 	(db/db-init)
+    ;(update-all-estates)
     (-> (main-frame) (move! :to [500 100]) show!)
     )
