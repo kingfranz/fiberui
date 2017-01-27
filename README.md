@@ -1,5 +1,3 @@
-# fiberui
-
 FIXME: description
 
 ## Installation
@@ -18,11 +16,7 @@ FIXME: listing of options this app accepts.
 
 ## Examples
 
-...
-
 ### Bugs
-
-...
 
 ### Any Other Sections
 ### That You Think
