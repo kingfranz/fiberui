@@ -13,6 +13,8 @@
     (:require [seesaw.color        :refer :all])
     (:require [seesaw.forms        :as forms])
     (:require [seesaw.font        :refer :all])
+    (:require [clojure.data.csv :as csv])
+    (:require [clojure.java.io :as io])
     (:require [taoensso.timbre            :as timbre
              :refer [log  trace  debug  info  warn  error  fatal  report
                      logf tracef debugf infof warnf errorf fatalf reportf spy get-env]])
@@ -70,21 +72,21 @@
 				(some true? match-list)))))
 
 (defn search-dialog
-	[data-list columns]
+	[data-list columns export-title export-cols]
 	(let [return-value (atom nil)
-		  panel (top-bottom-split
-					(horizontal-panel :items [
-						(checkbox :id :invert-search :text "Invertera?")
-						[:fill-h 20]
-						(checkbox :id :and-search :text "And?")
-						[:fill-h 20]
-						(text :id :search-text :font "ARIAL-BOLD-24")])
-					(scrollable
-						(table :id :data-table :font "ARIAL-12")
-						:vscroll :always
-						:hscroll :always)
-					:size [640 :by 600]
-					:divider-location 30)
+		  panel (forms/forms-panel
+              "right:40dlu,5dlu,20dlu,5dlu,right:20dlu,5dlu,300dlu"
+              :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+              :leading-column-offset 0
+              :default-dialog-border? true
+              :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+              :items   ["Invertera?" (checkbox :id :invert-search)
+              			"And?" (checkbox :id :and-search)
+              			(text :id :search-text :font "ARIAL-BOLD-18")
+              			(forms/separator)
+                      	(forms/span (scrollable	(table :id :data-table :font "ARIAL-12")
+							:vscroll :always
+							:hscroll :always) 6)])
 
 		  search-txt       (fn [] (text (select panel [:#search-text])))
 		  invert-search    (fn [] (value (select panel [:#invert-search])))
@@ -99,17 +101,40 @@
 									  		  data-list)))
 		  update-list (fn [] (set-list [:columns columns
 		  								:rows (vec (filtered-list))]))
+		  export-row (fn [cols row] (vec (map #(get row %) cols)))
 		  
 		  dialog-window (dialog :content panel
-	                			:option-type :ok-cancel
-	                			:success-fn (fn [e] (if-let [row (selection (select panel [:#data-table]))]
-	                									(set-var return-value (:id (nth (filtered-list) row))))
-	                								(return-from-dialog e :ok)))]
-		(listen (select panel [:#invert-search]) :action (fn [e] (update-list)))
-		(listen (select panel [:#and-search]) :action (fn [e] (update-list)))
-		(listen (select panel [:#search-text]) #{:insert-update :remove-update} (fn [e] (update-list)))
+		  	:width 1000
+		  	:height 700
+		  	:title "a title"
+	                			:options [
+	                		(button :id :ok-button
+    							  :text "OK"
+    							  :listen [:action (fn [e]
+    							  	  (if-let [row (selection (select panel [:#data-table]))]
+	                					(set-var return-value (:id (nth (filtered-list) row))))
+    								  (return-from-dialog e :ok))])
+    					  (button :id :cancel-button
+    					  		  :text "Cancel"
+    					  		  :listen [:action (fn [e]
+    					  			  (return-from-dialog e :cancel))])
+    					  (button :id :export-button
+    					  		  :text "Export"
+    					  		  :listen [:action (fn [e]
+    					  		  	  	(with-open [out-file (io/writer "out-file.csv")]
+											(csv/write-csv out-file
+						                		(concat export-title (map #(export-row export-cols %)
+						                								  (filtered-list)))))
+										(alert (str "Exporterade till: " "out-file.csv")))])])]
+
+		(listen (select panel [:#invert-search]) :action (fn [e]
+			(update-list)))
+		(listen (select panel [:#and-search]) :action (fn [e]
+			(update-list)))
+		(listen (select panel [:#search-text]) #{:insert-update :remove-update}
+			(fn [e] (update-list)))
 		(update-list)
-		(-> dialog-window pack! show!)
+		(-> dialog-window show!)
 		@return-value))
 
 (defn search-estates
@@ -120,6 +145,9 @@
 									:location (:location %)
 									:address  (:address %)
 									:text     (str (:estate-id %) (:location %) (:address %)))))
+				[:id :location :address]
+				[["Fastigheter" (utils/now-str) ""]
+				 ["ID" "Betäckning" "Adress"]]
 				[:id :location :address]))
 
 (defn search-members
@@ -127,22 +155,28 @@
 	(search-dialog (->> (db/get-all-members)
 					(sort-by :member-id)
 					(map #(hash-map :id      (:member-id %)
-									:name    (:name %)
-									:contact (preferred-contact %)
+									:namn    (:name %)
+									:kontakt (preferred-contact %)
 									:text    (str (:member-id %) (:name %) (preferred-contact %)))))
-				[:id :name :contact]))
+				[:id :namn :kontakt]
+				[["Medlemmar" (utils/now-str) ""]
+				 ["ID" "Namn" "Kontakt"]]
+				[:id :namn :kontakt]))
 
 (defn list-invoice-members
 	[year]
 	(search-dialog (->> (db/get-all-members)
-						(map #(hash-map :id      (:member-id %)
+						(map #(hash-map :medlemsnr      (:member-id %)
 										:name    (:name %)
-										:contact (data/preferred-contact %)
+										:kontact (data/preferred-contact %)
 										:belopp  (data/sum-debit-credit (:member-id %) year % [:membership-fee])
 								        :text    (str (:member-id %) (:name %) (data/preferred-contact %))))
 						(remove #(zero? (:belopp %)))
-						(sort-by :id))
-				[:id :name :contact :belopp]))
+						(sort-by :medlemsnr))
+				[:medlemsnr :name :kontact :belopp]
+				[["Skulder för medlemsavgift" (utils/now-str) "" ""]
+				 ["Medlemsnummer" "Namn" "Kontakt" "Belopp"]]
+				[:medlemsnr :namn :kontact :belopp]))
 
 (defn list-invoice-usage
 	[year yearly]
@@ -160,6 +194,8 @@
 								      				  	 (op-fee (:member-id %))))
 								      :tot-amount (+ (con-fee (:member-id %))
 								      				 (op-fee (:member-id %)))
+								      :conn-fee (con-fee (:member-id %))
+								      :oper-fee (op-fee (:member-id %))
 								      :text (str (:address x)
 								      			 (:member-id %)
 								      			 (:name %)
@@ -169,7 +205,10 @@
 						(mapcat mk-pay)
 						(filter #(not (zero? (:tot-amount %))))
 						(sort-by :medlemsnr))
-				[:medlemsnr :namn :fastighet :kontakt :belopp])))
+				[:medlemsnr :namn :fastighet :kontakt :belopp]
+				[["Skulder för anslutning och andvändning" (utils/now-str) "" "" "" "" ""]
+				 ["Medlemsnummer" "Namn" "Fastighet" "Kontakt" "Anslutninsavgift" "Användningsavgift" "Totalt"]]
+				[:medlemsnr :namn :fastighet :kontakt :conn-fee :oper-fee :tot-amount])))
 
 (defn do-new-member
 	[main-panel]

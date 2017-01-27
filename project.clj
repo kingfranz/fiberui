@@ -8,6 +8,7 @@
                  [org.clojure/math.numeric-tower "0.0.4"]
                  [seesaw "1.4.6-SNAPSHOT"]
                  [com.jgoodies/forms "1.2.1"]
+                 [org.clojure/data.csv "0.1.3"]
                  [clj-time "0.12.0"]
                  [gardendb "0.2.0"]]
   :main ^:skip-aot fiberui.core
