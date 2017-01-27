@@ -21,7 +21,13 @@
 	(:require [taoensso.timbre.appenders.core :as appenders])
 	(:require [clojure.set     :as set :refer [superset? intersection union]])
 	(:require [clojure.string  :as str  :refer [includes?]])
-	)
+	(:import  javax.swing.JPanel
+    		  com.jgoodies.forms.builder.DefaultFormBuilder
+    		  com.jgoodies.forms.layout.FormLayout)
+    (:use [seesaw.options :only (bean-option default-option
+    							 apply-options ignore-options option-map option-provider)]
+    	  [seesaw.util :only (resource)]))
+
 
 ;;------------------------------------------------------------------------------------
 
@@ -71,22 +77,56 @@
 				(not (some false? match-list))
 				(some true? match-list)))))
 
+(defn ^JPanel my-forms-panel
+  "Construct a panel with a FormLayout. The column spec is
+  expected to be a FormLayout column spec in string form.
+
+  The items are a list of strings, components or any of the
+  combinators. For example:
+
+      :items [\"Login\" (text) (next-line)
+              \"Password\" (span (text) 3)]
+
+  Takes the following special properties. They correspond
+  to the DefaultFormBuilder option of the same name.
+
+      :default-dialog-border?
+      :default-row-spec
+      :leading-column-offset
+      :line-gap-size
+      :paragraph-gap-size
+
+  See http://www.jgoodies.com/freeware/forms/index.html"
+  {:seesaw {:class `JPanel}}
+  [column-spec row-spec & opts]
+  (let [layout  (FormLayout. column-spec row-spec)
+        panel   (seesaw.core/construct JPanel)
+        builder (DefaultFormBuilder. layout panel)]
+    (apply-options layout opts)
+    (apply-options builder opts)
+    (doto (.getPanel builder)
+      (apply-options opts))))
+
+
+
 (defn search-dialog
 	[data-list columns export-title export-cols]
 	(let [return-value (atom nil)
-		  panel (forms/forms-panel
-              "right:40dlu,5dlu,20dlu,5dlu,right:20dlu,5dlu,300dlu"
-              :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
-              :leading-column-offset 0
-              :default-dialog-border? true
-              :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
-              :items   ["Invertera?" (checkbox :id :invert-search)
-              			"And?" (checkbox :id :and-search)
-              			(text :id :search-text :font "ARIAL-BOLD-18")
-              			(forms/separator)
-                      	(forms/span (scrollable	(table :id :data-table :font "ARIAL-12")
+		  panel (my-forms-panel
+            "right:pref,5dlu,right:pref,5dlu,fill:pref:grow"
+            "pref,10dlu,fill:pref:grow"
+			;:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+            ;:leading-column-offset 0
+            ;:default-dialog-border? true
+            ;:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+            :items [
+              	(checkbox :id :invert-search :text "Invertera?")
+              	(checkbox :id :and-search :text "And?")
+              	(text :id :search-text :text "" :font "ARIAL-BOLD-18") (forms/next-line)
+              	(forms/separator)
+                (forms/span (scrollable	(table :id :data-table :font "ARIAL-12")
 							:vscroll :always
-							:hscroll :always) 6)])
+							:hscroll :always) 5)])
 
 		  search-txt       (fn [] (text (select panel [:#search-text])))
 		  invert-search    (fn [] (value (select panel [:#invert-search])))
@@ -107,25 +147,25 @@
 		  	:width 1000
 		  	:height 700
 		  	:title "a title"
-	                			:options [
-	                		(button :id :ok-button
-    							  :text "OK"
-    							  :listen [:action (fn [e]
-    							  	  (if-let [row (selection (select panel [:#data-table]))]
-	                					(set-var return-value (:id (nth (filtered-list) row))))
-    								  (return-from-dialog e :ok))])
-    					  (button :id :cancel-button
-    					  		  :text "Cancel"
-    					  		  :listen [:action (fn [e]
-    					  			  (return-from-dialog e :cancel))])
-    					  (button :id :export-button
-    					  		  :text "Export"
-    					  		  :listen [:action (fn [e]
-    					  		  	  	(with-open [out-file (io/writer "out-file.csv")]
-											(csv/write-csv out-file
-						                		(concat export-title (map #(export-row export-cols %)
-						                								  (filtered-list)))))
-										(alert (str "Exporterade till: " "out-file.csv")))])])]
+	        :options [
+	        	(button :id :ok-button
+    					:text "OK"
+    					:listen [:action (fn [e]
+    						(if-let [row (selection (select panel [:#data-table]))]
+	                			(set-var return-value (:id (nth (filtered-list) row))))
+    						(return-from-dialog e :ok))])
+    			(button :id :cancel-button
+    					:text "Cancel"
+    					:listen [:action (fn [e]
+    						(return-from-dialog e :cancel))])
+    			(button :id :export-button
+    					:text "Export"
+    					:listen [:action (fn [e]
+    						(with-open [out-file (io/writer "out-file.csv")]
+								(csv/write-csv out-file
+						        	(concat export-title (map #(export-row export-cols %)
+						            						  (filtered-list)))))
+								(alert (str "Exporterade till: " "out-file.csv")))])])]
 
 		(listen (select panel [:#invert-search]) :action (fn [e]
 			(update-list)))
@@ -209,6 +249,7 @@
 				[["Skulder för anslutning och andvändning" (utils/now-str) "" "" "" "" ""]
 				 ["Medlemsnummer" "Namn" "Fastighet" "Kontakt" "Anslutninsavgift" "Användningsavgift" "Totalt"]]
 				[:medlemsnr :namn :fastighet :kontakt :conn-fee :oper-fee :tot-amount])))
+
 
 (defn do-new-member
 	[main-panel]
