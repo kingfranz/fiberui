@@ -96,11 +96,15 @@
 
 (defn get-estates-from-member
 	[memb]
-	(map data/validate-estate (db/query :estate :where [#(some #{(:estate-id %)} (:estates memb))])))
+	(map data/validate-estate (db/query :estate :where [#(some #{(:estate-id %)} (map :estate-id (:estates memb)))])))
 
 (defn get-estate
 	[id]
 	(data/validate-estate (first (db/query :estate :where [#(= id (:estate-id %))]))))
+
+(defn get-member
+	[id]
+	(data/validate-member (first (db/query :member :where [#(= id (:member-id %))]))))
 
 (defn get-members-with-estates
 	[]

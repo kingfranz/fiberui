@@ -793,7 +793,7 @@
    :debit-credit []},
   :9663209d1f79471b92a8957a04f41624
   {:member-id 5,
-   :estates [{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}],
+   :estates [{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}{:estate-id "MBEF10" :from-to {:from "2010-01-01"}}],
    :from-to {:from "2013-01-01"},
    :name "Ryman, Lars. Gunnel",
    :contact
@@ -801,7 +801,67 @@
     {:type :email, :value "larsryman@spray.se", :preferred true}],
    :_id :9663209d1f79471b92a8957a04f41624,
    :note "",
-   :debit-credit []},
+   :debit-credit [{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
+            :amount -500
+            :type :membership-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}]},
   :6c8c5766c1074b0da51d27c78698870c
   {:member-id 35,
    :estates [{:estate-id "MBEF43" :from-to {:from "2010-01-01"}}],

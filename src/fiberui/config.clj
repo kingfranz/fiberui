@@ -1,5 +1,5 @@
 (ns fiberui.config
   (:require [clojure.set    :refer [superset?]]))
 
-(def window-width 1000)
-(def window-height 600)
+(def window-width 1200)
+(def window-height 800)
