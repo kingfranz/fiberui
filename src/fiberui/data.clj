@@ -23,7 +23,7 @@
 
 (defn preferred-contact
 	[member]
-	(if-let [pref (filter #(:preferred %) (:contact member))]
+	(if-let [pref (filter :preferred (:contact member))]
 		(:value (first pref))
 		(throw (Exception. (str (:name member) " har ingen vald kontakt")))))
 
@@ -43,6 +43,7 @@
 					 {:type :phone   :value "090-773636"}]
 	 :debit-credit  [{:date "2016-12-5"
 	 				  :amount -500
+	 				  :tax 0.0
 	 				  :type :membership-fee
 	 				  :member-id 3
 	 				  :year 2016
@@ -64,6 +65,7 @@
 (s/def :fiber/estate-id      is-estate-id?)
 (s/def :fiber/date           date?)
 (s/def :fiber/amount         #(and (number? %) (> (math/abs %) 1)))
+(s/def :fiber/tax            number?)
 (s/def :fiber/from           date?)
 (s/def :fiber/to             date?)
 (s/def :fiber/from-to        (s/keys :req-un [:fiber/from] :opt-un [:fiber/to]))
@@ -73,6 +75,7 @@
 (s/def :fiber/type           #{:membership-fee :connection-fee :operator-fee})
 (s/def :fiber/dc-entry       (s/keys :req-un [:fiber/date
 											  :fiber/amount
+											  :fiber/tax
 											  :fiber/type
 											  :member/member-id
 											  :fiber/year
@@ -162,6 +165,7 @@
 	 :address          "Lindåsen Höjen 52, 54592 Älgarås"
 	 :debit-credit     [{:date "2016-12-5"
 	 					 :amount 40
+	 					 :tax 10
 	 					 :type :connection-fee
 	 					 :member-id 3
 	 					 :year 2016
@@ -271,4 +275,4 @@
 
 (defn calc-saldo
 	[d-c]
-	(reduce + (map :amount d-c)))
+	(reduce + (map #(+ (:amount %) (:tax %)) d-c)))

@@ -34,6 +34,22 @@
 	[s idx]
 	[(keyword (str "#" s idx))])
 
+(defn mk-tag
+	[s idx]
+	(keyword (str s idx)))
+		  
+(defn mk-select-tag
+	[id nu]
+	(keyword (str "#" id "-" nu)))
+
+(defn mk-year-spin
+	[current]
+	(spinner-model current :from 2010 :to 2020 :by 1))
+
+(defn get-at
+	[idx col]
+	(nth col idx))
+		  
 (defn restore-main-frame
 	[main-panel]
 	(config! (select main-panel [:JMenuItem]) :enabled? true)
@@ -322,20 +338,19 @@
 
 		panel))
 
-:debit-credit  [{:date "2016-12-5"
- 				 :amount -500
- 				 :type :membership-fee
- 				 :year 2016
- 				 :months #{1 2 3 4 5 6 7 8 9 10 11 12}}]
+;:debit-credit  [{:date "2016-12-5"
+; 				 :amount -500
+; 				 :type :membership-fee
+; 				 :year 2016
+; 				 :months #{1 2 3 4 5 6 7 8 9 10 11 12}}]
 
 (defn edit-member
 	[main-panel member-id]
 	(let [contact-types {"Adress" :address "E-Post" :email "Telefon" :phone}
-		  dc-types {"Membership" :membership-fee "Anslutning" :connection-fee "Användning" :operator-fee}
+		  dc-types {"Medlemskap" :membership-fee "Anslutning" :connection-fee "Användning" :operator-fee}
 		  fnt "ARIAL-BOLD-14"
 		  member (db/get-member member-id)
 		  get-at (fn [idx col] (nth col idx))
-		  mk-tag (fn [s idx] (keyword (str s idx)))
 		  get-ym (fn [x k ym] (if-let [ym-ym (f/parse (get (:from-to x) k))]
 		  						  (long (ym ym-ym))
 		  						  (long (if (= ym t/year) 2020 12))))
@@ -362,7 +377,7 @@
                  (forms/next-line)]))
 
 		  estate-part (forms/forms-panel
-              "right:pref,12dlu, right:pref,3dlu, 40dlu,12dlu, right:pref,3dlu, 30dlu,20dlu, right:pref,10dlu, right:pref,3dlu, 40dlu,12dlu, right:pref,3dlu, 30dlu, 30dlu"
+              "right:pref,12dlu, right:pref,3dlu, 40dlu,12dlu, right:pref,3dlu, 60dlu,20dlu, right:pref,10dlu, right:pref,3dlu, 40dlu,12dlu, right:pref,3dlu, 30dlu, 80dlu"
               :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
               :leading-column-offset 0
               :default-dialog-border? true
@@ -373,18 +388,19 @@
 		  dc-part (let [dc (->> member :debit-credit)
 		  				mk-date (fn [idx] (text :id (mk-tag "dc-date-" idx) :font fnt :text (:date (get-at idx dc))))
 		  				mk-money-spin (fn [idx] (spinner-model (:amount (get-at idx dc)) :from -1000 :to 1000 :by 0.01))
-		  				mk-year-spin (fn [idx] (spinner-model (:year (get-at idx dc)) :from 2010 :to 2020 :by 1))
+		  				mk-tax-spin (fn [idx] (spinner-model (:tax (get-at idx dc)) :from -1000 :to 1000 :by 0.01))
 		  				mk-cb (fn [idx m] (checkbox :id (mk-tag (str "dc-month-" m "-") idx) :text (str m)
 		  					:selected? (contains? (:months (get-at idx dc)) m)))
 		  				mk-entry (fn [idx]
 		  					(concat [(mk-date idx)]
 		  	 				 [(combobox :id (mk-tag "dc-type-" idx) :model (vec (keys dc-types)))]
 		  	 				 ["Belopp"] [(spinner :id (mk-tag "dc-amount-" idx) :font fnt :model (mk-money-spin idx))]
-		  	 				 ["År"] [(spinner :id (mk-tag "dc-year-" idx) :font fnt :model (mk-year-spin idx))]
+		  	 				 ["Moms"] [(spinner :id (mk-tag "dc-tax-" idx) :font fnt :model (mk-tax-spin idx))]
+		  	 				 ["År"] [(spinner :id (mk-tag "dc-year-" idx) :font fnt :model (mk-year-spin (:year (get-at idx dc))))]
 		  	 				 (map #(mk-cb idx %) (range 1 13))))]
 		  				;(println "dc-part1:" (mk-cb 0 1))
 		  	(forms/forms-panel
-              "right:pref,5dlu, pref,8dlu, right:pref,5dlu, pref,8dlu, right:pref,5dlu, pref,10dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 20dlu,3dlu, 20dlu,3dlu, 20dlu, 30dlu"
+              "right:pref,5dlu, pref,8dlu, right:pref,5dlu, right:pref,5dlu, pref,8dlu, right:pref,5dlu, pref,10dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 15dlu,3dlu, 20dlu,3dlu, 20dlu,3dlu, 20dlu, 30dlu"
               :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
               :leading-column-offset 0
               :default-dialog-border? true
@@ -431,33 +447,47 @@
 		 			 			  :model (spinner-model (get-ym member :to t/month) :from 1 :to 12 :by 1)
 		 		 			      :enabled? (utils/not-nil? (->> member :from-to :to)))])
 
-          contact-part (forms/forms-panel
-              "right:pref,8dlu,200dlu,8dlu,right:pref,8dlu,200dlu"
-              :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
-              :leading-column-offset 0
-              :default-dialog-border? true
-              :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
-              :items [
-              		(forms/separator "Kontakter (den första blir faktureringsadress)")
-              		(combobox :id :member-contact-type-1 :model (vec (keys contact-types)))
-              		(text :id :member-contact-field-1)
-              		(combobox :id :member-contact-type-2 :model (vec (keys contact-types)))
-              		(text :id :member-contact-field-2) (forms/next-line)
-              		(combobox :id :member-contact-type-3 :model (vec (keys contact-types)))
-              		(text :id :member-contact-field-3)
-              		(combobox :id :member-contact-type-4 :model (vec (keys contact-types)))
-              		(text :id :member-contact-field-4)])
+		  contact-part (let [
+		  	contacts (->> member :contact)
+		  	num-contact-fields (max (inc (int (/ (count contacts) 2))) 4)
+		  	get-pref (->> contacts (filter :preferred) first)
+		  	get-skipped (fn [idx] (->> contacts (remove :preferred) (sort-by :type) (get-at (dec idx))))
+		  	get-type-str (fn [cont] (get (set/map-invert contact-types) (:type cont)))
+		  	get-contact-type (fn [idx]  (if (>= idx (count contacts))
+		  								    "Adress"
+		  								    (if (= idx 0)
+		  								   		(get-type-str get-pref)
+		  								   		(get-type-str (get-skipped idx)))))
+		  	get-contact-text (fn [idx]  (if (>= idx (count contacts))
+		  								    ""
+		  								    (if (= idx 0)
+		  								   		(:value get-pref)
+		  								   		(:value (get-skipped idx)))))
+			mk-contact (fn [idx]
+				(concat [(combobox :id (mk-tag "member-contact-type-" idx)
+								   :model (vec (keys contact-types))
+								   :selected-item (get-contact-type idx))]
+ 						[(text :id (mk-tag "member-contact-field-" idx)
+ 							   :text (get-contact-text idx))]))]
+		  	(forms/forms-panel
+            	"right:pref,8dlu,200dlu,8dlu,right:pref,8dlu,200dlu"
+            	:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+            	:leading-column-offset 0
+            	:default-dialog-border? true
+            	:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+            	:items (concat 
+            		[(forms/separator "Kontakter (den första blir faktureringsadress)")]
+              		(mapcat mk-contact (range num-contact-fields)))))
 
 		  panel (my-forms-panel
                 "left:pref"
-                ;"70dlu:none, 50dlu:none, 90dlu:none, 70dlu:none, p:grow, center:50dlu:none"
                 "pref, 90dlu, 90dlu, 90dlu:grow, 20dlu, center:pref"
                 :default-dialog-border? true
             	:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 0)
             	:items [
 			  		(left-right-split info-part	start-part :divider-location 1/2 :border 0)
 					(scrollable estate-part :hscroll :never :border 0)
-					contact-part
+					(scrollable contact-part :hscroll :never :border 0)
 					(scrollable dc-part :hscroll :never :border 0)
 		            (forms/separator)
 		            (forms/forms-panel
@@ -511,6 +541,186 @@
 		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-member e)
 	                								   			 (restore-main-frame main-panel))))
 		(listen (select panel [:#cancel-button]) :action (fn [e] (restore-main-frame main-panel)))
+
+		panel))
+
+(def ^:private estate-example
+	{:estate-id        "MBEF82"
+	 :location         "Myrhult 1:2"
+	 :address          "Lindåsen Höjen 52, 54592 Älgarås"
+	 :note             ""
+	 :from-to          {:from "2016-12-5" :to "2016-12-5"}
+	 :billing-interval [{:year 2016 :months 12} {:year 2017 :months 3}]
+	 :activity         [{:year 2016 :months #{1 2 3 10 11 12}}]
+	 :debit-credit     [{:date "2016-12-5"
+	 					 :amount 40
+	 					 :tax 10
+	 					 :type :connection-fee
+	 					 :member-id 3
+	 					 :year 2016
+	 					 :months #{1 2 3}}]
+	 })
+
+(defn mk-month-boxes
+	[month-txt fnt row-num key-txt value-set]
+	(let [mk-cb (fn [m]
+					(checkbox :id (mk-tag (str key-txt row-num "-") m)
+			  				  :text (nth month-txt (dec m))
+			  				  :font fnt
+			  				  :selected? (contains? value-set m)))]
+	;(println "key:" key-txt "values:" value-set)
+		(grid-panel :columns 12 :items [
+			(mk-cb 1) (mk-cb 2) (mk-cb 3) (mk-cb 4)
+			(mk-cb 5) (mk-cb 6) (mk-cb 7) (mk-cb 8)
+			(mk-cb 9) (mk-cb 10) (mk-cb 11) (mk-cb 12)])))
+
+(defn edit-estate
+	[main-panel estate-id]
+	(let [dc-types {"Medlemskap" :membership-fee "Anslutning" :connection-fee "Användning" :operator-fee}
+		  fnt "ARIAL-BOLD-14"
+		  estate (db/get-estate estate-id)
+		  get-ym (fn [x k ym] (if-let [ym-ym (f/parse (get (:from-to x) k))]
+		  						  (long (ym ym-ym))
+		  						  (long (if (= ym t/year) 2020 12))))
+		  dc-part (let [dc (->> estate :debit-credit)
+		  				mk-date (fn [idx] (text :id (mk-tag "dc-date-" idx) :margin 3 :font fnt :text (:date (get-at idx dc))))
+		  				mk-money-spin (fn [idx] (spinner-model (:amount (get-at idx dc)) :from -1000 :to 1000 :by 0.01))
+		  				mk-tax-spin (fn [idx] (spinner-model (:tax (get-at idx dc)) :from -1000 :to 1000 :by 0.01))
+		  				mk-entry (fn [idx]
+		  					[(mk-date idx)
+		  	 				 (selection! (combobox :id (mk-tag "dc-type-" idx)
+		  	 				 					   :model (vec (keys dc-types)))
+		  	 				 			 (get (set/map-invert dc-types) (:type (get-at idx dc))))
+		  	 				 (spinner :id (mk-tag "dc-amount-" idx) :font fnt :model (mk-money-spin idx))
+		  	 				 (spinner :id (mk-tag "dc-tax-" idx) :font fnt :model (mk-tax-spin idx))
+		  	 				 (spinner :id (mk-tag "dc-year-" idx) :font fnt :model (mk-year-spin (:year (get-at idx dc))))
+		  	 				 (mk-month-boxes ["J" "F" "M" "A" "M" "J"
+			  								  "J" "A" "S" "O" "N" "D"]
+			  								  fnt idx "dc-month-" (:months (get-at idx dc)))
+		  	 				 (checkbox :id (mk-tag "dc-del-" idx) :font fnt)])]
+		  	(vertical-panel :items [
+		  		(forms/forms-panel
+	              	"center:50dlu,5dlu, center:50dlu,5dlu, center:30dlu,5dlu, center:30dlu,5dlu, center:30dlu,5dlu, center:230dlu,10dlu, 10dlu"
+	              	:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+	              	:leading-column-offset 0
+	              	:default-dialog-border? true
+	              	:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+	              	:items [
+	              		(forms/separator "Debit/Credit")
+	              		"Införd" "Type" "Belopp" "Moms" "År" "Månader" "X"])
+	            (scrollable (forms/forms-panel
+	              	"center:50dlu,5dlu, center:50dlu,5dlu, center:30dlu,5dlu, center:30dlu,5dlu, center:30dlu,5dlu, center:230dlu,10dlu, 10dlu"
+	              	:items (mapcat mk-entry (range (count dc))))
+	            	:hscroll :never :vscroll :always :border 0)
+	            (button :text "Lägg till ny")]))
+
+		  info-part (forms/forms-panel
+              "right:pref,8dlu, right:pref,8dlu, right:pref,8dlu, right:pref,8dlu, right:pref,8dlu, right:pref,8dlu, right:pref,8dlu, right:pref,8dlu"
+              :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+              :leading-column-offset 0
+              :default-dialog-border? true
+              :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+              :items [
+              	 "ID" (text :id :estate-id-field :text (:estate-id estate))
+                 "Betäckning" (text :id :estate-loc-field :text (:location estate))
+                 "Ägare" (text :text (:name (db/get-current-owner-from-estate estate)))
+                 (forms/next-line)
+                 "Adress" (forms/span (text :id :estate-address-field :text (:address estate)) 5)
+                 "Notering" (forms/span (text :id :estate-note-field :text (:note estate)) 5)])
+
+		  start-part (forms/forms-panel
+              "right:pref,8dlu, 50dlu,30dlu, right:pref,8dlu, right:pref,8dlu, 50dlu,10dlu"
+              :default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+              :leading-column-offset 0
+              :default-dialog-border? true
+              :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+              :items [
+              	 (forms/separator "Anslutningen börjar --- och slutar")
+                 (forms/next-line)
+                 "År" (spinner :id :estate-start-year :font fnt
+		 		 			 :model (spinner-model (->> estate :from-to :from f/parse t/year long)
+		 		 			 	:from 2010 :to 2020 :by 1))
+                 (checkbox :id :estate-disable :text "Avsluta?")
+                 (label :text "År" :enabled? (utils/not-nil? (->> estate :from-to :to)))
+                 (spinner :id :estate-end-year :font fnt
+		 		 			   :model (spinner-model (get-ym estate :to t/year):from 2010 :to 2020 :by 1)
+		 		 			   :enabled? (utils/not-nil? (->> estate :from-to :to)))
+                 "Månad" (spinner :id :estate-start-month :font fnt
+		 			 			  :model (spinner-model (->> estate :from-to :from f/parse t/month long) :from 1 :to 12 :by 1))
+                 "" (label :text "Månad" :enabled? (utils/not-nil? (->> estate :from-to :to)))
+                 (spinner :id :estate-end-month :font fnt
+		 			 			  :model (spinner-model (get-ym estate :to t/month) :from 1 :to 12 :by 1)
+		 		 			      :enabled? (utils/not-nil? (->> estate :from-to :to)))])
+
+		  interval-part
+		  	(let [bis (->> estate :billing-interval (sort-by :year))
+		  		  bi-group (button-group)
+		  		  mk-bi-entry (fn [idx]
+		  			[(spinner :id (mk-tag "bi-year-" idx)
+		  					  :font fnt
+		  					  :model (mk-year-spin (:year (get-at idx bis))))
+		  	 		 (selection! (combobox :id (mk-tag "bi-months-" idx)
+		  	 							   :model [3 12])
+		  	 					 (:months (get-at idx bis)))])]
+			  	(vertical-panel :items [
+			  		(forms/forms-panel
+	            		"center:50dlu,15dlu, center:50dlu"
+	            		:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+		                :leading-column-offset 0
+		                :default-dialog-border? true
+		                :line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+		                :items [(forms/separator "Betalningsinterval")])
+	          		(scrollable (forms/forms-panel
+	          						"center:50dlu,15dlu, center:50dlu"
+	          						:items (mapcat mk-bi-entry (range (count bis))))
+	          			:hscroll :never :vscroll :always :border 0)]))
+
+		  activity-part
+		  	(let [acts (->> estate :activity (sort-by :year))
+		  		  mk-act-entry (fn [idx]
+		  			[(spinner :id (mk-tag "act-year-" idx)
+		  					  :font fnt
+		  					  :model (mk-year-spin (:year (get-at idx acts))))
+		  	 		 (mk-month-boxes ["Jan" "Feb" "Mar" "Apr" "Maj" "Jun"
+			  						  "Jul" "Aug" "Sep" "Okt" "Nov" "Dec"]
+			  						 fnt idx "act-" (:months (get-at idx acts)))
+		  	 		 (checkbox :id (mk-tag "act-del-" idx) :font fnt)])]
+		  	(vertical-panel :items [
+			  	(forms/forms-panel
+              		"center:50dlu,15dlu, left:300dlu,10dlu, 10dlu"
+              		:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+              		:leading-column-offset 0
+              		:default-dialog-border? true
+              		:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+              		:items [(forms/separator "Aktiviteter")])
+              	(scrollable (forms/forms-panel
+	          		"center:50dlu,15dlu, left:300dlu,10dlu, 10dlu"
+	          		:items (mapcat mk-act-entry (range (count acts))))
+	          		:hscroll :never :vscroll :always :border 0)
+              	(button :text "Lägg till ny")]))
+
+		  panel (my-forms-panel
+                "left:pref"
+                "pref, top:100dlu, top:100dlu, top:pref:grow, center:pref"
+                :default-dialog-border? true
+            	:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 0)
+            	:items [
+			  		info-part
+			  		(left-right-split start-part interval-part)
+					activity-part
+					dc-part
+		            (forms/separator)
+		            (forms/forms-panel
+	            		"pref,30dlu,pref"
+	            		:leading-column-offset 100
+	            		:items [
+							(button :id :ok-button :text "OK")
+							(button :id :cancel-button :text "Cancel")])])]
+
+                      	
+;		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-member e)
+;	                								   			 (restore-main-frame main-panel))))
+;		(listen (select panel [:#cancel-button]) :action (fn [e] (restore-main-frame main-panel)))
 
 		panel))
 
@@ -653,10 +863,6 @@
 	[est nu]
 	(keyword (str (:estate-id est) "-" nu)))
 
-(defn mk-select-tag
-	[id nu]
-	(keyword (str "#" id "-" nu)))
-
 (defn get-estate-activity
 	[estate]
 	(if-let [s1 (first (filter #(= (:year %) (utils/year)) (:activity estate)))]
@@ -726,11 +932,102 @@
 
 ;;------------------------------------------------------------------------------------
 
+;		  a {:member-id
+;		     :name
+;		     :membership {:fee :tax}
+;		     :estates [{:estate-id :connection {:fee :tax} :operator {:fee :tax}}]}
+(defn enter-fees
+	[main-panel]
+	(let [fnt "ARIAL-BOLD-14"
+		  owe-entry (fn [member]
+			(let [mk-membership-line [
+			  		"" "Medlemsavgift"
+	        		"Belopp:" (label :text (str (:fee (:membership member))))
+	        		"Moms:" (label :text (str (:tax (:membership member))))
+	        		"Totalt:" (label :text (str (+ (:fee (:membership member)) (:tax (:membership member)))))
+	        		"När:" (text :id (mk-tag "date-paid-" (:member-id member)) :text (utils/today-str))
+	        		(checkbox :id (mk-tag "paid-all-" (:member-id member)) :text "Betalat allt?")
+	        		"Betalt:" (spinner :id (mk-tag "paid-amount-" (:member-id member)) :font fnt
+	 			 			  		   :model (spinner-model 1 :from 1 :to 10000 :by 1))]
+	              mk-conn-line (fn [estate] [
+			  		(label :text (:estate-id estate)) "Anslutningsavgift"
+	        		"Belopp:" (label :text (str (:fee (:connection estate))))
+	        		"Moms:" (label :text (str (:tax (:connection estate))))
+	        		"Totalt:" (label :text (str (+ (:fee (:connection estate)) (:tax (:connection estate)))))
+	        		"När:" (text :id (mk-tag "conn-date-paid-" (str (:member-id member) "-" (:estate-id estate))) :text (utils/today-str))
+	        		(checkbox :id (mk-tag "conn-paid-all-" (str (:member-id member) "-" (:estate-id estate))) :text "Betalat allt?")
+	        		"Betalt:" (spinner :id (mk-tag "conn-paid-amount-" (str (:member-id member) "-" (:estate-id estate))) :font fnt
+	 			 			  :model (spinner-model 1 :from 1 :to 10000 :by 1))])
+	              mk-oper-line (fn [estate] [
+			  		(label :text (:estate-id estate)) "Användningsavgift"
+	        		"Belopp:" (label :text (str (:fee (:operator estate))))
+	        		"Moms:" (label :text (str (:tax (:operator estate))))
+	        		"Totalt:" (label :text (str (+ (:fee (:operator estate)) (:tax (:operator estate)))))
+	        		"När:" (text :id (mk-tag "oper-date-paid-" (str (:member-id member) "-" (:estate-id estate))) :text (utils/today-str))
+	        		(checkbox :id (mk-tag "oper-paid-all-" (str (:member-id member) "-" (:estate-id estate))) :text "Betalat allt?")
+	        		"Betalt:" (spinner :id (mk-tag "oper-paid-amount-" (str (:member-id member) "-" (:estate-id estate))) :font fnt
+	 			 			  		   :model (spinner-model 1 :from 1 :to 10000 :by 1))])
+	              ]
+				(forms/forms-panel
+            		"right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref,8dlu,right:pref"
+	            	:default-row-spec (com.jgoodies.forms.layout.RowSpec. "20px")
+	            	:leading-column-offset 0
+	            	:default-dialog-border? true
+	            	:line-gap-size (com.jgoodies.forms.layout.Sizes/pixel 10)
+	            	:items (concat 
+	            		[(forms/separator (str (:member-id member) " " (:name member)))]
+	            		mk-membership-line
+	              		(mapcat mk-conn-line (:estates member))
+	              		(mapcat mk-oper-line (:estates member))))))
+
+		  sum-of-dc (fn [m-id t dc] (let [v2m (fn [[fee tax]] {:fee fee :tax tax})
+		  								  valu (->> dc (filter #(and (= (:member-id %) m-id) (= (:type %) t)))
+		  											   (map #(vector (:amount %) (:tax %)))
+		  									           (reduce (fn [[x1 y1] [x2 y2]] [(+ x1 x2) (+ y1 y2)]) [0 0]))]
+		  								(v2m valu)))
+
+		  members-who-owe (let [
+		  		members   (db/get-all-members)
+		  		owe-memb  (fn [member] {:member-id (:member-id member)
+		  								:name (:name member)
+		  								:membership (sum-of-dc (:member-id member) :membership-fee (:debit-credit member))})
+		  		owe-conn (fn [estate member-id] (sum-of-dc member-id :connection-fee (:debit-credit estate)))
+		  		owe-oper (fn [estate member-id] (sum-of-dc member-id :operator-fee   (:debit-credit estate)))
+		  		owe-estates (fn [member] (map #(hash-map :estate-id (:estate-id %)
+		  												 :connection (owe-conn % (:member-id member))
+		  												 :operator (owe-oper % (:member-id member))) (:estates member)))
+		  		aaa (map #(assoc (owe-memb %) :estates (owe-estates %)) members)
+		  		sum-estates (fn [estates] (reduce + (map #(+ (:fee (:connection %)) (:tax (:connection %))
+		  										             (:fee (:operator %)) (:tax (:operator %))) estates)))
+		  		f-fn (fn [memb] (< (+ (:fee (:membership memb)) (:tax (:membership memb)) (sum-estates (:estates memb))) 0))]
+		  	(sort-by :member-id (filter f-fn aaa)))
+
+		  entries (fn [] (map owe-entry members-who-owe))]
+
+		(vertical-panel :items [
+						(scrollable (vertical-panel :items (entries)))
+						:separator
+						[:fill-v 20]
+						(horizontal-panel :items [
+							(button :text "OK"
+									:listen [:action (fn [e]
+										;(update-entries)
+										(restore-main-frame main-panel)
+										)])
+							[:fill-h 100]
+							(button :text "Cancel"
+									:listen [:action (fn [e]
+										(restore-main-frame main-panel))])])
+						[:fill-v 20]])))
+
+;;------------------------------------------------------------------------------------
+
 (defn exec-membership
 	[year]
 	{:pre [(int? year) (> year 2010) (< year 2021)]}
 	(let [fee (fn [member] {:date (utils/today-str)
-		  	   				:amount (:tot (:membership (get (db/get-config year data/every-month) 1)))
+		  	   				:amount (:fee (:membership (get (db/get-config year data/every-month) 1)))
+		  	   				:tax (:tax (:membership (get (db/get-config year data/every-month) 1)))
 		  	   				:type :membership-fee
 		       				:member-id (:member-id member)
 		       				:year year
@@ -755,7 +1052,8 @@
 		  										 (:debit-credit estate)))))
 		  months (fn [estate member-id] (set/difference q-months (set/intersection (data/get-activity estate year) q-months (billed estate member-id))))
 		  fee (fn [estate member-id] {:date (utils/today-str)
-		  			                  :amount (reduce + (map #(:tot (:connection (get config %))) (months estate member-id)))
+		  			                  :amount (reduce + (map #(:fee (:connection (get config %))) (months estate member-id)))
+					  			      :tax (reduce + (map #(:tax (:connection (get config %))) (months estate member-id)))
 					  			      :type :operator-fee
 		  			                  :member-id member-id
 		    		                  :year year
@@ -785,7 +1083,8 @@
 		  										 (:debit-credit estate)))))
 		  months (fn [estate member-id] (set/difference q-months (set/intersection q-months (billed estate member-id))))
 		  fee (fn [estate member-id] {:date (utils/today-str)
-		  			                  :amount (reduce + (map #(:tot (:connection (get config %))) (months estate member-id)))
+		  			                  :amount (reduce + (map #(:fee (:connection (get config %))) (months estate member-id)))
+		  			                  :tax (reduce + (map #(:tax (:connection (get config %))) (months estate member-id)))
 		  			                  :type :connection-fee
 		  			                  :member-id member-id
 		    		                  :year year
@@ -978,6 +1277,7 @@
 					(menu-item :id :invoice-member     :text "Skapa fakturor (medlemsavgift)")
 					(menu-item :id :invoice-usage      :text "Skapa fakturor (användning)")
 					(menu-item :id :invoice-usage-year :text "Skapa fakturor (användning-helår)")
+					(menu-item :id :enter-fees         :text "Bokför inbetalningar")
 					(menu-item :id :config-system      :text "Konfigurera")])
 			(menu
 				:id :member-menu
@@ -985,45 +1285,16 @@
 				:items [
 					(menu-item :id :add-member :text "Ny medlem")
 					(menu-item :id :edit-member :text "Ändra medlem")
-					(menu-item :id :member-search :text "Sök medlemmar")
-					(menu-item :text "Bokför medlemsavgifter")])
+					(menu-item :id :member-search :text "Sök medlemmar")])
 			(menu
 				:id :estate-menu
 				:text "Fastigheter"
 				:items [
 					(menu-item :id :add-estate :text "Ny fastighet")
-					(menu-item :id :test-forms :text "Ändra fastighet")
+					(menu-item :id :edit-estate :text "Ändra fastighet")
 					(menu-item :id :estate-search :text "Sök fastighet")
-					(menu-item :id :enter-activities :text "Bokför aktiviteter")
-					(menu-item :text "Bokför betalningar")])]))]
+					(menu-item :id :enter-activities :text "Bokför aktiviteter")])]))]
 
-	(listen (select panel [:#config-system]) :action (fn [e]
-		(disable-main-menu panel)
-		(config! panel :title "Konfigurera")
-		(config! panel :content (do-config panel))))
-	
-	(listen (select panel [:#add-member]) :action (fn [e]
-		(disable-main-menu panel)
-		(config! panel :title "Lägg till medlem")
-		(config! panel :content (do-new-member panel))))
-	
-	(listen (select panel [:#add-estate]) :action (fn [e]
-		(disable-main-menu panel)
-		(config! panel :title "Lägg till fastighet")
-		(config! panel :content (do-new-estate panel))))
-	
-	(listen (select panel [:#edit-member]) :action (fn [e]
-		;(when-let [member-id (search-members "Välj medlem")]
-			(disable-main-menu panel)
-			(config! panel :title "Ändra medlem")
-			;(config! panel :content (edit-member panel member-id)))))
-			(config! panel :content (edit-member panel 5))))
-	
-	(listen (select panel [:#enter-activities]) :action (fn [e]
-		(disable-main-menu panel)
-		(config! panel :title "Bokför aktiviteter")
-		(config! panel :content (activity-frame panel))))
-	
 	(listen (select panel [:#calc-fees]) :action (fn [e]
 		(disable-main-menu panel)
 		(config! panel :title "Beräkna avgifter")
@@ -1050,15 +1321,53 @@
 			(list-invoice-usage year true "Avgifter för användning (helår)")
 			(restore-main-frame panel))))
 
+	(listen (select panel [:#enter-fees]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :title "Inbetalningar")
+		(config! panel :content (enter-fees panel))))
+	
+	(listen (select panel [:#config-system]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :title "Konfigurera")
+		(config! panel :content (do-config panel))))
+	
+	(listen (select panel [:#add-member]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :title "Lägg till medlem")
+		(config! panel :content (do-new-member panel))))
+	
+	(listen (select panel [:#edit-member]) :action (fn [e]
+		;(when-let [member-id (search-members "Välj medlem")]
+			(disable-main-menu panel)
+			(config! panel :title "Ändra medlem")
+			;(config! panel :content (edit-member panel member-id)))))
+			(config! panel :content (edit-member panel 5))))
+	
 	(listen (select panel [:#member-search]) :action (fn [e]
 		(disable-main-menu panel)
 		(config! panel :title "Sök medlemmar")
 		(search-members "Medlemmar")
 		(restore-main-frame panel)))
 
+	(listen (select panel [:#add-estate]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :title "Lägg till fastighet")
+		(config! panel :content (do-new-estate panel))))
+	
+	(listen (select panel [:#edit-estate]) :action (fn [e]
+		(when-let [estate-id (search-estates "Välj fastighet")]
+			(disable-main-menu panel)
+			(config! panel :title "Ändra fastighet")
+			(config! panel :content (edit-estate panel estate-id)))))
+	
 	(listen (select panel [:#estate-search]) :action (fn [e]
 		(disable-main-menu panel)
 		(config! panel :title "Sök fastigheter")
 		(search-estates "Fastigheter")
 		(restore-main-frame panel)))
+	
+	(listen (select panel [:#enter-activities]) :action (fn [e]
+		(disable-main-menu panel)
+		(config! panel :title "Bokför aktiviteter")
+		(config! panel :content (activity-frame panel))))
 	panel))

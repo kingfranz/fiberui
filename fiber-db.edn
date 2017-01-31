@@ -803,61 +803,73 @@
    :note "",
    :debit-credit [{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
             :months #{1 2 3 4 5 6 7 8 9 10 11 12}}{:date "2016-1-5"
             :amount -500
+            :tax 0
             :type :membership-fee
             :member-id 5
             :year 2016
@@ -1419,11 +1431,38 @@
   {:estate-id "MBEF110",
    :location "Fredstorp 1:1",
    :address "Myrhult Gömmet 8, 54592 Älgarås",
-   :billing-interval [{:year 2016, :months 3} {:year 2017, :months 3}],
+   :billing-interval [{:year 2010, :months 3} {:year 2011, :months 12}{:year 2012, :months 3} {:year 2013, :months 12}{:year 2014, :months 3} {:year 2015, :months 12}{:year 2016, :months 3} {:year 2017, :months 12}],
    :_id :5e697a7e7281479da7a56e4a395a91a5,
-   :activity [{:year 2017, :months #{}}],
-   :note "", :from-to {:from "2010-01-01"},
-   :debit-credit []},
+   :activity [{:year 2017, :months #{1 2 3}}{:year 2015, :months #{1 2 3 10 11 12}}{:year 2016, :months #{1 2 3 4 5 6}}],
+   :note "kalle kula", :from-to {:from "2010-01-01"},
+   :debit-credit [{:date "2015-1-5"
+            :amount -500
+            :tax -100
+            :type :connection-fee
+            :member-id 5
+            :year 2015
+            :months #{1 2 3 4 5 6 7 8 9 10 11 12}}
+            {:date "2015-1-5"
+            :amount -500
+            :tax 0
+            :type :operator-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 9 10 11 12}}
+            {:date "2016-1-5"
+            :amount -256
+            :tax -67
+            :type :connection-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 3 4 5 6 7 12}}
+            {:date "2016-1-5"
+            :amount -500
+            :tax 0
+            :type :operator-fee
+            :member-id 5
+            :year 2016
+            :months #{1 2 7 8 9 10 11 12}}]},
   :7f9f7503994947aa8e7094bc1b093f7c
   {:estate-id "MBEF23",
    :location "Björkulla 2:36",

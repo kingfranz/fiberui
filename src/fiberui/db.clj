@@ -86,11 +86,22 @@
 (defn was-owner?
 	[estate member year]
 	(filter #(and (= (:estate-id %) (:estate-id estate))
-					 (data/within-from-to (:from-to %) year)) (:estates member)))
+					 (data/within-from-to (:from-to %) year))
+			(:estates member)))
+
+(defn is-owner?
+	[estate member]
+	(filter #(and (= (:estate-id %) (:estate-id estate))
+					 (not (:to (:from-to %))))
+		    (:estates member)))
 
 (defn get-owners-from-estate
 	[year estate]
 	(map data/validate-member (db/query :member :where [#(was-owner? estate % year)])))
+
+(defn get-current-owner-from-estate
+	[estate]
+	(data/validate-member (first (db/query :member :where [#(is-owner? estate %)]))))
 
 ;;------------------------------------------------------------------------------------
 
