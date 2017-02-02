@@ -71,10 +71,6 @@
     [x]
     (and (is-string? x) (f/parse (f/formatters :mysql) x)))
 
-(defn is-estate-id?
-    [x]
-    (and (is-string? x) (re-matches #"MBEF[0-9]+" x)))
-
 (defn is-pos-int? 
     "doc-string"
     [x]

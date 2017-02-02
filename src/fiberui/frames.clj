@@ -1,26 +1,26 @@
 (ns fiberui.frames
-	(:require [fiberui.config       :refer :all])
-	(:require [fiberui.db      :as db       :refer :all])
-	(:require [fiberui.data      :as data       :refer :all])
-	(:require [fiberui.utils      :as utils       :refer :all])
-	(:require [clojure.spec               :as s])
-  	(:require [clj-time.core              :as t])
-	(:require [clj-time.format            :as f])
-	(:require [clj-time.local             :as l])
-	(:require [seesaw.core        :refer :all])
-    (:require [seesaw.border        :refer :all])
-    (:require [seesaw.graphics        :refer :all])
-    (:require [seesaw.color        :refer :all])
-    (:require [seesaw.forms        :as forms])
-    (:require [seesaw.font        :refer :all])
-    (:require [clojure.data.csv :as csv])
-    (:require [clojure.java.io :as io])
+	(:require [fiberui.config    :as config  :refer :all])
+	(:require [fiberui.data      :as data    :refer :all])
+	(:require [fiberui.utils     :as utils   :refer :all])
+	(:require [fiberui.db        :as db      :refer [set-persist]])
+	(:require [clojure.spec      :as s])
+  	(:require [clj-time.core     :as t])
+	(:require [clj-time.format   :as f])
+	(:require [clj-time.local    :as l])
+	(:require [seesaw.core                   :refer :all])
+    (:require [seesaw.border                 :refer :all])
+    (:require [seesaw.graphics               :refer :all])
+    (:require [seesaw.color                  :refer :all])
+    (:require [seesaw.forms      :as forms])
+    (:require [seesaw.font                   :refer :all])
+    (:require [clojure.data.csv  :as csv])
+    (:require [clojure.java.io   :as io])
     (:require [taoensso.timbre            :as timbre
              :refer [log  trace  debug  info  warn  error  fatal  report
                      logf tracef debugf infof warnf errorf fatalf reportf spy get-env]])
 	(:require [taoensso.timbre.appenders.core :as appenders])
-	(:require [clojure.set     :as set :refer [superset? intersection union]])
-	(:require [clojure.string  :as str  :refer [includes?]])
+	(:require [clojure.set       :as set     :refer [superset? intersection union]])
+	(:require [clojure.string    :as str     :refer [includes?]])
 	(:import  javax.swing.JPanel
     		  com.jgoodies.forms.builder.DefaultFormBuilder
     		  com.jgoodies.forms.layout.FormLayout)
@@ -29,6 +29,8 @@
     	  [seesaw.util :only (resource)]))
 
 ;;------------------------------------------------------------------------------------
+
+(def fnt "ARIAL-12")
 
 (defn mk-idx-tag
 	[s idx]
@@ -175,7 +177,7 @@
 
 (defn search-estates
 	[title]
-	(search-dialog (->> (db/get-all-estates)
+	(search-dialog (->> (data/get-all-estates)
 					(sort-by :estate-id)
 					(map #(hash-map :id       (:estate-id %)
 									:location (:location %)
@@ -189,7 +191,7 @@
 
 (defn search-members
 	[title]
-	(search-dialog (->> (db/get-all-members)
+	(search-dialog (->> (data/get-all-members)
 					(sort-by :member-id)
 					(map #(hash-map :id      (:member-id %)
 									:namn    (:name %)
@@ -203,7 +205,7 @@
 
 (defn list-invoice-members
 	[year title]
-	(search-dialog (->> (db/get-all-members)
+	(search-dialog (->> (data/get-all-members)
 						(map #(hash-map :medlemsnr      (:member-id %)
 										:name    (:name %)
 										:kontact (data/preferred-contact %)
@@ -219,7 +221,7 @@
 
 (defn list-invoice-usage
 	[year yearly title]
-	(let [mk-pay (fn [x] (let [members  (db/get-owners-from-estate year x)
+	(let [mk-pay (fn [x] (let [members  (data/get-owners-from-estate year x)
 							   con-fee (fn [id] (data/sum-debit-credit id year x [:connection-fee]))
 							   op-fee  (fn [id] (data/sum-debit-credit id year x [:operator-fee]))]
 							(map #(hash-map :fastighet (:address x)
@@ -239,7 +241,7 @@
 								      			 (:member-id %)
 								      			 (:name %)
 								      			 (preferred-contact %))) members)))]
-	(search-dialog (->> (db/get-all-estates)
+	(search-dialog (->> (data/get-all-estates)
 						(filter #(if yearly (data/is-yearly-bill year %) (not (data/is-yearly-bill year %))))
 						(mapcat mk-pay)
 						(filter #(not (zero? (:tot-amount %))))
@@ -321,12 +323,12 @@
 		  							   			 				 (get-contact 3)
 		  							   			 				 (get-contact 4)]))
 		  					  :from-to {:from (get-start)}
-		  					  :estates (if-not (utils/is-estate-id? (get-estate-name))
+		  					  :estates (if-not (data/is-estate-id? (get-estate-name))
 		  					   				[]
 		  					   				[{:estate-id (get-estate-name) :from-to {:from (get-start)}}])})
 		  make-member (fn [e] (if (= (s/conform member-spec (member-ctor)) :clojure.spec/invalid)
     							(do (alert e (s/explain-str member-spec (member-ctor))) false)
-    							(do (db/add-member (member-ctor)) true)))
+    							(do (data/add-member (member-ctor)) true)))
 		  estate-clicked (fn [idx]  (let [ret (search-estates "Välj fastighet")]
 										(config! (select panel [:#estate-name])
 												 :text (if (nil? ret) "" ret))))]
@@ -349,7 +351,7 @@
 	(let [contact-types {"Adress" :address "E-Post" :email "Telefon" :phone}
 		  dc-types {"Medlemskap" :membership-fee "Anslutning" :connection-fee "Användning" :operator-fee}
 		  fnt "ARIAL-BOLD-14"
-		  member (db/get-member member-id)
+		  member (data/get-member member-id)
 		  get-at (fn [idx col] (nth col idx))
 		  get-ym (fn [x k ym] (if-let [ym-ym (f/parse (get (:from-to x) k))]
 		  						  (long (ym ym-ym))
@@ -527,12 +529,12 @@
 		  							   			 				 (get-contact 3)
 		  							   			 				 (get-contact 4)]))
 		  					  :from-to {:from (get-start)}
-		  					  :estates (if-not (utils/is-estate-id? (get-estate-name))
+		  					  :estates (if-not (data/is-estate-id? (get-estate-name))
 		  					   				[]
 		  					   				[{:estate-id (get-estate-name) :from-to {:from (get-start)}}])})
 		  make-member (fn [e] (if (= (s/conform member-spec (member-ctor)) :clojure.spec/invalid)
     							(do (alert e (s/explain-str member-spec (member-ctor))) false)
-    							(do (db/add-member (member-ctor)) true)))
+    							(do (data/add-member (member-ctor)) true)))
 		  estate-clicked (fn [idx]  (let [ret (search-estates "Välj fastighet")]
 										(config! (select panel [:#estate-name])
 												 :text (if (nil? ret) "" ret))))]
@@ -562,8 +564,12 @@
 	 })
 
 (defn mk-month-boxes
-	[month-txt fnt row-num key-txt value-set]
-	(let [mk-cb (fn [m]
+	[short-month-txt key-txt row-num value-set]
+	{:pre [(boolean? short-month-txt) (utils/is-string? key-txt) (set? value-set)]}
+	(let [month-txt (if short-month-txt
+						["J" "F" "M" "A" "M" "J" "J" "A" "S" "O" "N" "D"]
+						["Jan" "Feb" "Mar" "Apr" "Maj" "Jun" "Jul" "Aug" "Sep" "Okt" "Nov" "Dec"])
+		  mk-cb (fn [m]
 					(checkbox :id (mk-tag (str key-txt row-num "-") m)
 			  				  :text (nth month-txt (dec m))
 			  				  :font fnt
@@ -578,7 +584,7 @@
 	[main-panel estate-id]
 	(let [dc-types {"Medlemskap" :membership-fee "Anslutning" :connection-fee "Användning" :operator-fee}
 		  fnt "ARIAL-BOLD-14"
-		  estate (db/get-estate estate-id)
+		  estate (data/get-estate estate-id)
 		  get-ym (fn [x k ym] (if-let [ym-ym (f/parse (get (:from-to x) k))]
 		  						  (long (ym ym-ym))
 		  						  (long (if (= ym t/year) 2020 12))))
@@ -594,9 +600,7 @@
 		  	 				 (spinner :id (mk-tag "dc-amount-" idx) :font fnt :model (mk-money-spin idx))
 		  	 				 (spinner :id (mk-tag "dc-tax-" idx) :font fnt :model (mk-tax-spin idx))
 		  	 				 (spinner :id (mk-tag "dc-year-" idx) :font fnt :model (mk-year-spin (:year (get-at idx dc))))
-		  	 				 (mk-month-boxes ["J" "F" "M" "A" "M" "J"
-			  								  "J" "A" "S" "O" "N" "D"]
-			  								  fnt idx "dc-month-" (:months (get-at idx dc)))
+		  	 				 (mk-month-boxes true "dc-month-" idx (:months (get-at idx dc)))
 		  	 				 (checkbox :id (mk-tag "dc-del-" idx) :font fnt)])]
 		  	(vertical-panel :items [
 		  		(forms/forms-panel
@@ -623,7 +627,7 @@
               :items [
               	 "ID" (text :id :estate-id-field :text (:estate-id estate))
                  "Betäckning" (text :id :estate-loc-field :text (:location estate))
-                 "Ägare" (text :text (:name (db/get-current-owner-from-estate estate)))
+                 "Ägare" (text :text (:name (data/get-current-owner-from-estate estate)))
                  (forms/next-line)
                  "Adress" (forms/span (text :id :estate-address-field :text (:address estate)) 5)
                  "Notering" (forms/span (text :id :estate-note-field :text (:note estate)) 5)])
@@ -681,9 +685,7 @@
 		  			[(spinner :id (mk-tag "act-year-" idx)
 		  					  :font fnt
 		  					  :model (mk-year-spin (:year (get-at idx acts))))
-		  	 		 (mk-month-boxes ["Jan" "Feb" "Mar" "Apr" "Maj" "Jun"
-			  						  "Jul" "Aug" "Sep" "Okt" "Nov" "Dec"]
-			  						 fnt idx "act-" (:months (get-at idx acts)))
+		  	 		 (mk-month-boxes false "act-" idx (:months (get-at idx acts)))
 		  	 		 (checkbox :id (mk-tag "act-del-" idx) :font fnt)])]
 		  	(vertical-panel :items [
 			  	(forms/forms-panel
@@ -756,8 +758,8 @@
 		  get-start     (fn [] (format "%d-%d-1" (value (select panel [:#estate-start-year]))
 		  										 (value (select panel [:#estate-start-month]))))
 
-		  estate-id-ok? (fn [] (if (and (utils/is-estate-id? (get-estate-id))
-		  							    (not (db/estate-id-exist? (get-estate-id))))
+		  estate-id-ok? (fn [] (if (and (data/is-estate-id? (get-estate-id))
+		  							    (not (data/estate-id-exist? (get-estate-id))))
 		  							true
 		  							(do (alert "Fel fastighets#") false)))
 		  estate-ctor (fn [] (hash-map :estate-id (get-estate-id)
@@ -769,7 +771,7 @@
 		  						false
 	  							(if (= (s/conform estate-spec (estate-ctor)) :clojure.spec/invalid)
    									(do (alert e (s/explain-str estate-spec (estate-ctor))) false)
-   									(do (db/add-estate (estate-ctor)) true))))]
+   									(do (data/add-estate (estate-ctor)) true))))]
 
 		(listen (select panel [:#ok-button]) :action (fn [e] (if (make-estate e)
 	                								   			 (restore-main-frame main-panel))))
@@ -840,9 +842,9 @@
 		  								  :operator   (get-operator-fee)}]
 		  						(if (= (s/conform config-spec fees) :clojure.spec/invalid)
     								(do (alert e (s/explain-str config-spec fees)) false)
-    								(do (db/add-config fees) true))))]
+    								(do (data/add-config fees) true))))]
 
-		(when-let [current (db/get-latest-config)]
+		(when-let [current (data/get-latest-config)]
 			(selection! (select panel [:#membership-fee])     (->> current :membership :fee))
 			(selection! (select panel [:#membership-fee-tax]) (->> current :membership :tax))
 			(selection! (select panel [:#connection-fee])     (->> current :connection :fee))
@@ -859,76 +861,75 @@
 
 ;;------------------------------------------------------------------------------------
 
-(defn mk-estate-tag
-	[est nu]
-	(keyword (str (:estate-id est) "-" nu)))
-
-(defn get-estate-activity
-	[estate]
-	(if-let [s1 (first (filter #(= (:year %) (utils/year)) (:activity estate)))]
-		(:months s1)
-		#{}))
-
 (defn activity-frame
-	[main-panel]
-	(let [mk-boxes (fn [estate]
-		  	(let [grid (grid-panel :columns 13 :items (concat [
-			  		(button :id (mk-estate-tag estate "button") :text "Alla" :font "ARIAL-BOLD-14")]
-			  		(map #(checkbox :id (mk-estate-tag estate (str %))
-			  						:text (nth ["Jan" "Feb" "Mar" "Apr" "Maj" "Jun"
-			  									"Jul" "Aug" "Sep" "Okt" "Nov" "Dec"] (dec %))
-			  						:font "ARIAL-12"
-			  						:selected? (contains? (get-estate-activity estate) %))
-			  			 (range 1 13))))
+	[main-panel year]
+	(let [mk-act-tag (fn [estate idx] (mk-tag (str "#act-" (data/get-estate-id estate) "-") idx))
+		  mk-estate-entry (fn [estate]
+		  	(let [lbl (label :text (data/get-estate-address estate) :halign :left :font fnt)
+		  		  btn (button :id (mk-tag (str "act-" (data/get-estate-id estate) "-") "button")
+		  		  			  :text "Alla" :font fnt)
+			  	  boxes (mk-month-boxes false
+			  	  						"act-"
+			  	  						(data/get-estate-id estate)
+			  	  						(data/get-estate-activity estate year))
+
 		  		  set-box-on (fn [i]
-		  			(config! (select grid [(mk-select-tag (:estate-id estate) i)]) :selected? true))]
-		  		(listen (select grid [(mk-select-tag (:estate-id estate) "button")]) :action (fn [e]
-		  			(doseq [i (range 1 13)] (set-box-on i))))
-		  		grid))
+		  			(config! (select boxes [(mk-act-tag estate i)])
+		  					 :selected? true))]
+
+		  		(listen btn :action (fn [e] (doseq [i (range 1 13)] (set-box-on i))))
+		  		[(forms/forms-panel
+            		"right:150dlu,8dlu, 30dlu,8dlu, left:pref,10dlu"
+              		:items [lbl btn boxes])]))
 
 		  activity-entry (fn [member]
-			(let [estates (db/get-estates-from-member member)
-				  houses (mapcat #(vector (label :text (:address %) :halign :left :font "ARIAL-BOLD-16")
-				  						  (mk-boxes %)) estates)]
-				(grid-panel :vgap 5 :columns 1 :items (concat [
-					(label :text (:name member) :halign :left :font "ARIAL-BOLD-16")]
-					houses
-					[:separator]))))
+		  	(horizontal-panel :items [
+		  		[:fill-h 10]
+				(my-forms-panel
+	            	"500dlu"
+	            	"pref, top:pref,10dlu"
+	              	:items [
+	              		(forms/separator (data/get-member-name member))
+						(forms/forms-panel
+	            			"pref"
+	            			:items (mapcat mk-estate-entry
+	            						   (data/get-estates-from-member member year)))])]))
+
+		  panel (my-forms-panel
+            "pref"
+            "420dlu, 20dlu, center:pref"
+            :default-dialog-border? true
+            :items [
+				(scrollable
+					(vertical-panel :items
+						(map activity-entry (data/get-members-with-estates year)))
+					:hscroll :never)
+				(forms/separator)
+				(horizontal-panel :items [
+					(button :text "OK" :id :ok-button)
+					[:fill-h 100]
+					(button :text "Cancel" :id :cancel-button)])])
 
 		  update-entries (fn []
-			(let [estate-ids (mapcat :estates (db/get-members-with-estates))
-				  is-selected? (fn [id i] (config (select main-panel [(mk-select-tag id i)]) :selected?))
-				  mk-selected-set (fn [id] (set (remove nil? (map #(if (is-selected? id %) %) (range 1 13)))))
-				  estate-list (map #(hash-map :estate-id % :months (mk-selected-set %)) estate-ids)]
+			(let [is-selected? (fn [estate idx] (config (select panel
+				  												[(mk-act-tag estate idx)])
+				  										:selected?))
+				  mk-selected-set (fn [estate] (->> config/month-range
+				  									(map #(if (is-selected? estate %) % nil))
+				  									(remove nil?)
+				  									(set)))]
 				(db/set-persist false)
-				(doseq [list-entry estate-list
-						:let [the-estate (db/get-estate (:estate-id list-entry))
-							  year (t/year (l/local-now))
-							  act-list (:activity the-estate)
-							  activities (if act-list
-							  				 (remove #(= (:year %) year) act-list)
-							  				 [])
-							  new-act (conj activities {:year year :months (:months list-entry)})
-							  new-estate (assoc the-estate :activity new-act)]]
-					(db/add-estate new-estate))
-				(db/set-persist true)))
-		  entries (fn [] (map activity-entry (db/get-members-with-estates)))]
+				(doseq [estate (->> (data/get-members-with-estates year)
+									(mapcat #(data/get-estates-from-member % year)))]
+					(data/add-estate (data/add-activity estate year (mk-selected-set estate))))
+				(db/set-persist true)))]
 
-		(vertical-panel :items [
-						(scrollable (vertical-panel :items (entries)))
-						:separator
-						[:fill-v 20]
-						(horizontal-panel :items [
-							(button :text "OK"
-									:listen [:action (fn [e]
-										(update-entries)
-										(restore-main-frame main-panel)
-										)])
-							[:fill-h 100]
-							(button :text "Cancel"
-									:listen [:action (fn [e]
-										(restore-main-frame main-panel))])])
-						[:fill-v 20]])))
+		(listen (select panel [:#ok-button]) :action (fn [e]
+			(update-entries)
+	        (restore-main-frame main-panel)))
+		(listen (select panel [:#cancel-button]) :action (fn [e]
+			(restore-main-frame main-panel)))
+		panel))
 
 ;;------------------------------------------------------------------------------------
 
@@ -987,7 +988,7 @@
 		  								(v2m valu)))
 
 		  members-who-owe (let [
-		  		members   (db/get-all-members)
+		  		members   (data/get-all-members)
 		  		owe-memb  (fn [member] {:member-id (:member-id member)
 		  								:name (:name member)
 		  								:membership (sum-of-dc (:member-id member) :membership-fee (:debit-credit member))})
@@ -1026,23 +1027,23 @@
 	[year]
 	{:pre [(int? year) (> year 2010) (< year 2021)]}
 	(let [fee (fn [member] {:date (utils/today-str)
-		  	   				:amount (:fee (:membership (get (db/get-config year data/every-month) 1)))
-		  	   				:tax (:tax (:membership (get (db/get-config year data/every-month) 1)))
+		  	   				:amount (:fee (:membership (get (data/get-config year data/every-month) 1)))
+		  	   				:tax (:tax (:membership (get (data/get-config year data/every-month) 1)))
 		  	   				:type :membership-fee
 		       				:member-id (:member-id member)
 		       				:year year
 		  	   				:months data/every-month})]
 		(db/set-persist false)
 		(doseq [entry (map #(assoc % :debit-credit (conj (:debit-credit %) (fee %)))
-						   (db/get-members-not-charged-membership year))]
-			(db/add-member entry))
+						   (data/get-members-not-charged-membership year))]
+			(data/add-member entry))
 		(db/set-persist true)))
 
 (defn exec-operator
 	[year q-months yearly]
 	{:pre [(int? year) (> year 2010) (< year 2021) (seq q-months)]}
-	(let [config (db/get-config year q-months)
-		  members (fn [estate] (db/get-owners-from-estate year estate))
+	(let [config (data/get-config year q-months)
+		  members (fn [estate] (data/get-owners-from-estate year estate))
 		  billed (fn [estate member-id]
 		  	(apply set/union (map :months (filter #(and (= (:year %) year)
 					  								    (= (:type %) :operator-fee)
@@ -1061,19 +1062,19 @@
 		  mk-dc (fn [estate] (assoc estate :debit-credit (vec (conj (:debit-credit estate)
 		  															(map #(fee estate %) (members estate))))))
 		  estates (if yearly
-		  			(filter #(db/is-yearly? year %) (db/get-estates-not-charged-oper year q-months))
-		  			(remove #(db/is-yearly? year %) (db/get-estates-not-charged-oper year q-months)))]
+		  			(filter #(data/is-yearly? year %) (data/get-estates-not-charged-oper year q-months))
+		  			(remove #(data/is-yearly? year %) (data/get-estates-not-charged-oper year q-months)))]
 
 		(db/set-persist false)
 		(doseq [estate (map mk-dc estates)]
-			(db/add-estate estate))
+			(data/add-estate estate))
 		(db/set-persist true)))
 
 (defn exec-connection
 	[year q-months yearly]
 	{:pre [(int? year) (> year 2010) (< year 2021) (seq q-months)]}
-	(let [config (db/get-config year q-months)
-		  members (fn [estate] (db/get-owners-from-estate year estate))
+	(let [config (data/get-config year q-months)
+		  members (fn [estate] (data/get-owners-from-estate year estate))
 		  billed (fn [estate member-id]
 		  	(apply set/union (map :months (filter #(and (= (:year %) year)
 									 				    (= (:type %) :connection-fee)
@@ -1092,12 +1093,12 @@
 		  mk-dc (fn [estate] (assoc estate :debit-credit (vec (conj (:debit-credit estate)
 		  															(map #(fee estate %) (members estate))))))
 		  estates (if yearly
-		  			(filter #(db/is-yearly? year %) (db/get-estates-not-charged-conn year q-months))
-		  			(remove #(db/is-yearly? year %) (db/get-estates-not-charged-conn year q-months)))]
+		  			(filter #(data/is-yearly? year %) (data/get-estates-not-charged-conn year q-months))
+		  			(remove #(data/is-yearly? year %) (data/get-estates-not-charged-conn year q-months)))]
 
 		(db/set-persist false)
 		(doseq [estate (map mk-dc estates)]
-			(db/add-estate estate))
+			(data/add-estate estate))
 		(db/set-persist true)))
 
 ;;------------------------------------------------------------------------------------
@@ -1186,31 +1187,31 @@
 				(cond
 					(config (mk-select :#calc-member-radio) :selected?)
 						(calc-action
-							(db/get-members-not-charged-membership (get-year))
+							(data/get-members-not-charged-membership (get-year))
 							"Medlemsavgifterna"
 							"medlemmar")
 
 					(config (mk-select :#calc-yearly-con-radio) :selected?)
 						(calc-action
-							(db/get-estates-not-charged-yearly-con (get-year))
+							(data/get-estates-not-charged-yearly-con (get-year))
 							"Anslutningsavgifterna"
 							"fastigheter")
 
 					(config (mk-select :#calc-yearly-oper-radio) :selected?)
 						(calc-action
-							(db/get-estates-not-charged-yearly-oper (get-year))
+							(data/get-estates-not-charged-yearly-oper (get-year))
 							"Användningsavgifterna"
 							"fastigheter")
 
 					(config (mk-select :#calc-conn-radio) :selected?)
 						(calc-action
-							(db/get-estates-not-charged-conn (get-year) (get-q-months))
+							(data/get-estates-not-charged-conn (get-year) (get-q-months))
 							"Användningsavgifterna"
 							"fastigheter")
 
 					(config (mk-select :#calc-usage-radio) :selected?)
 						(calc-action
-							(db/get-estates-not-charged-oper (get-year) (get-q-months))
+							(data/get-estates-not-charged-oper (get-year) (get-q-months))
 							"Användningsavgifterna"
 							"fastigheter")
 					)))
@@ -1301,21 +1302,21 @@
 		(config! panel :content (do-calc panel))))
 
 	(listen (select panel [:#invoice-member]) :action (fn [e]
-		(when-let [year (input "Välj år:" :choices (range 2010 2021))]
+		(when-let [year (input "Välj år:" :choices year-range)]
 			(disable-main-menu panel)
 			(config! panel :title "Medlemsavgifter")
 			(list-invoice-members year "Medlemsavgifter")
 			(restore-main-frame panel))))
 
 	(listen (select panel [:#invoice-usage]) :action (fn [e]
-		(when-let [year (input "Välj år:" :choices (range 2010 2021))]
+		(when-let [year (input "Välj år:" :choices year-range)]
 			(disable-main-menu panel)
 			(config! panel :title "Avgifter för användning")
 			(list-invoice-usage year false "Avgifter för användning")
 			(restore-main-frame panel))))
 
 	(listen (select panel [:#invoice-usage-year]) :action (fn [e]
-		(when-let [year (input "Välj år:" :choices (range 2010 2021))]
+		(when-let [year (input "Välj år:" :choices year-range)]
 			(disable-main-menu panel)
 			(config! panel :title "Avgifter för användning (helår)")
 			(list-invoice-usage year true "Avgifter för användning (helår)")
@@ -1367,7 +1368,9 @@
 		(restore-main-frame panel)))
 	
 	(listen (select panel [:#enter-activities]) :action (fn [e]
-		(disable-main-menu panel)
-		(config! panel :title "Bokför aktiviteter")
-		(config! panel :content (activity-frame panel))))
+		(when-let [year (input "Välj år:" :choices year-range)]
+			(disable-main-menu panel)
+			(config! panel :title "Bokför aktiviteter")
+			(config! panel :content (activity-frame panel year)))))
+
 	panel))

@@ -1,5 +1,7 @@
 (ns fiberui.data
-  (:require [fiberui.utils      :as utils      :refer :all])
+  (:require [fiberui.utils      		:as utils])
+  (:require [fiberui.config      		:as config])
+  (:require [fiberui.db      		    :as db])
   (:require [clojure.spec               :as s])
   (:require [clojure.math.numeric-tower :as math])
   (:require [clj-time.core              :as t])
@@ -9,27 +11,8 @@
              :refer [log  trace  debug  info  warn  error  fatal  report
                      logf tracef debugf infof warnf errorf fatalf reportf spy get-env]])
   (:require [taoensso.timbre.appenders.core :as appenders])
-  (:require [clojure.set   :as set :refer [difference superset?]]))
+  (:require [clojure.set   				:as set :refer [difference superset?]]))
 
-
-;;------------------------------------------------------------------------------------
-
-(defn mk-email1-str
-    [contact]
-    (let [email1 (filter #(and (= (:type %) :email) (:preferred %)) contact)]
-        (if (empty? email1)
-            ""
-            (:value email1))))
-
-(defn preferred-contact
-	[member]
-	(if-let [pref (filter :preferred (:contact member))]
-		(:value (first pref))
-		(throw (Exception. (str (:name member) " har ingen vald kontakt")))))
-
-(defn mk-member-str
-	[member]
-	(str "ID: " (:member-id member) " " (:name member) " " (preferred-contact member)))
 
 ;;------------------------------------------------------------------------------------
 
@@ -53,21 +36,24 @@
 	 :note          ""})
 
 ;;------------------------------------------------------------------------------------
-; [[:addr {:value aaaaaaaa, :type :address, :preferred true}] [:addr {:value bbbbbbbbb, :type :address}]]
 
 (defn contains-preferred?
 	[contacts]
-	;(println "contains:" contacts)
+	;(println "contacts:" contacts)
 	(->> contacts (map second) (filter :preferred) not-empty))
 
 (def every-month #{1 2 3 4 5 6 7 8 9 10 11 12})
 
+(defn is-estate-id?
+    [x]
+    (and (utils/is-string? x) (re-matches #"MBEF[0-9]+" x)))
+
 (s/def :fiber/estate-id      is-estate-id?)
-(s/def :fiber/date           date?)
+(s/def :fiber/date           utils/date?)
 (s/def :fiber/amount         #(and (number? %) (> (math/abs %) 1)))
 (s/def :fiber/tax            number?)
-(s/def :fiber/from           date?)
-(s/def :fiber/to             date?)
+(s/def :fiber/from           utils/date?)
+(s/def :fiber/to             utils/date?)
 (s/def :fiber/from-to        (s/keys :req-un [:fiber/from] :opt-un [:fiber/to]))
 (s/def :fiber/note           string?)
 (s/def :fiber/year           int?)
@@ -80,13 +66,13 @@
 											  :member/member-id
 											  :fiber/year
 											  :fiber/months]))
-(s/def :addr/value           is-string?)
+(s/def :addr/value           utils/is-string?)
 (s/def :addr/type            #{:address})
 (s/def :member/addr-entry    (s/keys :req-un [:addr/type :addr/value] :opt-un [:member/preferred]))
-(s/def :email/value          valid-email?)
+(s/def :email/value          utils/valid-email?)
 (s/def :email/type           #{:email})
 (s/def :member/email-entry   (s/keys :req-un [:email/type :email/value] :opt-un [:member/preferred]))
-(s/def :phone/value    	     valid-phone?)
+(s/def :phone/value    	     utils/valid-phone?)
 (s/def :phone/type     	     #{:phone})
 (s/def :member/phone-entry 	 (s/keys :req-un [:phone/type :phone/value] :opt-un [:member/preferred]))
 (s/def :member/contact-entry (s/or :addr :member/addr-entry
@@ -94,11 +80,11 @@
 							 	   :phone :member/phone-entry))
 (s/def :member/estates-entry (s/keys :req-un [:fiber/estate-id :fiber/from-to]))
 
-(s/def :member/name          is-string?)
+(s/def :member/name          utils/is-string?)
 (s/def :member/contact       (s/and vector?
 									(s/+ :member/contact-entry)
 									contains-preferred?))
-(s/def :member/member-id     is-pos-int?)
+(s/def :member/member-id     utils/is-pos-int?)
 (s/def :member/estates       (s/and vector? (s/* :member/estates-entry)))
 (s/def :fiber/debit-credit   (s/and vector? (s/* :fiber/dc-entry)))
 
@@ -112,9 +98,15 @@
                          		  :fiber/note
                                	  :member/estates]))
 
+;;------------------------------------------------------------------------------------
+
+(defn is-member?
+	[member]
+	(not= (s/conform member-spec member) :clojure.spec/invalid))
+
 (defn validate-member
 	[member]
-	(if (= (s/conform member-spec member) :clojure.spec/invalid)
+	(if-not (is-member? member)
     	(do
     		(error "------- Invalid member -----------")
     		(error (s/explain-str member-spec member))
@@ -123,21 +115,63 @@
     		(throw (Exception. "Invalid member data")))
     	member))
 
-(defmulti within-from-to (fn [x y] [x y]))
-(defmethod within-from-to [map org.joda.time.DateTime]
+(defn get-all-members
+	[]
+	(map validate-member (db/get-all-members)))
+
+(defn is-from-to?
+	[x]
+	(not= (s/conform :fiber/from-to x) :clojure.spec/invalid))
+
+(defn is-debit-credit?
+	[x]
+	(not= (s/conform :fiber/debit-credit x) :clojure.spec/invalid))
+
+(defn is-contacts?
+	[x]
+	(not= (s/conform :member/contact x) :clojure.spec/invalid))
+
+(defn mk-email1-str
+    [contacts]
+    {:pre [(is-contacts? contacts)]}
+	(let [email1 (filter #(and (= (:type %) :email) (:preferred %)) contacts)]
+        (if (empty? email1)
+            ""
+            (:value email1))))
+
+(defn preferred-contact
+	[member]
+	{:pre [(is-member? member)]}
+	(if-let [pref (filter :preferred (:contact member))]
+		(:value (first pref))
+		(throw (Exception. (str (:name member) " har ingen vald kontakt")))))
+
+(defn mk-member-str
+	[member]
+	{:pre [(is-member? member)]}
+	(str "ID: " (:member-id member) " " (:name member) " " (preferred-contact member)))
+
+(defmulti within-from-to (fn [x y] [(if (= (type x) clojure.lang.PersistentArrayMap) :pam) (get {org.joda.time.DateTime :dt
+											java.lang.String :str
+											java.lang.Long :int} (type y))]))
+(defmethod within-from-to [:pam :dt]
 	[ft dt]
+	{:pre [(is-from-to? ft)]}
 	(t/within? (t/interval (f/parse (:from ft)) (f/parse (:to ft))) dt))
 
-(defmethod within-from-to [map java.lang.String]
+(defmethod within-from-to [:pam :str]
 	[ft dt]
+	{:pre [(is-from-to? ft)]}
 	(t/within? (t/interval (f/parse (:from ft)) (f/parse (:to ft))) (f/parse dt)))
 
-(defmethod within-from-to [map int]
+(defmethod within-from-to [:pam :int]
 	[ft dt]
-	(t/within? (t/interval (f/parse (:from ft)) (f/parse (:to ft))) (t/date-time dt 6 30)))
+	{:pre [(is-from-to? ft)]}
+	(t/within? (t/interval (f/parse (:from ft)) (f/parse (:to ft))) (t/date-time dt 12 31)))
 
 (defn sum-debit-credit
 	[member-id year entry tags]
+	{:pre [(int? member-id) (int? year) (is-debit-credit? entry) (seq tags)]}
 	(if-let [sum (->> entry
 					 :debit-credit
 					 (filter #(= (:year %) year))
@@ -148,16 +182,12 @@
 		(float sum)
 		0.0))
 
-(defn is-yearly-bill
-	[year estate]
-	(->> estate :billing-interval (filter #(= year (:year %))) first :months (= 12)))
-
+(defn get-member-name
+	[member]
+	{:pre [(is-member? member)]}
+	(:name member))
 
 ;;------------------------------------------------------------------------------------
-
-(defn mk-estate-str
-	[estate]
-	(str "ID: " (:estate-id estate) " " (:location estate) " " (:address estate)))
 
 (def ^:private estate-example
 	{:estate-id        "MBEF82"
@@ -181,10 +211,10 @@
 (s/def :estate/activity-entry   (s/keys :req-un [:fiber/year :fiber/months]))
 (s/def :estate/billing-entry    (s/keys :req-un [:estate/year :billing/months]))
 
-(s/def :estate/address          is-string?)
-(s/def :estate/location         is-string?)
+(s/def :estate/address          utils/is-string?)
+(s/def :estate/location         utils/is-string?)
 (s/def :estate/billing-interval (s/and vector? (s/+ :estate/billing-entry)))
-(s/def :estate/activity         (s/and vector? (s/+ :estate/activity-entry)))
+(s/def :estate/activity         (s/and vector? (s/+ :estate/activity-entry) #(apply distinct? (map :year %))))
 
 ;;------------------------------------------------------------------------------------
 
@@ -199,12 +229,44 @@
 
 ;;------------------------------------------------------------------------------------
 
+(defn is-estate?
+	[x]
+	(not= (s/conform estate-spec x) :clojure.spec/invalid))
+
+(defn validate-estate
+	[estate]
+	{:pre [(is-estate? estate)]}
+	(if-not (is-estate? estate)
+		(do
+			(error "------- Invalid estate -----------")
+			(error (s/explain-str estate-spec estate))
+			(error "-------------------------------------")
+			(error estate)
+			(throw (Exception. "Invalid estate data")))
+		estate))
+
+(defn get-all-estates
+	[]
+	(map validate-estate (db/get-all-estates)))
+
+(defn is-yearly-bill
+	[estate year]
+	{:pre [(is-estate? estate) (int? year)]}
+	(->> estate :billing-interval (filter #(= year (:year %))) first :months (= 12)))
+
+(defn mk-estate-str
+	[estate]
+	{:pre [(is-estate? estate)]}
+	(str "ID: " (:estate-id estate) " " (:location estate) " " (:address estate)))
+
 (defn get-activity
 	[estate year]
+	{:pre [(is-estate? estate) (int? year)]}
 	(apply set/union (map :months (filter #(= (:year %) year) (:activity estate)))))
 
 (defn update-estate-billing
 	[estate]
+	{:pre [(is-estate? estate)]}
 	(let [bill-years   (set (map :year (:billing-interval estate)))
 		  bill-last    (:months (last (sort-by :year (:billing-interval estate))))
 		  dc-years     (set (map :year (:debit-credit estate)))
@@ -217,25 +279,47 @@
 		(assoc estate :billing-interval (vec (concat (:billing-interval estate) added)))))
 
 (defn months-billing
-	[year estate]
+	[estate year]
+	{:pre [(is-estate? estate) (int? year)]}
 	(let [the-year (filter #(= (:year %) year) (:billing-interval estate))]
 		(if (empty? the-year)
 			(:months (last (sort-by :year (:billing-interval estate))))
 			(:months (first the-year)))))
 
+(defn is-owned-by
+	[estate member]
+	{:pre [(is-estate? estate) (is-member? member)]}
+	(some #{(:estate-id estate)} (map :estate-id (:estates member))))
+
+(defn get-estate-activity
+	[estate year]
+	{:pre [(is-estate? estate) (int? year)]}
+	(if-let [s1 (first (filter #(= (:year %) year) (:activity estate)))]
+		(:months s1)
+		#{}))
+
+(defn get-estates-from-member
+	[member year]
+	{:pre [(is-member? member) (int? year)]}
+	(let [estate-ids (set (map :estate-id (filter #(within-from-to (:from-to %) year) (:estates member))))]
+		(filter #(contains? estate-ids (:estate-id %)) (get-all-estates))))
+
+
+(defn get-estate-address
+	[estate]
+	{:pre [(is-estate? estate)]}
+	(:address estate))
+
+(defn get-estate-id
+	[estate]
+	{:pre [(is-estate? estate)]}
+	(:estate-id estate))
+
 ;;------------------------------------------------------------------------------------
 
-(defn validate-estate
-	[house]
-	;(println "----------------------------------------\n" "validate-estate:" house "\n----------------------------------------")
-	(if (= (s/conform estate-spec house) :clojure.spec/invalid)
-		(do
-			(error "------- Invalid estate -----------")
-			(error (s/explain-str estate-spec house))
-			(error "-------------------------------------")
-			(error house)
-			(throw (Exception. "Invalid estate data")))
-		house))
+(defn is-estate?
+	[estate]
+	(not= (s/conform estate-spec estate) :clojure.spec/invalid))
 
 ;;------------------------------------------------------------------------------------
 
@@ -245,7 +329,7 @@
 	 :connection {:fee 40  :tax 0.25 :start-year 2017 :start-month 1}
 	 :operator   {:fee 90  :tax 0.0  :start-year 2017 :start-month 1}})
 
-(s/def :conf/fee         is-pos-int?)
+(s/def :conf/fee         utils/is-pos-int?)
 (s/def :conf/tax         (s/and double? #(>= % 0.0) #(< % 1.0)))
 (s/def :conf/start-month int?)
 (s/def :conf/start-year  int?)
@@ -261,18 +345,236 @@
 								  :conf/connection
 								  :conf/operator]))
 
+(defn is-config?
+	[config]
+	(not= (s/conform config-spec config) :clojure.spec/invalid))
+
 (defn validate-config
-	[co]
-	(if (= (s/conform config-spec co) :clojure.spec/invalid)
+	[config]
+	(if-not (is-config? config)
     	(do
     		(error "------- Invalid config -----------")
-    		(error (s/explain-str config-spec co))
+    		(error (s/explain-str config-spec config))
     		(error "-------------------------------------")
     		(throw (Exception. "Invalid config data")))
-    	co))
+    	config))
 
 ;;------------------------------------------------------------------------------------
+
+(defn add-member
+    [member]
+    (db/add-member (validate-member member)))
+
+(defn add-estate
+    [estate]
+    (db/add-estate (validate-estate estate)))
+
+(defn add-config
+    [config]
+    (db/add-config (validate-config config)))
 
 (defn calc-saldo
 	[d-c]
 	(reduce + (map #(+ (:amount %) (:tax %)) d-c)))
+
+(defn was-owner?
+	[estate member year]
+	{:pre [(int? year) (is-estate? estate) (is-member? member)]}
+	(filter #(and (= (:estate-id %) (:estate-id estate))
+					 (within-from-to (:from-to %) year))
+			(:estates member)))
+
+(defn is-owner?
+	[estate member]
+	{:pre [(is-estate? estate) (is-member? member)]}
+	(filter #(and (= (:estate-id %) (:estate-id estate))
+					 (not (:to (:from-to %))))
+		    (:estates member)))
+
+(defn estates-owned-at-year
+	[member year]
+	{:pre [(int? year) (is-member? member)]}
+	(filter #(within-from-to (:from-to %) year) (:estates member)))
+
+(defn get-owners-from-estate
+	[estate year]
+	{:pre [(int? year) (is-estate? estate)]}
+	(->> (get-all-members) (filter #(was-owner? estate % year))))
+
+(defn get-current-owner-from-estate
+	[estate]
+	{:pre [(is-estate? estate)]}
+	(->> (get-all-members) (filter #(is-owner? estate %)) first))
+
+;;------------------------------------------------------------------------------------
+
+(defn get-estate
+	[estate-id]
+	{:pre [(is-estate-id? estate-id)]}
+	(->> (get-all-estates) (filter #(= estate-id (:estate-id %))) first))
+
+(defn get-member
+	[member-id]
+	{:pre [(int? member-id)]}
+	(->> (get-all-members) (filter #(= member-id (:member-id %))) first))
+
+(defn get-members-with-estates
+	[year]
+	{:pre [(int? year)]}
+	(->> (get-all-members) (filter #(seq (estates-owned-at-year % year))) (sort-by :name)))
+
+(defn active-member?
+	[member]
+	{:pre [(is-member? member)]}
+	(nil? (get-in member [:from-to :to])))
+
+;;------------------------------------------------------------------------------------
+
+(defn is-yearly?
+	[estate year]
+	{:pre [(int? year) (is-estate? estate)]}
+	(= (months-billing year estate) 12))
+
+;;------------------------------------------------------------------------------------
+
+(defn membership-charged?
+	[member year]
+	{:pre [(int? year) (is-member? member)]}
+	(seq (filter #(and (utils/this-year? year (:date %))
+					   (= (:type %) :membership-fee)
+					   (neg? (:amount %)))
+				 (:debit-credit member))))
+
+(defn get-members-not-charged-membership
+	[year]
+	{:pre [(int? year)]}
+	(->> (get-all-members)
+		 (filter #(not (membership-charged? year %)))
+		 (sort-by :name)))
+
+;;------------------------------------------------------------------------------------
+
+(defn yearly-connection-charged?
+	[estate year]
+	{:pre [(int? year) (is-estate? estate)]}
+	(seq (filter #(and (utils/this-year? year (:date %))
+					   (= (:type %) :connection-fee)
+					   (= every-month (:months %))
+					   (neg? (:amount %)))
+				 (:debit-credit estate))))
+
+(defn get-estates-not-charged-yearly-con
+	[year]
+	{:pre [(int? year)]}
+	(->> (get-all-estates)
+		 (filter #(and (is-yearly? year %) (not (yearly-connection-charged? year %))))))
+
+;;------------------------------------------------------------------------------------
+
+(defn yearly-operator-charged?
+	[estate year]
+	{:pre [(int? year) (is-estate? estate)]}
+	(seq (filter #(and (utils/this-year? year (:date %))
+					   (= (:type %) :operator-fee)
+					   (= every-month (:months %))
+					   (neg? (:amount %)))
+				 (:debit-credit estate))))
+
+(defn get-estates-not-charged-yearly-oper
+	[year]
+	(->> (get-all-estates)
+		 (filter #(and (is-yearly? year %) (not (yearly-operator-charged? year %))))))
+
+;;------------------------------------------------------------------------------------
+
+(defn operator-charged?
+	[estate months year]
+	{:pre [(int? year) (is-estate? estate) (set? months)]}
+	(seq (filter #(and (utils/this-year? year (:date %))
+					   (= (:type %) :operator-fee)
+					   (= (set/intersection months (:months %)) months)
+					   (neg? (:amount %)))
+				 (:debit-credit estate))))
+
+(defn get-estates-not-charged-oper
+	[months year]
+	{:pre [(int? year) (set? months)]}
+	(->> (get-all-estates)
+		 (filter #(and (not (is-yearly? year %))
+					   (seq (set/intersection months (get-activity % year)))
+					   (not (operator-charged? year months %))))))
+
+;;------------------------------------------------------------------------------------
+
+(defn conn-charged?
+	[estate months year]
+	{:pre [(int? year) (is-estate? estate) (set? months)]}
+	(seq (filter #(and (utils/this-year? year (:date %))
+					   (= (:type %) :connection-fee)
+					   (= (set/intersection months (:months %)) months)
+					   (neg? (:amount %)))
+				 (:debit-credit estate))))
+
+(defn get-estates-not-charged-conn
+	[months year]
+	{:pre [(int? year) (set? months)]}
+	(->> (get-all-estates)
+		 (filter #(and (not (is-yearly? year %))
+					   (not (conn-charged? year months %))))))
+
+;;------------------------------------------------------------------------------------
+
+(defn member-id-exist?
+	[member-id]
+	{:pre [(int? member-id)]}
+	(->> (get-all-members)
+		 (filter #(= member-id (:member-id %)))
+		 (seq)))
+
+(defn estate-id-exist?
+	[estate-id]
+	{:pre [(is-estate-id? estate-id)]}
+	(->> (get-all-estates)
+		 (filter #(= estate-id (:estate-id %)))
+		 (seq)))
+
+(defn get-latest-config
+	[]
+	(->> (db/get-all-configs)
+		(sort-by :entered)
+		(last)))
+
+(defn get-config
+	[months year]
+	{:pre [(int? year) (> year config/min-year) (< year config/max-year) (set? months) (seq months)]}
+	(let [mk-idx (fn [y m] (+ y (/ m 13)))
+		  config-sort (fn [cfg] (mk-idx (:start-year cfg) (:start-month cfg)))
+		  update-month (fn [m c] (if (<= (config-sort c) (mk-idx year (key m)))
+		  							 {(key m) {:membership {:fee (->> c :membership :fee)
+		  							 					    :tax (->> c :membership :tax)
+		  							 					    :tot (* (->> c :membership :fee)
+		  							 					   		    (->> c :membership :tax (+ 1.0)))}
+		  							 		   :connection {:fee (->> c :connection :fee)
+		  							 					    :tax (->> c :connection :tax)
+		  							 					    :tot (* (->> c :connection :fee)
+		  							 					    	    (->> c :connection :tax (+ 1.0)))}
+		  							 		   :operator   {:fee (->> c :operator :fee)
+		  							 					    :tax (->> c :operator :tax)
+		  							 					    :tot (* (->> c :operator :fee)
+		  							 					    	    (->> c :operator :tax (+ 1.0)))}}}
+		  							 m))
+		  configs (->> (db/get-all-configs)
+		  			   (remove #(> (config-sort %) (mk-idx year (apply max months))))
+		  			   (validate-config)
+		  			   (sort-by config-sort))
+		  aaa (map #(hash-map % {:membership {:fee 0 :tax 0.0 :tot 0.0}
+		  					     :connection {:fee 0 :tax 0.0 :tot 0.0}
+		  					     :operator   {:fee 0 :tax 0.0 :tot 0.0}}) months)
+		  mmm (loop [m   aaa
+			         cfg configs]
+					(if (nil? cfg)
+						m
+						(recur (map #(update-month % (first cfg)) m) (rest cfg))))]
+		(into {} (map #(hash-map (:month %) (dissoc % :month)) mmm))))
+
+
